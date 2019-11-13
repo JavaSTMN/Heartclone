@@ -100,8 +100,10 @@ public class MinionCard extends Card implements Attacker, Target {
 		this.healthPoints -= nb;
 
 		if (!isAlive()) {
-			// TODO: destroy this object
 			System.out.println("La carte a été détruite");
+			//TODO: Send the card to the Discard
+			// Solution: If the game manager contains the Discard instance and we have a singleton pattern
+			// we can use the the addCard of Discard through the GameManager to send the card to the Discard
 		}
 	}
 

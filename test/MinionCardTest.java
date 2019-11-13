@@ -79,6 +79,7 @@ class MinionCardTest {
 		assertEquals(5, card.getHealthPoints());
 	}
 	
+	@Test
 	void receiveHealthPointsExceptionTest() {
 		MinionCard card = new MinionCard(5,3,false);
 		
