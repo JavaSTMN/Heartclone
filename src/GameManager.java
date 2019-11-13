@@ -1,9 +1,5 @@
-import java.lang.reflect.Array;
 import java.sql.Date;
-import java.sql.Time;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 import javax.swing.SwingWorker;
 
@@ -31,29 +27,43 @@ public class GameManager {
 		turnStartDate = Date.valueOf(LocalDate.now());
 	}
 	
+	/**
+	 * Start a game
+	 */
 	public void startGame()
 	{
 		
 	}
 	
+	/**
+	 * Finish a game
+	 */
 	public void finishGame()
 	{
 		
 	}
 	
+	/**
+	 * Start a turn
+	 * @param hero
+	 */
 	public void startTurn(Hero hero)
 	{
 		turnStartDate = Date.valueOf(LocalDate.now());
 		inTurn(hero);
 	}
 	
+	/**
+	 * Timer running while a hero is playing
+	 * @param hero
+	 */
 	public void inTurn(Hero hero)
 	{
 		SwingWorker sw = new SwingWorker()
 		{
 			protected Object doInBackground() throws Exception
 			{
-				do {} while (turnTimeLeft() > 0);
+				do {System.out.println(turnTimeLeft());} while (turnTimeLeft() > 0);
 				return null;
 			}
 			
@@ -67,11 +77,19 @@ public class GameManager {
 		sw.execute();
 	}
 	
+	/**
+	 * Finish turn, pass to another player or finish the game
+	 * @param hero
+	 */
 	public void finishTurn(Hero hero)
 	{
 		
 	}
 	
+	/**
+	 * Time left for the turn in seconds
+	 * @return
+	 */
 	private long turnTimeLeft()
 	{			
 		long diff = (turnStartDate.getTime()/1000) + turnMaxSeconds - (Date.valueOf(LocalDate.now()).getTime()/1000);
