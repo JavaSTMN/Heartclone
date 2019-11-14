@@ -1,4 +1,5 @@
-package controller;
+package controller.hero;
+
 /**
  * 
  */
@@ -7,12 +8,12 @@ package controller;
  * @author adrien
  *
  */
-public class DealDamageEffect extends Effect {
+public class Hero  {
 
 	/**
 	 * 
 	 */
-	public DealDamageEffect() {
+	public Hero() {
 		// TODO Auto-generated constructor stub
 	}
 

@@ -1,4 +1,4 @@
-package controller;
+package controller.effect;
 /**
  * 
  */
@@ -7,12 +7,12 @@ package controller;
  * @author adrien
  *
  */
-public class HealEffect extends Effect {
+public class DrawEffect extends Effect {
 
 	/**
 	 * 
 	 */
-	public HealEffect() {
+	public DrawEffect() {
 		// TODO Auto-generated constructor stub
 	}
 

@@ -1,4 +1,4 @@
-package controller;
+package controller.card;
 /**
  * 
  */
@@ -7,12 +7,12 @@ package controller;
  * @author adrien
  *
  */
-public abstract class Effect {
+public class SpellCard extends Card {
 
 	/**
 	 * 
 	 */
-	public Effect() {
+	public SpellCard() {
 		// TODO Auto-generated constructor stub
 	}
 

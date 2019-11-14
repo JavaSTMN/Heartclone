@@ -1,4 +1,4 @@
-package controller;
+package controller.manager;
 /**
  * 
  */
@@ -7,12 +7,12 @@ package controller;
  * @author adrien
  *
  */
-public class CardContainer {
+public class GameManager {
 
 	/**
 	 * 
 	 */
-	public CardContainer() {
+	public GameManager() {
 		// TODO Auto-generated constructor stub
 	}
 

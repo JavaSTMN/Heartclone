@@ -1,5 +1,4 @@
-package controller;
-
+package controller.card;
 /**
  * 
  */
@@ -8,12 +7,12 @@ package controller;
  * @author adrien
  *
  */
-public class Hero  {
+public class CardContainer {
 
 	/**
 	 * 
 	 */
-	public Hero() {
+	public CardContainer() {
 		// TODO Auto-generated constructor stub
 	}
 

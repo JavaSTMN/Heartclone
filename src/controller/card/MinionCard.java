@@ -1,4 +1,7 @@
-package controller;
+package controller.card;
+
+import controller.Attacker;
+import controller.Target;
 
 /**
  * 
