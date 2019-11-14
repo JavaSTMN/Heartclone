@@ -1,3 +1,4 @@
+package controller;
 /**
  * 
  */
@@ -6,12 +7,12 @@
  * @author adrien
  *
  */
-public class GameManager {
+public class DrawEffect extends Effect {
 
 	/**
 	 * 
 	 */
-	public GameManager() {
+	public DrawEffect() {
 		// TODO Auto-generated constructor stub
 	}
 

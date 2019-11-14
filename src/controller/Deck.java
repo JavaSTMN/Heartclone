@@ -1,3 +1,4 @@
+package controller;
 /**
  * 
  */
@@ -6,12 +7,12 @@
  * @author adrien
  *
  */
-public class CardContainer {
+public class Deck extends CardContainer {
 
 	/**
 	 * 
 	 */
-	public CardContainer() {
+	public Deck() {
 		// TODO Auto-generated constructor stub
 	}
 

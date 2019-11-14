@@ -1,3 +1,4 @@
+package controller;
 /**
  * 
  */
@@ -6,12 +7,12 @@
  * @author adrien
  *
  */
-public abstract class Effect {
+public class GameManager {
 
 	/**
 	 * 
 	 */
-	public Effect() {
+	public GameManager() {
 		// TODO Auto-generated constructor stub
 	}
 

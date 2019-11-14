@@ -1,3 +1,4 @@
+package controller;
 /**
  * 
  */
@@ -6,12 +7,12 @@
  * @author adrien
  *
  */
-public class HealEffect extends Effect {
+public abstract class Effect {
 
 	/**
 	 * 
 	 */
-	public HealEffect() {
+	public Effect() {
 		// TODO Auto-generated constructor stub
 	}
 

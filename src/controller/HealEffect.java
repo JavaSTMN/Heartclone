@@ -1,3 +1,4 @@
+package controller;
 /**
  * 
  */
@@ -6,12 +7,12 @@
  * @author adrien
  *
  */
-public class Hero implements Attacker, Target {
+public class HealEffect extends Effect {
 
 	/**
 	 * 
 	 */
-	public Hero() {
+	public HealEffect() {
 		// TODO Auto-generated constructor stub
 	}
 

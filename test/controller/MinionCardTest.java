@@ -1,9 +1,12 @@
+package controller;
 
 
 import static org.junit.jupiter.api.Assertions.*;
 import junit.framework.*;
 
 import org.junit.jupiter.api.Test;
+
+import controller.MinionCard;
 
 class MinionCardTest {
 

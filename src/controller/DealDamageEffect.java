@@ -1,3 +1,4 @@
+package controller;
 /**
  * 
  */
@@ -6,12 +7,12 @@
  * @author adrien
  *
  */
-public class SpellCard extends Card {
+public class DealDamageEffect extends Effect {
 
 	/**
 	 * 
 	 */
-	public SpellCard() {
+	public DealDamageEffect() {
 		// TODO Auto-generated constructor stub
 	}
 
