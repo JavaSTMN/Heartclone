@@ -1,3 +1,6 @@
+
+
+
 /**
  * 
  */
@@ -7,12 +10,18 @@
  *
  */
 public abstract class Effect {
+	
+	boolean used;
 
 	/**
 	 * 
 	 */
 	public Effect() {
-		// TODO Auto-generated constructor stub
+		this.used = false;
+	}
+
+	public void activateEffect(Target target) {
+		this.used = true;
 	}
 
 }
