@@ -1,12 +1,8 @@
 package view;
 
-import view.card.*;
-import view.gameview.*;
-
-import java.awt.Color;
+import view.game.*;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 public class Main extends JFrame {
 
