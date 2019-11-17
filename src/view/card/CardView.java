@@ -4,12 +4,16 @@ import service.ImageFetcher;
 
 import java.awt.BorderLayout;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -25,32 +29,37 @@ public class CardView extends JPanel {
 	
 	private int panelWidth = 120;
 	private int panelHeight = 200;
+	
+	private Integer cristalCost = 25;
+	
+	CardContent card;
 
 	
 	public CardView() throws IOException {
 
+		this.setOpaque(false);
 		
 		cardBackground = ImageIO.read(new File("assets/base-minion-premium.png"));
 		cristalImage = ImageIO.read(new File("assets/cost-mana.png"));
 		lifeImage = ImageIO.read(new File("assets/health-premium.png"));
 		attackImage = ImageIO.read(new File("assets/attack-minion-premium.png"));
 		
+		// Creation of the card background
+		card = new CardContent();
+		card.setSize(140, 200);
+		ImageIcon cardImage = new ImageIcon("assets/base-minion-premium.png");
 		
-		// JPanel card = new JPanel();
-		// card.setSize(this.panelWidth, this.panelHeight);
-		// card.setLayout(new BorderLayout());
-		// card.setVisible(true);
+		// Resizing the card background
+		Image resizedImage = cardImage.getImage(); // transform it 
+		resizedImage = resizedImage.getScaledInstance(120, 180, Image.SCALE_SMOOTH); // scale it the smooth way  
+		cardImage = new ImageIcon(resizedImage);  // transform it back
+		card.setIcon(cardImage);
 		
-	}
-	
-	public void paintComponent(Graphics g) {
-	    super.paintComponent(g);
-
-	    // Draw the background image.
-	    g.drawImage(cardBackground, 25, 0, 120, 200, this);
-//	    g.drawImage(cristalImage, 0, 20, this);
-//	    g.drawImage(attackImage, 0, this.cardBackground.getHeight() - 150, this);
-//	    g.drawImage(lifeImage, this.cardBackground.getWidth() - 70, this.cardBackground.getHeight() - 150, this);
-	  }
+		this.add(card);
+		this.setSize(140, 200);
+		this.setVisible(true);
+		
+	}	
 
 }
+

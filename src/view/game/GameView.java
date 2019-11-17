@@ -22,7 +22,7 @@ import javax.swing.JPanel;
 
 public class GameView extends JFrame {
 	
-	private JFrame frame;
+	private JFrame window;
 	private JPanel gameView;
 	private Toolkit toolkit;
 	private MediaTracker tracker;
@@ -31,14 +31,14 @@ public class GameView extends JFrame {
 	private JPanel handPlayerOne;
 	private JPanel handPlayerTwo;
 	
-	public GameView(){
+	public GameView() throws IOException{
 		super();
 		
 		Image image = ImageFetcher.findImage("assets/icon.png", this);
 		
 		
-		this.frame = new JFrame();
-		this.frame.setLayout(new BorderLayout());
+		this.window = new JFrame();
+		this.window.setLayout(new BorderLayout());
 		this.gameView = new JPanel();
 		this.gameView.setBackground(Color.DARK_GRAY);
 		this.gameView.setLayout(new BorderLayout());
@@ -47,11 +47,21 @@ public class GameView extends JFrame {
 		this.handPlayerOne.setBackground(Color.RED);
 		this.handPlayerOne.setPreferredSize(new Dimension(0, 200));
 		
+		FlowLayout layout = new FlowLayout(FlowLayout.CENTER);
+		
+		
 		this.handPlayerTwo = new JPanel();
+		this.handPlayerTwo.setLayout(layout);
 		this.handPlayerTwo.setBackground(Color.BLUE);
 		this.handPlayerTwo.setPreferredSize(new Dimension(0, 200));
+		this.handPlayerTwo.add(new CardView());
+		this.handPlayerTwo.add(new CardView());
+		this.handPlayerTwo.add(new CardView());
+		this.handPlayerTwo.add(new CardView());
+		this.handPlayerTwo.add(new CardView());
+		this.handPlayerTwo.add(new CardView());
 		
-		
+
 		this.gameView.add(handPlayerOne, BorderLayout.PAGE_END);
 		this.gameView.add(handPlayerTwo, BorderLayout.PAGE_START);
 		
@@ -63,13 +73,13 @@ public class GameView extends JFrame {
 //		}
 		
 		
-		this.frame.setTitle("HeartClone");
-		this.frame.setIconImage(image);
-		this.frame.setSize(getMaximumSize());
-		this.frame.setContentPane(this.gameView);
+		this.window.setTitle("HeartClone");
+		this.window.setIconImage(image);
+		this.window.setSize(getMaximumSize());
+		this.window.setContentPane(this.gameView);
 		
 		
-		this.frame.setVisible(true);
+		this.window.setVisible(true);
 		
 	}
 }
