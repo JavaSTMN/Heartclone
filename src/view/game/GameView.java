@@ -53,7 +53,9 @@ public class GameView extends JFrame {
 		this.handPlayerTwo = new JPanel();
 		this.handPlayerTwo.setLayout(layout);
 		this.handPlayerTwo.setBackground(Color.BLUE);
-		this.handPlayerTwo.setPreferredSize(new Dimension(0, 200));
+		this.handPlayerTwo.setPreferredSize(new Dimension(0, 220));
+		this.handPlayerTwo.add(new CardView());
+		this.handPlayerTwo.add(new CardView());
 		this.handPlayerTwo.add(new CardView());
 		this.handPlayerTwo.add(new CardView());
 		this.handPlayerTwo.add(new CardView());

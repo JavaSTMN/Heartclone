@@ -3,6 +3,8 @@ package view.card;
 import service.ImageFetcher;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -12,10 +14,12 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 public class CardView extends JPanel {
 	
@@ -46,17 +50,23 @@ public class CardView extends JPanel {
 		
 		// Creation of the card background
 		card = new CardContent();
-		card.setSize(140, 200);
+		
 		ImageIcon cardImage = new ImageIcon("assets/base-minion-premium.png");
 		
 		// Resizing the card background
 		Image resizedImage = cardImage.getImage(); // transform it 
 		resizedImage = resizedImage.getScaledInstance(120, 180, Image.SCALE_SMOOTH); // scale it the smooth way  
 		cardImage = new ImageIcon(resizedImage);  // transform it back
+		//Border border = BorderFactory.createLineBorder(Color.RED, 5);
+		//card.setBorder(border);
+		card.setPreferredSize(new Dimension(140,200));
 		card.setIcon(cardImage);
 		
+		
+		
+		
 		this.add(card);
-		this.setSize(140, 200);
+		this.setSize(140, 250);
 		this.setVisible(true);
 		
 	}	
