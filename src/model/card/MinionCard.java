@@ -14,10 +14,12 @@ import model.Target;
  */
 public class MinionCard extends Card implements Attacker, Target {
 
+	
 	private int healthPoints;
 	private int maxHealtPoints;
 	private int damagePoints;
 	private boolean active;
+
 
 	/**
 	 * Constructor
@@ -26,13 +28,20 @@ public class MinionCard extends Card implements Attacker, Target {
 	 * @param damagePoints
 	 * @param active
 	 */
+	public MinionCard(int maxHealthPoints, int damagePoints, boolean active, String name, String description, int cristalCost) {
+		super(name, description, cristalCost);
+		this.maxHealtPoints = this.healthPoints = maxHealthPoints;
+		this.damagePoints = damagePoints;
+		this.active = active;
+	}
+	
 	public MinionCard(int maxHealthPoints, int damagePoints, boolean active) {
 		this.maxHealtPoints = this.healthPoints = maxHealthPoints;
 		this.damagePoints = damagePoints;
 		this.active = active;
 	}
 
-	public int getHealthPoints() {
+	public Integer getHealthPoints() {
 		return this.healthPoints;
 	}
 
@@ -40,7 +49,7 @@ public class MinionCard extends Card implements Attacker, Target {
 		this.healthPoints = value;
 	}
 
-	public int getDamagePoints() {
+	public Integer getDamagePoints() {
 		return this.damagePoints;
 	}
 

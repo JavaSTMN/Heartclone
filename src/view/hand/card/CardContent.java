@@ -1,4 +1,4 @@
-package view.card;
+package view.hand.card;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -10,7 +10,12 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JLabel;
 
+import model.card.Card;
+import model.card.MinionCard;
+
 public class CardContent extends JLabel {
+	
+	Card card;
 	
 	private BufferedImage cardBackground;
 	private BufferedImage cristalImage;
@@ -25,8 +30,8 @@ public class CardContent extends JLabel {
 	private String description = "Test description for the card";
 		
 	
-	public CardContent() throws IOException {
-		
+	public CardContent(Card card) throws IOException {
+		this.card = card;
 		cardBackground = ImageIO.read(new File("assets/base-minion-premium.png"));
 		cristalImage = ImageIO.read(new File("assets/cost-mana.png"));
 		lifeImage = ImageIO.read(new File("assets/health-premium.png"));
@@ -40,9 +45,6 @@ public class CardContent extends JLabel {
 		this.setVerticalAlignment(JLabel.CENTER);
 		
 		this.add(descriptionBlock);
-		
-		
-
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -59,7 +61,13 @@ public class CardContent extends JLabel {
 	        Graphics2D g2d = (Graphics2D)g;
 	        g2d.setColor(Color.WHITE);
 	        //g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-	        g2d.drawString(cristalCost.toString(), 12, 32);
+	        g2d.drawString(card.getCristalCost().toString(), 12, 32);
+	        
+	        if(card instanceof MinionCard) {
+	        	g2d.drawString(((MinionCard) card).getDamagePoints().toString(), 16, 185);
+	        	
+	        }
+	        
 	    }
 	  }
 
