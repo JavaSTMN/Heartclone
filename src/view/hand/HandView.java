@@ -81,9 +81,6 @@ public class HandView extends JPanel implements MouseListener {
 			
 			cardView.setBorder(border);
 		}
-		
-		
-		
 	}
 
 	@Override
