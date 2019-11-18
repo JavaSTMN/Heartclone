@@ -25,6 +25,7 @@ import model.card.MinionCard;
 public class Hero implements Attacker, Target {
 	
 	private int cristals;
+	private int cristalsRegeneration;
 	private int lifePoints;
 	private int maxLifePoints;
 	private Deck deck;
@@ -47,6 +48,7 @@ public class Hero implements Attacker, Target {
 	
 		
 		cristals = 1;
+		cristalsRegeneration = 1;
 		deck = new Deck(new ArrayList<Card>());		
 		hand = new CardContainer(10);
 		gameboard = new CardContainer(7);
@@ -179,6 +181,17 @@ public class Hero implements Attacker, Target {
 	public void dealDamage(Target target) throws IllegalArgumentException {
 		this.dealDamage(target, 2);
 		
+	}
+	
+	public void regenerateCristals()
+	{
+		cristalsRegeneration += 1;
+		cristals = cristalsRegeneration;
+	}
+	
+	public void addCristals(int amount)
+	{
+		cristals += amount;
 	}
 
 }

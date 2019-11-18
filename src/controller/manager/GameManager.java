@@ -82,6 +82,7 @@ public class GameManager {
 	 */
 	public void startTurn()
 	{
+		opponents[activeHero].regenerateCristals();
 		inTurn();
 	}
 	
