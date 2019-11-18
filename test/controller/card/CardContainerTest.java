@@ -6,16 +6,8 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 
-/**
- * 
- */
-
-/**
- * @author adrien
- *
- */
 class CardContainerTest {
-	
+
 	@Test
 	void testCardContainer_constructor_normal() {
 		CardContainer defaultCardContainer = new CardContainer();
@@ -52,6 +44,7 @@ class CardContainerTest {
 	void testCardContainer_deleteCard_cardNormal() {
 		Card c1 = new MinionCard(10, 10, true);
 		Card c2 = new MinionCard(10, 10, true);
+
 		CardContainer cardContainer = new CardContainer(new ArrayList<Card>(Arrays.asList(c1, c2)));
 
 		try {
@@ -75,9 +68,12 @@ class CardContainerTest {
 
 	@Test
 	void testCardContainer_deleteCard_indexNormal() {
+
+    
 		Card c1 = new MinionCard(10, 10, true);
 		Card c2 = new MinionCard(10, 10, true);
-		CardContainer cardContainer = new CardContainer(new ArrayList<Card>(Arrays.asList(c1, c2)));
+  
+    CardContainer cardContainer = new CardContainer(new ArrayList<Card>(Arrays.asList(c1, c2)));
 
 		try {
 			cardContainer.deleteCard(0);
@@ -126,7 +122,7 @@ class CardContainerTest {
 		CardContainer cardContainer = new CardContainer(new ArrayList<Card>(), 0);
 
 		assertThrows(Exception.class, () -> {
-			cardContainer.addCard(new MinionCard(10, 10, true));
+        cardContainer.addCard(new MinionCard(10, 10, true));
 		});
 	}
 
@@ -135,7 +131,7 @@ class CardContainerTest {
 		CardContainer cardContainer = new CardContainer(new ArrayList<Card>(), 1);
 
 		try {
-			cardContainer.addCard(new MinionCard(10, 10, true));
+      cardContainer.addCard(new MinionCard(10, 10, true));
 		} catch (Exception e) {
 			fail("Should have added card");
 		}

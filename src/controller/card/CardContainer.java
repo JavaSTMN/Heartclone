@@ -1,7 +1,4 @@
 package controller.card;
-/**
- * 
- */
 import java.util.ArrayList;
 
 
