@@ -1,4 +1,4 @@
-package controller.card;
+package model.card;
 import java.util.UUID;
 
 import controller.manager.GameManager;

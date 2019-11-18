@@ -1,7 +1,7 @@
 /**
  * 
  */
-package controller.card;
+package model.card;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,10 +11,14 @@ import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 
+import model.card.Card;
+import model.card.Deck;
+import model.card.MinionCard;
+
 class DeckTest {
 
 	/**
-	 * Test method for {@link controller.card.Deck#drawCard()}.
+	 * Test method for {@link model.card.Deck#drawCard()}.
 	 */
 	@Test
 	void testDrawCard_normal() {
@@ -38,7 +42,7 @@ class DeckTest {
 	}
 	
 	/**
-	 * Test method for {@link controller.card.Deck#drawCard()}.
+	 * Test method for {@link model.card.Deck#drawCard()}.
 	 */
 	@Test
 	void testDrawCard_noCard() {		

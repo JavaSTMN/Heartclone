@@ -1,9 +1,13 @@
-package controller.card;
+package model.card;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import org.junit.jupiter.api.Test;
+
+import model.card.Card;
+import model.card.CardContainer;
+import model.card.MinionCard;
 
 
 class CardContainerTest {

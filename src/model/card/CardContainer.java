@@ -1,5 +1,5 @@
 
-package controller.card;
+package model.card;
 /**
  * 
  */

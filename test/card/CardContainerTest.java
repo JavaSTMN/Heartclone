@@ -8,9 +8,9 @@ import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 
-import controller.card.Card;
-import controller.card.CardContainer;
-import controller.card.MinionCard;
+import model.card.Card;
+import model.card.CardContainer;
+import model.card.MinionCard;
 
 class CardContainerTest {
 

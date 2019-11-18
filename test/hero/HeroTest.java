@@ -6,10 +6,10 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import controller.card.Card;
-import controller.card.CardContainer;
-import controller.card.MinionCard;
-import controller.hero.Hero;
+import model.card.Card;
+import model.card.CardContainer;
+import model.card.MinionCard;
+import model.hero.Hero;
 
 class HeroTest {
 

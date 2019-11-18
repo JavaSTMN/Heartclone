@@ -1,16 +1,16 @@
-package controller.hero;
+package model.hero;
 
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Handler;
 
-import controller.Attacker;
-import controller.Target;
-import controller.card.Card;
-import controller.card.CardContainer;
-import controller.card.Deck;
-import controller.card.MinionCard;
+import model.Attacker;
+import model.Target;
+import model.card.Card;
+import model.card.CardContainer;
+import model.card.Deck;
+import model.card.MinionCard;
 
 
 /**
@@ -47,7 +47,7 @@ public class Hero implements Attacker, Target {
 	
 		
 		cristals = 1;
-		deck = new Deck();		
+		deck = new Deck(new ArrayList<Card>());		
 		hand = new CardContainer(10);
 		gameboard = new CardContainer(7);
 		discard = new CardContainer(); 

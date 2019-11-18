@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import javax.swing.SwingWorker;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane.IconifyAction;
 
-import controller.hero.Hero;
+import model.hero.Hero;
 
 
 
