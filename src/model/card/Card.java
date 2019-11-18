@@ -29,6 +29,16 @@ public abstract class Card{
 		this.gameManager = GameManager.getInstance();
 	}
 	
+	public Card(String name, String description, int cristalCost) {
+		this.id = UUID.randomUUID();
+		this.gameManager = GameManager.getInstance();
+		
+		this.name = name;
+		this.description = description;
+		this.cristalCost = cristalCost;
+	}
+
+	
 	public String getName(){
 		return this.name;
 	}
@@ -45,7 +55,7 @@ public abstract class Card{
 		this.description = value;
 	}
 	
-	public int getCristalCost() {
+	public Integer getCristalCost() {
 		return this.cristalCost;
 	}
 	
