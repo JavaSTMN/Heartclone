@@ -1,9 +1,10 @@
+/**
+ * @author MadKid
+ */
 package view.hand;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
@@ -19,24 +20,27 @@ import view.hand.card.CardView;
 
 public class HandView extends JPanel implements MouseListener {
 	
-	ArrayList<CardView> cardViews;
+	ArrayList<CardView> cardViews; // array of all the cards the player has in is hands
 	
 	public HandView() throws IOException {
 		cardViews = new ArrayList<CardView>();
 		
+		// Widget setup
 		this.setLayout(new FlowLayout(FlowLayout.CENTER));
 		this.setBackground(Color.DARK_GRAY);
 		
+		//Instantiation of the card views
 		for(Card card : StartDeck.getDeck()) {
 			CardView cardView = new CardView(card);
 			cardViews.add(cardView);
 			cardView.addMouseListener(this);
 			this.add(cardView);
 		}
-		
-		
 	}
-
+	
+	/**
+	 * If we click a card, it becomes selected and any other card that was selected before becomes deselected
+	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		for(CardView cardView : this.cardViews) {

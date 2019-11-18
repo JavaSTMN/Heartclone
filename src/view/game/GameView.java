@@ -39,28 +39,25 @@ public class GameView extends JFrame {
 		super();
 
 		Image image = ImageFetcher.findImage("assets/icon.png", this);
-		
-		
+		// Main window
 		this.window = new JFrame();
 		
+		// Panel inside the window
 		this.gameView = new JPanel();
 		this.gameView.setBackground(Color.DARK_GRAY);
 		this.gameView.setLayout(new BorderLayout());
 		
-		this.handPlayerOne = new HandView();
-			
+		// Hands
+		this.handPlayerOne = new HandView();			
 		this.handPlayerTwo = new HandView();
-		
-		
 		this.gameView.add(handPlayerOne, BorderLayout.PAGE_END);
 		this.gameView.add(handPlayerTwo, BorderLayout.PAGE_START);
 				
-		
+		// Main window setup
 		this.window.setTitle("HeartClone");
 		this.window.setIconImage(image);
 		this.window.setSize(getMaximumSize());
 		this.window.setContentPane(this.gameView);
-		
 		
 		this.window.setVisible(true);
 		
