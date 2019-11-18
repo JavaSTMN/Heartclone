@@ -50,9 +50,13 @@ public abstract class Card{
 			return false;
 		
 		if(other instanceof Card) {
-			return ((Card) other).id == this.id;
+			return ((Card) other).getId() == this.getId();
 		}
 		
 		return false;
+	}
+
+	public UUID getId() {
+		return id;
 	}
 }
