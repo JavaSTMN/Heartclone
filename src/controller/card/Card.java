@@ -29,10 +29,6 @@ public abstract class Card{
 		this.gameManager = GameManager.getInstance();
 	}
 	
-	public UUID getId() {
-		return this.id;
-	}
-	
 	public String getName(){
 		return this.name;
 	}
