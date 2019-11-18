@@ -100,9 +100,20 @@ public class CardContainer {
 	 */
 	protected void deleteCard(int index) throws Exception {
 		if (index < 0 || index >= this.cards.size())
-			throw new Exception("The index specified does not exist");
+			throw new Exception("The specified index does not exist");
 		
 		this.cards.remove(index);
 	}	
+	
+	public Card fetchCard(int index) throws Exception {
+		if (index < 0 || index >= this.cards.size())
+			throw new Exception("The specified index does not exist");
+		
+		Card c = this.cards.get(index);
+		this.cards.remove(index);
+		
+		return c;
+	}
+	
 }
 
