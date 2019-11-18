@@ -1,11 +1,11 @@
-<<<<<<< HEAD:src/controller/card/CardContainer.java
+
 package controller.card;
 /**
  * 
  */
-=======
+
 import java.util.ArrayList;
->>>>>>> c9d4922b26d9864be0afba461ab5989f359bb697:src/CardContainer.java
+
 
 /**
  * Class which contains cards. 
