@@ -1,11 +1,9 @@
-<<<<<<< HEAD:src/controller/card/CardContainer.java
 package controller.card;
 /**
  * 
  */
-=======
 import java.util.ArrayList;
->>>>>>> c9d4922b26d9864be0afba461ab5989f359bb697:src/CardContainer.java
+
 
 /**
  * Class which contains cards. 
@@ -40,10 +38,10 @@ public class CardContainer {
 	
 	/**
 	 * Constructor without card limit
-	 * @param cards
+	 * @param arrayList
 	 */
-	public CardContainer(ArrayList<Card> cards) {
-		this.cards = cards;
+	public CardContainer(ArrayList<Card> arrayList) {
+		this.cards = arrayList;
 		
 		// unlimited number of cards
 		this.cardLimit = Integer.MAX_VALUE;
@@ -59,8 +57,7 @@ public class CardContainer {
 		this.cardLimit = Integer.MAX_VALUE;
 	}
 	
-	
-	
+
 	public int getCardNumber() {
 		return this.cards.size();
 	}

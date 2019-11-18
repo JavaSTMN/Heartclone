@@ -1,8 +1,10 @@
+package controller.card;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import org.junit.jupiter.api.Test;
+
 
 /**
  * 
@@ -13,7 +15,7 @@ import org.junit.jupiter.api.Test;
  *
  */
 class CardContainerTest {
-
+	
 	@Test
 	void testCardContainer_constructor_normal() {
 		CardContainer defaultCardContainer = new CardContainer();
@@ -42,14 +44,14 @@ class CardContainerTest {
 	@Test
 	void testCardContainer_constructor_exceedCardLimit() {
 		assertThrows(Exception.class, () -> {
-			new CardContainer(new ArrayList<Card>(Arrays.asList(new MinionCard(), new MinionCard())), 1);
+			new CardContainer(new ArrayList<Card>(Arrays.asList(new MinionCard(10, 10, true), new MinionCard(10, 10, true))), 1);
 		});
 	}
 
 	@Test
 	void testCardContainer_deleteCard_cardNormal() {
-		Card c1 = new MinionCard();
-		Card c2 = new MinionCard();
+		Card c1 = new MinionCard(10, 10, true);
+		Card c2 = new MinionCard(10, 10, true);
 		CardContainer cardContainer = new CardContainer(new ArrayList<Card>(Arrays.asList(c1, c2)));
 
 		try {
@@ -67,14 +69,14 @@ class CardContainerTest {
 		CardContainer cardContainer = new CardContainer();
 
 		assertThrows(Exception.class, () -> {
-			cardContainer.deleteCard(new MinionCard());
+			cardContainer.deleteCard(new MinionCard(10, 10, true));
 		});
 	}
 
 	@Test
 	void testCardContainer_deleteCard_indexNormal() {
-		Card c1 = new MinionCard();
-		Card c2 = new MinionCard();
+		Card c1 = new MinionCard(10, 10, true);
+		Card c2 = new MinionCard(10, 10, true);
 		CardContainer cardContainer = new CardContainer(new ArrayList<Card>(Arrays.asList(c1, c2)));
 
 		try {
@@ -108,7 +110,7 @@ class CardContainerTest {
 	@Test
 	void testCardContainer_addCard_normal() {
 		CardContainer cardContainer = new CardContainer();
-		MinionCard c = new MinionCard();
+		MinionCard c = new MinionCard(10, 10, true);
 		try {
 			cardContainer.addCard(c);
 		} catch (Exception e) {
@@ -124,7 +126,7 @@ class CardContainerTest {
 		CardContainer cardContainer = new CardContainer(new ArrayList<Card>(), 0);
 
 		assertThrows(Exception.class, () -> {
-			cardContainer.addCard(new MinionCard());
+			cardContainer.addCard(new MinionCard(10, 10, true));
 		});
 	}
 
@@ -133,7 +135,7 @@ class CardContainerTest {
 		CardContainer cardContainer = new CardContainer(new ArrayList<Card>(), 1);
 
 		try {
-			cardContainer.addCard(new MinionCard());
+			cardContainer.addCard(new MinionCard(10, 10, true));
 		} catch (Exception e) {
 			fail("Should have added card");
 		}
