@@ -124,7 +124,7 @@ public class GameManager {
 	 */
 	public void finishTurn()
 	{
-		if(!opponents[activeHero].isAlive())
+		if(!opponents[0].isAlive() || !opponents[1].isAlive())
 		{
 			finishGame();
 		}
