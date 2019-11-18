@@ -48,9 +48,9 @@ public class Hero implements Attacker, Target {
 		
 		cristals = 1;
 		deck = new Deck();		
-		hand = new CardContainer(new ArrayList<Card>(), 10);
-		gameboard = new CardContainer(new ArrayList<Card>(), 7);
-		discard = new CardContainer(new ArrayList<Card>()); 
+		hand = new CardContainer(10);
+		gameboard = new CardContainer(7);
+		discard = new CardContainer(); 
 		lifePoints = 30;
 		maxLifePoints = 30;
 		isActive = true;
@@ -155,11 +155,8 @@ public class Hero implements Attacker, Target {
 	 * @return true if the player can play the card, false if not
 	 */
 	public boolean canPlay(Card card) {
-		if(card.getCristalCost() > this.cristals) {
-			return false;
-		}
-		
-		return true;
+
+		return (card.getCristalCost() < this.cristals);
 	}
 
 }

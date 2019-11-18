@@ -50,6 +50,17 @@ public class CardContainer {
 	}
 	
 	/**
+	 * Constructor without card limit
+	 * @param limit
+	 */
+	public CardContainer(int cardLimit) {
+		this.cards = new ArrayList<Card>();
+		
+		// unlimited number of cards
+		this.cardLimit = cardLimit;
+	}
+	
+	/**
 	 * Default constructor. Initialize cards with empty arraylist. Unlimited card number
 	 */
 	public CardContainer() {
