@@ -2,6 +2,8 @@ package controller.manager;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.SwingWorker;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane.IconifyAction;
@@ -21,6 +23,7 @@ import controller.hero.Hero;
 public class GameManager {
 	
 	private Hero opponents[];
+	private int activeHero;
 	private int turnCount;
 	private Date turnStartDate;
 	private long turnMaxSeconds;
@@ -31,12 +34,17 @@ public class GameManager {
 	{
 		
 		opponents = new Hero[2];
+		activeHero = 0;
 		turnCount = 0;		
 		turnMaxSeconds = 30;
 		turnStartDate = Date.valueOf(LocalDate.now());
 	}
 	
 	
+	/**
+	 * singleton
+	 * @return
+	 */
 	public static GameManager getInstance()
 	{
 		if(instanceGameManager == null)
@@ -47,10 +55,18 @@ public class GameManager {
 	
 	/**
 	 * Start a game
+	 * @param _opponents[2]
 	 */
-	public void startGame()
+	public void startGame(Hero _opponents[])
 	{
+		try {
+			opponents = _opponents;
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 		
+		
+		startTurn();
 	}
 	
 	/**
@@ -63,55 +79,71 @@ public class GameManager {
 	
 	/**
 	 * Start a turn
-	 * @param hero
 	 */
-	public void startTurn(Hero hero)
+	public void startTurn()
 	{
-		turnStartDate = Date.valueOf(LocalDate.now());
-		inTurn(hero);
+		inTurn();
 	}
 	
 	/**
 	 * Timer running while a hero is playing
-	 * @param hero
 	 */
-	public void inTurn(Hero hero)
+	public void inTurn()
 	{
-		SwingWorker sw = new SwingWorker()
-		{
-			protected Object doInBackground() throws Exception
-			{
-				do {System.out.println(turnTimeLeft());} while (turnTimeLeft() > 0);
-				return null;
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask() {	
+			@Override
+			public void run() {
+				
+				
 			}
-			
-			public void done()
-			{
-				finishTurn(hero);
-			}
-		};
+		}, turnMaxSeconds*1000);
+		
+		finishTurn();
 		
 		
-		sw.execute();
+		
+//		SwingWorker sw = new SwingWorker()
+//		{
+//			protected Object doInBackground() throws Exception
+//			{
+//				do {System.out.println(turnTimeLeft());} while (turnTimeLeft() > 0);
+//				return null;
+//			}
+//			
+//			public void done()
+//			{
+//				finishTurn(hero);
+//			}
+//		};
+//		sw.execute();
 	}
 	
 	/**
 	 * Finish turn, pass to another player or finish the game
-	 * @param hero
 	 */
-	public void finishTurn(Hero hero)
+	public void finishTurn()
 	{
+		if(!opponents[activeHero].isAlive())
+		{
+			finishGame();
+		}
 		
-	}
-	
-	/**
-	 * Time left for the turn in seconds
-	 * @return
-	 */
-	private long turnTimeLeft()
-	{			
-		long diff = (turnStartDate.getTime()/1000) + turnMaxSeconds - (Date.valueOf(LocalDate.now()).getTime()/1000);
-		return diff;
-	}
+		else 
+		{
+			switch (activeHero) {
+			case 0:
+					activeHero = 1;
+				break;
+			case 1:
+					activeHero = 0;
+				break;
 
+			default:
+				break;
+			}
+			
+			startTurn();
+		}
+	}
 }
