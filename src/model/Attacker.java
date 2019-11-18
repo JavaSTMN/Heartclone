@@ -12,7 +12,17 @@ public interface Attacker {
 	
 	/**
 	 * Deals damage to the target
-	 * @param target 
+	 * @param target
+	 * @param amount
+	 * @throws IllegalArgumentException
+	 */
+	public void dealDamage(Target target, int amount) throws IllegalArgumentException;
+	
+	/**
+	 * 
+	 * @param target
+	 * @param amount
+	 * @throws IllegalArgumentException
 	 */
 	public void dealDamage(Target target) throws IllegalArgumentException;
 	

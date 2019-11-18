@@ -90,7 +90,13 @@ public class Hero implements Attacker, Target {
 	 * Hero draw a card from his deck to his hand
 	 */
 	public void draw() {
-		
+		try {
+			hand.addCard(deck.drawCard());
+		}
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -105,13 +111,22 @@ public class Hero implements Attacker, Target {
 	 * Substract cristals from the hero
 	 * @param nbCristalsUsed
 	 */
-	public void useCristals(int nbCristalsUsed) {
-		cristals -= nbCristalsUsed;
+	public Boolean useCristals(int nbCristalsUsed) {
+		if(nbCristalsUsed <= cristals)
+		{
+			cristals -= nbCristalsUsed;
+			return true;
+		}
+		else {return false;}
 	}
 
 	@Override
-	public void receiveDamage(int nb) throws IllegalArgumentException {
-		lifePoints -= nb;
+	public void receiveDamage(int amount) throws IllegalArgumentException {
+		lifePoints -= amount;
+		if(lifePoints - amount < 0)
+			lifePoints = 0;
+		else 
+			lifePoints -= amount;
 	}
 
 	@Override
@@ -120,32 +135,33 @@ public class Hero implements Attacker, Target {
 	}
 
 	@Override
-	public void dealDamage(Target target) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+	public void dealDamage(Target target, int amount) throws IllegalArgumentException {
+		target.receiveDamage(amount);
 		
 	}
 
 	@Override
 	public void disable() {
-		// TODO Auto-generated method stub
-		
+		isActive = false;
 	}
 
 	@Override
 	public void enable() {
-		// TODO Auto-generated method stub
+		isActive = true;
 		
 	}
 
 	@Override
 	public boolean getState() {
-		// TODO Auto-generated method stub
-		return false;
+		return isActive;
 	}
 
 	@Override
 	public void receiveHealthPoints(int amount) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		if(lifePoints + amount > maxLifePoints)
+			lifePoints = maxLifePoints;
+		else 
+			lifePoints += amount;
 		
 	}
 	
@@ -157,6 +173,12 @@ public class Hero implements Attacker, Target {
 	public boolean canPlay(Card card) {
 
 		return (card.getCristalCost() < this.cristals);
+	}
+
+	@Override
+	public void dealDamage(Target target) throws IllegalArgumentException {
+		this.dealDamage(target, 2);
+		
 	}
 
 }

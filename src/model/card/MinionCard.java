@@ -61,6 +61,12 @@ public class MinionCard extends Card implements Attacker, Target {
 	public void dealDamage(Target target) {
 		target.receiveDamage(this.damagePoints);
 	}
+	
+	@Override
+	public void dealDamage(Target target, int amount) throws IllegalArgumentException {
+		this.dealDamage(target);
+		
+	}
 
 	/**
 	 * Disable the card. it's state becomes inactive
@@ -141,5 +147,7 @@ public class MinionCard extends Card implements Attacker, Target {
 
 		return true;
 	}
+
+	
 
 }
