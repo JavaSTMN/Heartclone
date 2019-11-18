@@ -1,4 +1,11 @@
+
+package controller.card;
+/**
+ * 
+ */
+
 import java.util.ArrayList;
+
 
 /**
  * Class which contains cards. 

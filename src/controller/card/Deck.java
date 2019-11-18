@@ -1,3 +1,4 @@
+package controller.card;
 /**
  * 
  */
@@ -6,12 +7,12 @@
  * @author adrien
  *
  */
-public class DrawEffect extends Effect {
+public class Deck extends CardContainer {
 
 	/**
 	 * 
 	 */
-	public DrawEffect() {
+	public Deck() {
 		// TODO Auto-generated constructor stub
 	}
 

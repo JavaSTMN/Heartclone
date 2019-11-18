@@ -1,3 +1,4 @@
+package controller.effect;
 /**
  * 
  */
@@ -6,12 +7,12 @@
  * @author adrien
  *
  */
-public abstract class Effect {
+public class DealDamageEffect extends Effect {
 
 	/**
 	 * 
 	 */
-	public Effect() {
+	public DealDamageEffect() {
 		// TODO Auto-generated constructor stub
 	}
 

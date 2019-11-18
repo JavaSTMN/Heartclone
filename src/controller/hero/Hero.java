@@ -1,5 +1,14 @@
+package controller.hero;
+
 import java.awt.Image;
 import java.util.logging.Handler;
+
+import controller.Attacker;
+import controller.Target;
+import controller.card.Card;
+import controller.card.CardContainer;
+import controller.card.Deck;
+
 
 /**
  * 
@@ -9,6 +18,7 @@ import java.util.logging.Handler;
  * @author adrien
  *
  */
+
 public class Hero implements Attacker, Target {
 	
 	private int cristals;
@@ -33,6 +43,7 @@ public class Hero implements Attacker, Target {
 //		image
 	}
 	
+
 	/**
 	 * Hero put a card from his hand to the gameboard
 	 * @param playableCard
@@ -106,3 +117,5 @@ public class Hero implements Attacker, Target {
 	}
 
 }
+
+

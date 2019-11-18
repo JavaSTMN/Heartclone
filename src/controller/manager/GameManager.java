@@ -1,8 +1,14 @@
+package controller.manager;
+
 import java.sql.Date;
 import java.time.LocalDate;
 
 import javax.swing.SwingWorker;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane.IconifyAction;
+
+import controller.hero.Hero;
+
+
 
 /**
  * 

@@ -1,3 +1,4 @@
+package controller.effect;
 /**
  * 
  */
@@ -6,12 +7,12 @@
  * @author adrien
  *
  */
-public class SpellCard extends Card {
+public class HealEffect extends Effect {
 
 	/**
 	 * 
 	 */
-	public SpellCard() {
+	public HealEffect() {
 		// TODO Auto-generated constructor stub
 	}
 

@@ -1,3 +1,4 @@
+package controller.effect;
 /**
  * 
  */
@@ -6,12 +7,12 @@
  * @author adrien
  *
  */
-public class Deck extends CardContainer {
+public abstract class Effect {
 
 	/**
 	 * 
 	 */
-	public Deck() {
+	public Effect() {
 		// TODO Auto-generated constructor stub
 	}
 
