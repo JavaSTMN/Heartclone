@@ -67,7 +67,6 @@ public class Hero implements Attacker, Target {
 
 	@Override
 	public void receiveDamage(int nb) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
 		lifePoints -= nb;
 	}
 
@@ -98,6 +97,12 @@ public class Hero implements Attacker, Target {
 	public boolean getState() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public void receiveHealthPoints(int amount) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

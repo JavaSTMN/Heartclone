@@ -2,6 +2,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 
 import javax.swing.SwingWorker;
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.IconifyAction;
 
 /**
  * 
@@ -12,19 +13,30 @@ import javax.swing.SwingWorker;
  *
  */
 public class GameManager {
-
+	
 	private Hero opponents[];
 	private int turnCount;
 	private Date turnStartDate;
 	private long turnMaxSeconds;
 	
+	private static GameManager instanceGameManager = null;
 	
 	public GameManager()
 	{
+		
 		opponents = new Hero[2];
 		turnCount = 0;		
 		turnMaxSeconds = 30;
 		turnStartDate = Date.valueOf(LocalDate.now());
+	}
+	
+	
+	public static GameManager getInstance()
+	{
+		if(instanceGameManager == null)
+			instanceGameManager = new GameManager();
+		
+		return instanceGameManager;
 	}
 	
 	/**
