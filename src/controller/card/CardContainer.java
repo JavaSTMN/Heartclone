@@ -45,6 +45,17 @@ public class CardContainer {
 	}
 	
 	/**
+	 * Constructor without card limit
+	 * @param limit
+	 */
+	public CardContainer(int cardLimit) {
+		this.cards = new ArrayList<Card>();
+		
+		// unlimited number of cards
+		this.cardLimit = cardLimit;
+	}
+	
+	/**
 	 * Default constructor. Initialize cards with empty arraylist. Unlimited card number
 	 */
 	public CardContainer() {
@@ -61,7 +72,15 @@ public class CardContainer {
 
 	public int getCardLimit() {
 		return this.cardLimit;
-	}	
+	}
+	
+	public Card getCard(int index) {
+		return this.cards.get(index);
+	}
+	
+	public ArrayList<Card> getCards(){
+		return this.cards;
+	}
 	
 	
 	/**
@@ -69,7 +88,7 @@ public class CardContainer {
 	 * @param card 
 	 * @throws Exception if the limit have already been reached
 	 */
-	protected void addCard(Card card) throws Exception {
+	public void addCard(Card card) throws Exception {
 		// if the limit have been reached
 		if (this.cards.size() >= this.cardLimit)
 			throw new Exception("Can't add a new Card: the limit have been reached");
@@ -100,6 +119,14 @@ public class CardContainer {
 			throw new Exception("The specified index does not exist");
 		
 		this.cards.remove(index);
+	}
+	
+	public Card fetchCard(Card card) throws Exception {
+		Card cardToReturn = card;
+		
+		this.deleteCard(card);
+		
+		return cardToReturn;
 	}	
 	
 	public Card fetchCard(int index) throws Exception {
@@ -110,7 +137,7 @@ public class CardContainer {
 		this.cards.remove(index);
 		
 		return c;
-	}
+  }
 	
 }
 
