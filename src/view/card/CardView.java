@@ -63,12 +63,9 @@ public class CardView extends JPanel {
 		card.setIcon(cardImage);
 		
 		
-		
-		
 		this.add(card);
 		this.setSize(140, 250);
 		this.setVisible(true);
-		
 	}	
 
 }

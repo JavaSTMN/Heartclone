@@ -67,7 +67,15 @@ public class CardContainer {
 
 	public int getCardLimit() {
 		return this.cardLimit;
-	}	
+	}
+	
+	public Card getCard(int index) {
+		return this.cards.get(index);
+	}
+	
+	public ArrayList<Card> getCards(){
+		return this.cards;
+	}
 	
 	
 	/**
@@ -75,7 +83,7 @@ public class CardContainer {
 	 * @param card 
 	 * @throws Exception if the limit have already been reached
 	 */
-	protected void addCard(Card card) throws Exception {
+	public void addCard(Card card) throws Exception {
 		// if the limit have been reached
 		if (this.cards.size() >= this.cardLimit)
 			throw new Exception("Can't add a new Card: the limit have been reached");
@@ -106,6 +114,15 @@ public class CardContainer {
 			throw new Exception("The index specified does not exist");
 		
 		this.cards.remove(index);
-	}	
+	}
+	
+	public Card fetchCard(Card card) throws Exception {
+		Card cardToReturn = card;
+		
+		this.deleteCard(card);
+		
+		return cardToReturn;
+	}
+	
 }
 

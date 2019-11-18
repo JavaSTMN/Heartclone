@@ -1,6 +1,8 @@
 package controller.hero;
 
 import java.awt.Image;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Handler;
 
 import controller.Attacker;
@@ -8,6 +10,7 @@ import controller.Target;
 import controller.card.Card;
 import controller.card.CardContainer;
 import controller.card.Deck;
+import controller.card.MinionCard;
 
 
 /**
@@ -27,29 +30,59 @@ public class Hero implements Attacker, Target {
 	private Deck deck;
 	private CardContainer gameboard;
 	private CardContainer hand;
+	private CardContainer discard;
 	boolean isActive;
 	private Image image;
 	
 	
 	
 	public Hero() {
+		
+		
+//		ArrayList<Card> handCards = new ArrayList<Card>(Arrays.asList(
+//				new MinionCard(5,2,false),
+//				new MinionCard(3,3,false),
+//				new MinionCard(2,3,false)	
+//		));
+	
+		
 		cristals = 1;
-		deck = new Deck();
-		hand = new CardContainer();
-		gameboard = new CardContainer();
+		deck = new Deck();		
+		hand = new CardContainer(new ArrayList<Card>(), 10);
+		gameboard = new CardContainer(new ArrayList<Card>(), 7);
+		discard = new CardContainer(new ArrayList<Card>()); 
 		lifePoints = 30;
 		maxLifePoints = 30;
 		isActive = true;
 //		image
 	}
 	
+	public CardContainer getHand() {
+		return this.hand;
+	}
+	
+	public CardContainer getGameboard() {
+		return this.gameboard;
+	}
+	
+	
 
 	/**
 	 * Hero put a card from his hand to the gameboard
-	 * @param playableCard
+	 * @param playableCard: the card to play
+	 * @throws Exception if the player doesn't have enough cristals 
 	 */
-	public void play(Card playableCard)
+	public void play(Card playableCard) throws Exception
 	{
+		if(this.canPlay(playableCard)) {
+			// We fetch the card to play from the hand
+			playableCard = hand.fetchCard(playableCard);
+			
+			// We add it to the gameboard
+			gameboard.addCard(playableCard);
+		}else {
+			throw new Exception("Not enough cristals to play this card");
+		}
 		
 	}
 	
@@ -114,6 +147,19 @@ public class Hero implements Attacker, Target {
 	public void receiveHealthPoints(int amount) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	/**
+	 * Check if the player can play a card
+	 * @param card
+	 * @return true if the player can play the card, false if not
+	 */
+	public boolean canPlay(Card card) {
+		if(card.getCristalCost() > this.cristals) {
+			return false;
+		}
+		
+		return true;
 	}
 
 }
