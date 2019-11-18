@@ -1,5 +1,7 @@
-package controller.card;
+package model.card;
 import java.util.UUID;
+
+import controller.manager.GameManager;
 
 /**
  * 
@@ -15,6 +17,8 @@ public abstract class Card{
 	private String name;				// Card name
 	private String description;			// Card description
 	private int cristalCost;			// Amount of cristal needed to play the card
+	
+	private GameManager gameManager;
 
 
 	/**
@@ -22,6 +26,7 @@ public abstract class Card{
 	 */
 	public Card() {
 		this.id = UUID.randomUUID();
+		this.gameManager = GameManager.getInstance();
 	}
 	
 	public String getName(){
@@ -40,6 +45,11 @@ public abstract class Card{
 		this.description = value;
 	}
 	
+	public int getCristalCost() {
+		return this.cristalCost;
+	}
+	
+	
 	/**
 	 * check if two cards are the same
 	 * @param other Object: the object to compare with this one
@@ -50,9 +60,13 @@ public abstract class Card{
 			return false;
 		
 		if(other instanceof Card) {
-			return ((Card) other).id == this.id;
+			return ((Card) other).getId() == this.getId();
 		}
 		
 		return false;
+	}
+
+	public UUID getId() {
+		return id;
 	}
 }

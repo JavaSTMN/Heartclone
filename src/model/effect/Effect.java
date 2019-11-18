@@ -1,4 +1,4 @@
-package controller.effect;
+package model.effect;
 /**
  * 
  */
@@ -7,12 +7,12 @@ package controller.effect;
  * @author adrien
  *
  */
-public class DrawEffect extends Effect {
+public abstract class Effect {
 
 	/**
 	 * 
 	 */
-	public DrawEffect() {
+	public Effect() {
 		// TODO Auto-generated constructor stub
 	}
 

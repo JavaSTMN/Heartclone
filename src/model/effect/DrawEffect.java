@@ -1,4 +1,4 @@
-package controller.card;
+package model.effect;
 /**
  * 
  */
@@ -7,12 +7,12 @@ package controller.card;
  * @author adrien
  *
  */
-public class Deck extends CardContainer {
+public class DrawEffect extends Effect {
 
 	/**
 	 * 
 	 */
-	public Deck() {
+	public DrawEffect() {
 		// TODO Auto-generated constructor stub
 	}
 
