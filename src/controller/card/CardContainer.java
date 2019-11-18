@@ -1,9 +1,4 @@
-
 package controller.card;
-/**
- * 
- */
-
 import java.util.ArrayList;
 
 
@@ -40,10 +35,10 @@ public class CardContainer {
 	
 	/**
 	 * Constructor without card limit
-	 * @param cards
+	 * @param arrayList
 	 */
-	public CardContainer(ArrayList<Card> cards) {
-		this.cards = cards;
+	public CardContainer(ArrayList<Card> arrayList) {
+		this.cards = arrayList;
 		
 		// unlimited number of cards
 		this.cardLimit = Integer.MAX_VALUE;
@@ -70,8 +65,7 @@ public class CardContainer {
 		this.cardLimit = Integer.MAX_VALUE;
 	}
 	
-	
-	
+
 	public int getCardNumber() {
 		return this.cards.size();
 	}
@@ -122,7 +116,7 @@ public class CardContainer {
 	 */
 	protected void deleteCard(int index) throws Exception {
 		if (index < 0 || index >= this.cards.size())
-			throw new Exception("The index specified does not exist");
+			throw new Exception("The specified index does not exist");
 		
 		this.cards.remove(index);
 	}
@@ -133,7 +127,17 @@ public class CardContainer {
 		this.deleteCard(card);
 		
 		return cardToReturn;
-	}
+	}	
+	
+	public Card fetchCard(int index) throws Exception {
+		if (index < 0 || index >= this.cards.size())
+			throw new Exception("The specified index does not exist");
+		
+		Card c = this.cards.get(index);
+		this.cards.remove(index);
+		
+		return c;
+  }
 	
 }
 
