@@ -14,11 +14,13 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
+import controller.IObservable;
+import controller.IObserver;
 import model.card.Card;
 import service.StartDeck;
 import view.hand.card.CardView;
 
-public class HandView extends JPanel implements MouseListener {
+public class HandView extends JPanel implements MouseListener{
 	
 	ArrayList<CardView> cardViews; // array of all the cards the player has in is hands
 	
@@ -98,8 +100,6 @@ public class HandView extends JPanel implements MouseListener {
 		// TODO Auto-generated method stub
 		
 	}
-	
-	
 	
 
 }
