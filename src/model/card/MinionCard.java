@@ -1,7 +1,7 @@
 package model.card;
 
-import model.Attacker;
-import model.Target;
+import controller.Attacker;
+import controller.Target;
 
 /**
  * 

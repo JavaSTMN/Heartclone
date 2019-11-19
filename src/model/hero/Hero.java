@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Handler;
 
-import model.Attacker;
-import model.Target;
+import controller.Attacker;
+import controller.Target;
 import model.card.Card;
 import model.card.CardContainer;
 import model.card.Deck;
