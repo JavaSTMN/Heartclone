@@ -4,6 +4,7 @@ package model.card;
  * 
  */
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import controller.Observable;

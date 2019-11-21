@@ -118,6 +118,7 @@ public class CardView extends JPanel implements IObserver {
 	
 	public void setSelected(boolean value) {
 		this.selected = value;
+		this.card.setSelected(value);
 	}
 	
 	public boolean getSelected() {

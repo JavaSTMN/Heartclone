@@ -81,10 +81,10 @@ public class Hero implements Attacker, Target {
 	{
 		if(this.canPlay(playableCard)) {
 			// We fetch the card to play from the hand
-			playableCard = hand.fetchCard(playableCard);
+			playableCard = this.hand.fetchCard(playableCard);
 			
 			// We add it to the gameboard
-			gameboard.addCard(playableCard);
+			this.gameboard.addCard(playableCard);
 		}else {
 			throw new Exception("Not enough cristals to play this card");
 		}
