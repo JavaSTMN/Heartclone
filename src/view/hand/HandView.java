@@ -15,6 +15,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
+
 import controller.IObserver;
 import controller.Observable;
 import model.card.Card;
@@ -22,6 +23,7 @@ import model.card.CardContainer;
 import model.card.MinionCard;
 import model.hero.Hero;
 import view.hand.card.CardView;
+
 
 public class HandView extends JPanel implements MouseListener, IObserver {
 

@@ -46,9 +46,9 @@ public class GameView extends JFrame {
 	private JPanel boardPlayerOne;
 	private JPanel boardPlayerTwo;
 	
-	
-	
+  
 	public GameView() throws Exception{
+
 		super();
 		player1 = GameManager.getInstance().getHeros()[0];
 		player2 = GameManager.getInstance().getHeros()[1];
@@ -77,12 +77,14 @@ public class GameView extends JFrame {
 		this.gameView.add(centerPart, BorderLayout.CENTER);
 		centerPart.setLayout(new BoxLayout(centerPart, BoxLayout.PAGE_AXIS));
 		
+
 		this.boardPlayerTwo = new BoardView(player2);
 		
 		centerPart.add(this.boardPlayerTwo);
 		
 		
 		this.boardPlayerOne = new BoardView(player1);
+
 		centerPart.add(this.boardPlayerOne);
 			
 		// Main window setup

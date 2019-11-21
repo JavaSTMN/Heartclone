@@ -1,15 +1,18 @@
 package view.board;
 
 import java.awt.Color;
+
 import java.awt.Cursor;
 import java.awt.FlowLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 
+
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
+
 
 import controller.IObserver;
 import controller.Observable;
