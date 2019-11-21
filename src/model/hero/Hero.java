@@ -43,7 +43,7 @@ public class Hero implements Attacker, Target {
 	
 	public Hero() {
 		
-		cristals = 1;
+		cristals = 10;
 		deck = new Deck(StartDeck.getDeck());		
 		hand = new CardContainer(10);
 		gameboard = new CardContainer(7);
@@ -89,7 +89,12 @@ public class Hero implements Attacker, Target {
 			throw new Exception("Not enough cristals to play this card");
 		}
 		
-		this.observable.notifyObservers();
+		try {
+			this.observable.notifyObservers();
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		
 		
 	}
 	
@@ -183,7 +188,7 @@ public class Hero implements Attacker, Target {
 	 * @return true if the player can play the card, false if not
 	 */
 	public boolean canPlay(Card card) {
-		return (card.getCristalCost() < this.cristals);
+		return (card.getCristalCost() <= this.cristals);
 	}
 	
 	

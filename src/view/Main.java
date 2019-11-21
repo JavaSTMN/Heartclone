@@ -12,6 +12,7 @@ public class Main extends JFrame {
 		
 		GameView gameView = new GameView();
 		
+		
 	}
 
 }

@@ -73,7 +73,7 @@ public class HandView extends JPanel implements MouseListener, IObserver{
 			cardView.setBorder(border);
 			
 			try {
-				hero.draw();
+				hero.play(cardView.getCard());
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -146,6 +146,8 @@ public class HandView extends JPanel implements MouseListener, IObserver{
 			cardView.addMouseListener(this);
 			this.add(cardView);
 		}
+		
+		this.repaint();
 	}
 
 	@Override

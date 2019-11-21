@@ -77,12 +77,12 @@ public class GameView extends JFrame {
 		this.gameView.add(centerPart, BorderLayout.CENTER);
 		centerPart.setLayout(new BoxLayout(centerPart, BoxLayout.PAGE_AXIS));
 		
-		this.boardPlayerTwo = new BoardView();
+		this.boardPlayerTwo = new BoardView(player2);
 		
 		centerPart.add(this.boardPlayerTwo);
 		
 		
-		this.boardPlayerOne = new BoardView();
+		this.boardPlayerOne = new BoardView(player1);
 		centerPart.add(this.boardPlayerOne);
 			
 		// Main window setup
@@ -90,6 +90,7 @@ public class GameView extends JFrame {
 		this.window.setIconImage(image);
 		this.window.setSize(getMaximumSize());
 		this.window.setContentPane(this.gameView);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		this.window.setVisible(true);
 	}
