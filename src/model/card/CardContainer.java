@@ -82,7 +82,7 @@ public class CardContainer {
 	
 	
 	
-	public int getCardNumber() {
+	public Integer getCardNumber() {
 		return this.cards.size();
 	}
 
