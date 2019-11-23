@@ -44,7 +44,6 @@ public class GameManager {
 	}
 
 	public static GameManager getInstance() throws Exception {
-	 */
 		if (instanceGameManager == null)
 			synchronized (GameManager.class) {
 				if (instanceGameManager == null) {
@@ -59,7 +58,7 @@ public class GameManager {
 	 * Start a game
 	 * @param _opponents[2]
 	 */
-	public void startGame(Hero _opponents[])
+	public void startGame(Hero _opponents[]) {
 		for (int i = 0; i < 4; i++) {
 		try {
 			opponents = _opponents;
@@ -70,8 +69,8 @@ public class GameManager {
 			}
 			
 		startTurn();
-		}
 	}
+
 
 	/**
 	 * Finish a game
@@ -84,7 +83,7 @@ public class GameManager {
 	 * Start a turn
 	 * 
 	 */
-	public void startTurn()
+	public void startTurn() {
 		opponents[activeHero].regenerateCristals();
 		inTurn();
 	}
@@ -127,14 +126,14 @@ public class GameManager {
 	 * Finish turn, pass to another player or finish the game
 	 * 
 	 */
-	public void finishTurn()
+	public void finishTurn() {
 		if(!opponents[0].isAlive() || !opponents[1].isAlive())
 		{
 			finishGame();
 		}
 		
 		else 
-	 * 
+	 
 		{
 			switch (activeHero) {
 			case 0:

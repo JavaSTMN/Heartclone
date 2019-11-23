@@ -105,9 +105,11 @@ public class Hero implements Attacker, Target {
 	 * @throws Exception 
 	 */
 	public void draw() throws Exception {
+		try {
 		hand.addCard(deck.fetchCard(0));
 			hand.addCard(deck.drawCard());
 		//this.observable.notifyObservers();
+		}
 		catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -136,6 +138,7 @@ public class Hero implements Attacker, Target {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
 	}
 
 	@Override
