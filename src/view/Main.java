@@ -8,9 +8,10 @@ import javax.swing.JFrame;
 
 public class Main extends JFrame {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws Exception {
 		
 		GameView gameView = new GameView();
+		
 		
 	}
 

@@ -27,24 +27,35 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
+import controller.IObserver;
+import controller.Observable;
+import controller.manager.GameManager;
 import service.StretchIcon;
 import model.card.Card;
 import model.card.MinionCard;
 
-public class CardView extends JPanel {
+public class CardView extends JPanel implements IObserver {
 	
-	private BufferedImage cardBackground;
-	private BufferedImage cristalImage;
-	private BufferedImage lifeImage;
-	private BufferedImage attackImage;
+	// Card
+	private JLabel mana;
+	private JLabel image;
+	private JLabel description;
 	
+	// Minion Card Specific
+	private JLabel attack;
+	private JLabel health;
+	
+	// Config
 	private int panelWidth = 100;
 	private int panelHeight = 150;
 	
 	private boolean selected;
+	private Card card;
 
 	
 	public CardView(Card card) throws IOException {
+		this.card = card;
+		this.card.getObservable().subscribe(this);
 		
 		// JPanel configuration
 		this.setOpaque(false);
@@ -59,22 +70,22 @@ public class CardView extends JPanel {
 		this.setBorder(border);
 		
 		// Mana label
-		JLabel mana = new JLabel();
-		mana.setText("Mana: "+card.getCristalCost().toString());
-		mana.setFont(new Font(Font.DIALOG, Font.BOLD,  15));
-		mana.setForeground(Color.WHITE);
+		this.mana = new JLabel();
+		this.mana.setText("Mana: "+card.getCristalCost().toString());
+		this.mana.setFont(new Font(Font.DIALOG, Font.BOLD,  15));
+		this.mana.setForeground(Color.WHITE);
 		
 		// Image label
-		JLabel image = new JLabel();
+		this.image = new JLabel();
 		
 		Image resizedImage = new ImageIcon("assets/card-images/ex-001.jpg").getImage(); // transform it 
 		resizedImage = resizedImage.getScaledInstance(this.getWidth(), (int)(this.getHeight() * 0.3f), Image.SCALE_SMOOTH); // scale it the smooth way  
 		ImageIcon img = new ImageIcon(resizedImage);  // transform it back
-		image.setIcon(img);
+		this.image.setIcon(img);
 		
 		// Description Label
-		JLabel description = new JLabel();
-		description.setText(card.getDescription());
+		this.description = new JLabel();
+		this.description.setText(card.getDescription());
 		
 		
 		this.add(mana);
@@ -86,32 +97,54 @@ public class CardView extends JPanel {
 			MinionCard minionCard = (MinionCard)card;
 			
 			// Attack label
-			JLabel attack = new JLabel();
+			attack = new JLabel();
 			attack.setText("Atk: "+minionCard.getDamagePoints().toString());
 			this.add(attack);
 			attack.setFont(new Font(Font.DIALOG, Font.BOLD,  15));
 			attack.setForeground(Color.WHITE);
 			
 			// Health label
-			JLabel health = new JLabel();
+			health = new JLabel();
 			health.setText("Vie: "+minionCard.getHealthPoints().toString());
 			this.add(health);
 			health.setFont(new Font(Font.DIALOG, Font.BOLD,  15));
 			health.setForeground(Color.WHITE);
 			
 		}
-		
-		
+
 		this.setVisible(true);
 	}
 
 	
 	public void setSelected(boolean value) {
 		this.selected = value;
+		this.card.setSelected(value);
 	}
 	
 	public boolean getSelected() {
 		return this.selected;
+	}
+	
+	public Card getCard() {
+		return this.card;
+	}
+
+
+	@Override
+	public void update() {
+		System.out.println("update on CardView called");
+		if(this.card instanceof MinionCard) {
+			MinionCard card = (MinionCard)this.card;
+			this.health.setText("Vie: "+card.getHealthPoints().toString());
+			this.attack.setText("Atk: "+card.getDamagePoints().toString());
+		}
+		
+	}
+
+
+	@Override
+	public void setObservable(Observable obj) {
+		
 	}
 
 }

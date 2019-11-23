@@ -1,6 +1,7 @@
 package model.card;
 import java.util.UUID;
 
+import controller.Observable;
 import controller.manager.GameManager;
 
 /**
@@ -18,20 +19,21 @@ public abstract class Card{
 	private String description;			// Card description
 	private int cristalCost;			// Amount of cristal needed to play the card
 	
-	private GameManager gameManager;
-
+	private boolean selected = false;
+	
+	private Observable observable;
 
 	/**
 	 * Default constructor
 	 */
 	public Card() {
 		this.id = UUID.randomUUID();
-		this.gameManager = GameManager.getInstance();
+		this.observable = new Observable();
 	}
 	
 	public Card(String name, String description, int cristalCost) {
 		this.id = UUID.randomUUID();
-		this.gameManager = GameManager.getInstance();
+		this.observable = new Observable();
 		
 		this.name = name;
 		this.description = description;
@@ -57,6 +59,18 @@ public abstract class Card{
 	
 	public Integer getCristalCost() {
 		return this.cristalCost;
+	}
+	
+	public Observable getObservable() {
+		return this.observable;
+	}
+	
+	public boolean getSelected() {
+		return this.selected;
+	}
+	
+	public void setSelected(boolean value) {
+		this.selected = value;
 	}
 	
 	

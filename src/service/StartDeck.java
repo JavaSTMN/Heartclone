@@ -15,8 +15,8 @@ public class StartDeck {
 	
 	public static ArrayList<Card> getDeck() {
 		deck = new ArrayList<Card>(Arrays.asList(
-				new MinionCard(3, 2, false, "Clerc du soleil brisé", "", 3),
-				new MinionCard(3, 2, false, "Clerc du soleil brisé", "", 3),
+				new MinionCard(3, 2, false, "Clerc du soleil brisé", "blablabla", 3),
+				new MinionCard(3, 2, false, "Clerc du soleil brisé", "blablabla", 3),
 				new MinionCard(4, 5, false, "Yeti noroit", "", 4),
 				new MinionCard(4, 5, false, "Yeti noroit", "", 4),
 				new MinionCard(1, 1, false, "Loup des bois", "", 1),

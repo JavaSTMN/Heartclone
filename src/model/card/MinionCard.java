@@ -1,7 +1,10 @@
 package model.card;
 
-import model.Attacker;
-import model.Target;
+import java.io.IOException;
+
+import controller.Attacker;
+import controller.Target;
+import controller.manager.GameManager;
 
 /**
  * 
@@ -115,9 +118,13 @@ public class MinionCard extends Card implements Attacker, Target {
 
 		if (!isAlive()) {
 			System.out.println("La carte a été détruite");
-			//TODO: Send the card to the Discard
-			// Solution: If the game manager contains the Discard instance and we have a singleton pattern
-			// we can use the the addCard of Discard through the GameManager to send the card to the Discard
+			
+		}
+		try {
+			this.getObservable().notifyObservers();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -145,7 +152,7 @@ public class MinionCard extends Card implements Attacker, Target {
 	 * @return true if the minion is alive, false if not
 	 */
 	public boolean isAlive() {
-		if (this.healthPoints < 0)
+		if (this.healthPoints <= 0)
 			return false;
 
 		return true;

@@ -1,16 +1,21 @@
 package model.hero;
 
 import java.awt.Image;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Observer;
 import java.util.logging.Handler;
 
-import model.Attacker;
-import model.Target;
+import controller.Attacker;
+import controller.IObserver;
+import controller.Observable;
+import controller.Target;
 import model.card.Card;
 import model.card.CardContainer;
 import model.card.Deck;
 import model.card.MinionCard;
+import service.StartDeck;
 
 
 /**
@@ -24,6 +29,8 @@ import model.card.MinionCard;
 
 public class Hero implements Attacker, Target {
 	
+	private Observable observable;
+	
 	private int cristals;
 	private int lifePoints;
 	private int maxLifePoints;
@@ -34,20 +41,10 @@ public class Hero implements Attacker, Target {
 	boolean isActive;
 	private Image image;
 	
-	
-	
 	public Hero() {
 		
-		
-//		ArrayList<Card> handCards = new ArrayList<Card>(Arrays.asList(
-//				new MinionCard(5,2,false),
-//				new MinionCard(3,3,false),
-//				new MinionCard(2,3,false)	
-//		));
-	
-		
-		cristals = 1;
-		deck = new Deck(new ArrayList<Card>());		
+		cristals = 10;
+		deck = new Deck(StartDeck.getDeck());		
 		hand = new CardContainer(10);
 		gameboard = new CardContainer(7);
 		discard = new CardContainer(); 
@@ -65,6 +62,14 @@ public class Hero implements Attacker, Target {
 		return this.gameboard;
 	}
 	
+	public Deck getDeck() {
+		return this.deck;
+	}
+	
+	public Observable getObservable() {
+		return this.observable;
+	}
+	
 	
 
 	/**
@@ -76,21 +81,31 @@ public class Hero implements Attacker, Target {
 	{
 		if(this.canPlay(playableCard)) {
 			// We fetch the card to play from the hand
-			playableCard = hand.fetchCard(playableCard);
+			playableCard = this.hand.fetchCard(playableCard);
 			
 			// We add it to the gameboard
-			gameboard.addCard(playableCard);
+			this.gameboard.addCard(playableCard);
 		}else {
 			throw new Exception("Not enough cristals to play this card");
 		}
+		
+		try {
+			this.observable.notifyObservers();
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		
 		
 	}
 	
 	/**
 	 * Hero draw a card from his deck to his hand
+	 * @throws Exception 
 	 */
-	public void draw() {
+	public void draw() throws Exception {
+		hand.addCard(deck.fetchCard(0));
 		
+		//this.observable.notifyObservers();
 	}
 	
 	/**
@@ -107,11 +122,23 @@ public class Hero implements Attacker, Target {
 	 */
 	public void useCristals(int nbCristalsUsed) {
 		cristals -= nbCristalsUsed;
+		try {
+			this.observable.notifyObservers();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void receiveDamage(int nb) throws IllegalArgumentException {
 		lifePoints -= nb;
+		try {
+			this.observable.notifyObservers();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -146,6 +173,12 @@ public class Hero implements Attacker, Target {
 	@Override
 	public void receiveHealthPoints(int amount) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
+		try {
+			this.observable.notifyObservers();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -155,9 +188,10 @@ public class Hero implements Attacker, Target {
 	 * @return true if the player can play the card, false if not
 	 */
 	public boolean canPlay(Card card) {
-
-		return (card.getCristalCost() < this.cristals);
+		return (card.getCristalCost() <= this.cristals);
 	}
+	
+	
 
 }
 

@@ -24,9 +24,15 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import controller.manager.GameManager;
 import model.card.Card;
+import model.hero.Hero;
 
 public class GameView extends JFrame {
+	
+	
+	private Hero player1;
+	private Hero player2;
 	
 	private JFrame window;
 	private JPanel gameView;
@@ -40,8 +46,13 @@ public class GameView extends JFrame {
 	private JPanel boardPlayerOne;
 	private JPanel boardPlayerTwo;
 	
-	public GameView() throws IOException{
+  
+	public GameView() throws Exception{
+
 		super();
+		player1 = GameManager.getInstance().getHeros()[0];
+		player2 = GameManager.getInstance().getHeros()[1];
+		GameManager.getInstance().startGame();
 
 		Image image = ImageFetcher.findImage("assets/icon.png", this);
 		// Main window
@@ -52,9 +63,12 @@ public class GameView extends JFrame {
 		this.gameView.setBackground(Color.DARK_GRAY);
 		this.gameView.setLayout(new BorderLayout());
 		
+
 		// Hands
-		this.handPlayerOne = new HandView();			
-		this.handPlayerTwo = new HandView();
+		this.handPlayerOne = new HandView(player1);
+		this.handPlayerTwo = new HandView(player2);
+		
+		
 		this.gameView.add(handPlayerOne, BorderLayout.PAGE_END);
 		this.gameView.add(handPlayerTwo, BorderLayout.PAGE_START);
 		
@@ -63,10 +77,14 @@ public class GameView extends JFrame {
 		this.gameView.add(centerPart, BorderLayout.CENTER);
 		centerPart.setLayout(new BoxLayout(centerPart, BoxLayout.PAGE_AXIS));
 		
-		this.boardPlayerTwo = new BoardView();
+
+		this.boardPlayerTwo = new BoardView(player2);
+		
 		centerPart.add(this.boardPlayerTwo);
 		
-		this.boardPlayerOne = new BoardView();
+		
+		this.boardPlayerOne = new BoardView(player1);
+
 		centerPart.add(this.boardPlayerOne);
 			
 		// Main window setup
@@ -74,6 +92,7 @@ public class GameView extends JFrame {
 		this.window.setIconImage(image);
 		this.window.setSize(getMaximumSize());
 		this.window.setContentPane(this.gameView);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		this.window.setVisible(true);
 	}
