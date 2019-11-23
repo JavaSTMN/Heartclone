@@ -87,7 +87,7 @@ public class HandView extends JPanel implements MouseListener, IObserver {
 		// We select the card clicked by the player
 		if (e.getSource() instanceof CardView) {
 			CardView cardView = (CardView) (e.getSource());
-			Border border = BorderFactory.createLineBorder(Color.RED, 4);
+			Border border = BorderFactory.createLineBorder(Color.ORANGE, 4);
 			cardView.setSelected(true);
 			cardView.setBorder(border);
 		}
@@ -116,7 +116,7 @@ public class HandView extends JPanel implements MouseListener, IObserver {
 			Border border;
 
 			if (cardView.getSelected())
-				border = BorderFactory.createLineBorder(Color.RED, 4);
+				border = BorderFactory.createLineBorder(Color.ORANGE, 4);
 			else
 				border = BorderFactory.createLineBorder(Color.GRAY, 2);
 
