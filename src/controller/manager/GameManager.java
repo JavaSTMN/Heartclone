@@ -136,5 +136,12 @@ public class GameManager {
 		else
 			return this.opponents[0];
 	}
+	
+	public boolean isPlayerOne(Hero hero) {
+		if(hero == this.opponents[1])
+			return false;
+		else
+			return true;
+	}
 
 }

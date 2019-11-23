@@ -79,6 +79,10 @@ public class Hero implements Attacker, Target {
 		this.isTurn = value;
 	}
 	
+	public Integer getLifePoints() {
+		return this.lifePoints;
+	}
+	
 	
 
 	/**
