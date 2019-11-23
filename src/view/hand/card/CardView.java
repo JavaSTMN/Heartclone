@@ -150,7 +150,15 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		System.out.println("Click event called");
+
+		if(e.getSource() instanceof CardView) {
+			CardView cardView = (CardView)e.getSource();
+			Card card = cardView.getCard();
+			if(card instanceof MinionCard) {
+				MinionCard mCard = (MinionCard)card;
+				mCard.receiveDamage(1);
+			}
+		}
 		
 	}
 

@@ -191,6 +191,15 @@ public class Hero implements Attacker, Target {
 		return (card.getCristalCost() <= this.cristals);
 	}
 	
+	public void discard(Card card) {
+		try {
+			this.discard.addCard(this.gameboard.fetchCard(card));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	
 
 }
