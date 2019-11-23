@@ -40,6 +40,7 @@ public class Hero implements Attacker, Target {
 	private CardContainer discard;
 	boolean isActive;
 	private Image image;
+	private boolean isTurn = false;
 	
 	public Hero() {
 		
@@ -68,6 +69,14 @@ public class Hero implements Attacker, Target {
 	
 	public Observable getObservable() {
 		return this.observable;
+	}
+	
+	public boolean getIsTurn() {
+		return this.isTurn;
+	}
+	
+	public void setIsTurn(boolean value) {
+		this.isTurn = value;
 	}
 	
 	

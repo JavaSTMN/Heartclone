@@ -20,6 +20,7 @@ public abstract class Card{
 	private int cristalCost;			// Amount of cristal needed to play the card
 	
 	private boolean selected = false;
+	private boolean selectedToAttack = false;
 	
 	private Observable observable;
 
@@ -71,6 +72,14 @@ public abstract class Card{
 	
 	public void setSelected(boolean value) {
 		this.selected = value;
+	}
+	
+	public boolean getSelectedToAttack() {
+		return this.selectedToAttack;
+	}
+	
+	public void setSelectedToAttack(boolean value) {
+		this.selectedToAttack = value;
 	}
 	
 	

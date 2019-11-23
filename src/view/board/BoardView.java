@@ -36,7 +36,7 @@ public class BoardView extends JPanel implements IObserver, MouseListener {
 		
 		for(Card card: this.hero.getGameboard().getCards()) {
 			try {
-				this.add(new CardView(card));
+				this.add(new CardView(card, this.hero));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -53,7 +53,7 @@ public class BoardView extends JPanel implements IObserver, MouseListener {
 		// We recreate the card Views with the updated data
 		for(Card card: this.hero.getGameboard().getCards()) {
 			try {
-				CardView cardView = new CardView(card);
+				CardView cardView = new CardView(card, this.hero);
 				cardView.addMouseListener(cardView);
 				this.add(cardView);
 				
@@ -79,15 +79,18 @@ public class BoardView extends JPanel implements IObserver, MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// If the player click his board with a card selected, he plays it
-		for(Card card: this.hero.getHand().getCards()) {
-			if(card.getSelected()) {
-				try {
-					this.hero.play(card);
-				} catch (Exception e1) {
-					e1.getMessage();
+		if(e.getSource() instanceof BoardView) {
+			for(Card card: this.hero.getHand().getCards()) {
+				if(card.getSelected()) {
+					try {
+						this.hero.play(card);
+					} catch (Exception e1) {
+						e1.getMessage();
+					}
 				}
 			}
 		}
+		
 		
 	}
 

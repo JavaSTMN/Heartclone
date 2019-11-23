@@ -55,7 +55,7 @@ public class HandView extends JPanel implements MouseListener, IObserver {
 		
 		// We create the CardViews from the card models
 		for (Card card : hero.getHand().getCards()) {
-			cardViews.add(new CardView(card));
+			cardViews.add(new CardView(card, this.hero));
 		}
 
 		// Instantiation of the card views
@@ -154,7 +154,7 @@ public class HandView extends JPanel implements MouseListener, IObserver {
 		// We add all the cards with the modifications
 		for (Card card : this.hero.getHand().getCards()) {
 			try {
-				cardViews.add(new CardView(card));
+				cardViews.add(new CardView(card, this.hero));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
