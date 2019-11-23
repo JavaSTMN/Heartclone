@@ -41,6 +41,7 @@ public class Hero implements Attacker, Target {
 	boolean isActive;
 	private Image image;
 	private boolean isTurn = false;
+	private boolean spellSelected = false;
 	
 	public Hero() {
 		
@@ -53,6 +54,8 @@ public class Hero implements Attacker, Target {
 		maxLifePoints = 30;
 		isActive = true;
 //		image
+		
+		this.observable = new Observable();
 	}
 	
 	public CardContainer getHand() {
@@ -83,6 +86,33 @@ public class Hero implements Attacker, Target {
 		return this.lifePoints;
 	}
 	
+	public boolean getIsActive() {
+		return this.isActive;
+	}
+	
+	public void setIsActive(boolean value) {
+		this.isActive = value;
+		try {
+			this.observable.notifyObservers();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public boolean getSpellSelected() {
+		return this.spellSelected;
+	}
+	
+	public void setSpellSelected(boolean value) {
+		this.spellSelected = value;
+		try {
+			this.observable.notifyObservers();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 
 	/**
@@ -124,9 +154,11 @@ public class Hero implements Attacker, Target {
 	/**
 	 * Hero use his special spell which cost him 2 cristals
 	 */
-	public void useSpell() 
+	public void useSpell(Target target) 
 	{
 		useCristals(2);
+		target.receiveDamage(2);
+		this.setSpellSelected(false);
 	}
 	
 	/**
@@ -202,6 +234,13 @@ public class Hero implements Attacker, Target {
 	 */
 	public boolean canPlay(Card card) {
 		return (card.getCristalCost() <= this.cristals);
+	}
+	
+	public boolean canUseSpell() {
+		if(this.cristals < 2) 
+			return false;
+		
+		return true;
 	}
 	
 	public void discard(Card card) {

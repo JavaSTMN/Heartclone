@@ -94,6 +94,8 @@ public class HandView extends JPanel implements MouseListener, IObserver {
 			card.setSelectedToAttack(false);
 		}
 		
+		this.hero.setSpellSelected(false);
+		
 		// We select the card clicked by the player
 		if (e.getSource() instanceof CardView) {
 			CardView cardView = (CardView) (e.getSource());
