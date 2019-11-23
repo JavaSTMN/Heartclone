@@ -81,6 +81,14 @@ public class GameManager {
 	public void startTurn(Hero hero) {
 		turnStartDate = Date.valueOf(LocalDate.now());
 		inTurn(hero);
+		
+		// the hero tries to draw a card at the beginning of his turn
+		try {
+			hero.draw();
+		} catch (Exception e) {
+			// impossible to draw a card => suffer fatigue
+			hero.sufferFatigue();
+		}
 	}
 
 	/**

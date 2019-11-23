@@ -51,6 +51,8 @@ public class Hero implements Attacker, Target {
 		lifePoints = 30;
 		maxLifePoints = 30;
 		isActive = true;
+		
+		observable = new Observable();
 //		image
 	}
 	
@@ -104,8 +106,7 @@ public class Hero implements Attacker, Target {
 	 */
 	public void draw() throws Exception {
 		hand.addCard(deck.fetchCard(0));
-		
-		//this.observable.notifyObservers();
+		observable.notifyObservers();
 	}
 	
 	/**
@@ -141,6 +142,15 @@ public class Hero implements Attacker, Target {
 		}
 	}
 
+	
+	/**
+	 * Makes the hero loose 2 healthpoints
+	 */
+	public void sufferFatigue() {
+		this.receiveDamage(2);
+	}
+		
+	
 	@Override
 	public boolean isAlive() {
 		return(lifePoints>0);
