@@ -34,7 +34,7 @@ import service.StretchIcon;
 import model.card.Card;
 import model.card.MinionCard;
 
-public class CardView extends JPanel implements IObserver {
+public class CardView extends JPanel implements IObserver, MouseListener {
 	
 	// Card
 	private JLabel mana;
@@ -144,6 +144,41 @@ public class CardView extends JPanel implements IObserver {
 
 	@Override
 	public void setObservable(Observable obj) {
+		
+	}
+
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		System.out.println("Click event called");
+		
+	}
+
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 
