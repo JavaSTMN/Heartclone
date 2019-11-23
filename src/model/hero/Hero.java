@@ -183,12 +183,19 @@ public class Hero implements Attacker, Target {
 		
 	}
 	
+	/**
+	 * Regenerate all cristals
+	 */
 	public void regenerateCristals()
 	{
 		cristalsRegeneration += 1;
 		cristals = cristalsRegeneration;
 	}
 	
+	/**
+	 * Add cristals to the hero reserve
+	 * @param amount
+	 */
 	public void addCristals(int amount)
 	{
 		cristals += amount;
