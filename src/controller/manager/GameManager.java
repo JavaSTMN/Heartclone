@@ -58,15 +58,17 @@ public class GameManager {
 	 * Start a game
 	 * @param _opponents[2]
 	 */
-	public void startGame(Hero _opponents[]) {
+	public void startGame() {
 		for (int i = 0; i < 4; i++) {
-		try {
-			opponents = _opponents;
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		
+			try {
+//				opponents = _opponents;
+				opponents[0].draw();
+				opponents[1].draw();
+			} catch (Exception e) {
+				System.out.println(e);
 			}
+		
+		}
 			
 		startTurn();
 	}
@@ -149,5 +151,9 @@ public class GameManager {
 			
 			startTurn();
 		}
+	}
+	
+	public Hero[] getHeros() {
+		return this.opponents;
 	}
 }
