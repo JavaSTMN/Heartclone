@@ -45,8 +45,9 @@ public class HandView extends JPanel implements MouseListener, IObserver {
 		cardContainer.setLayout(new FlowLayout(FlowLayout.CENTER));
 		cardContainer.setBackground(Color.DARK_GRAY);
 		
+		
 		// Widget setup
-		this.setLayout(new GridLayout(1,3));
+		this.setLayout(new FlowLayout());
 		this.setBackground(Color.DARK_GRAY);
 
 		cardViews = new ArrayList<CardView>();
@@ -66,7 +67,7 @@ public class HandView extends JPanel implements MouseListener, IObserver {
 		JPanel filler = new JPanel();
 		filler.setBackground(Color.DARK_GRAY);
 		
-		this.add(new DeckView(this.hero.getHand()));
+		this.add(new DeckView(this.hero.getDeck()));
 		this.add(cardContainer);
 		this.add(filler);
 	}
@@ -138,6 +139,12 @@ public class HandView extends JPanel implements MouseListener, IObserver {
 
 	@Override
 	public void update() {
+		try {
+			this.hero.draw();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		cardViews = new ArrayList<CardView>();
 
 		// We remove all the cards
@@ -147,7 +154,7 @@ public class HandView extends JPanel implements MouseListener, IObserver {
 		this.cardContainer.setLayout(new FlowLayout(FlowLayout.CENTER));
 		cardContainer.setBackground(Color.DARK_GRAY);
 		
-		this.setLayout(new GridLayout(1,3));
+		this.setLayout(new FlowLayout());
 		this.setBackground(Color.DARK_GRAY);
 		
 		// We add all the cards with the modifications
@@ -169,7 +176,7 @@ public class HandView extends JPanel implements MouseListener, IObserver {
 		JPanel filler = new JPanel();
 		filler.setBackground(Color.DARK_GRAY);
 		
-		this.add(new DeckView(this.hero.getHand()));
+		this.add(new DeckView(this.hero.getDeck()));
 		this.add(cardContainer);
 		this.add(filler);
 		this.repaint();
