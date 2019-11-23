@@ -8,9 +8,8 @@ import java.util.TimerTask;
 import javax.swing.SwingWorker;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane.IconifyAction;
 
+import controller.Observable;
 import model.hero.Hero;
-
-
 
 /**
  * 
@@ -21,73 +20,78 @@ import model.hero.Hero;
  *
  */
 public class GameManager {
-	
+
 	private Hero opponents[];
 	private int activeHero;
 	private int turnCount;
 	private Date turnStartDate;
 	private long turnMaxSeconds;
-	
+
 	private static GameManager instanceGameManager = null;
-	
-	public GameManager()
-	{
+
+	public GameManager() throws Exception {
 		
 		opponents = new Hero[2];
 		activeHero = 0;
-		turnCount = 0;		
+		opponents[0] = new Hero();
+		opponents[1] = new Hero();
+		
+		turnCount = 0;
 		turnMaxSeconds = 30;
 		turnStartDate = Date.valueOf(LocalDate.now());
+
+
 	}
-	
-	
-	/**
-	 * singleton
-	 * @return
+
+	public static GameManager getInstance() throws Exception {
 	 */
-	public static GameManager getInstance()
-	{
-		if(instanceGameManager == null)
-			instanceGameManager = new GameManager();
-		
+		if (instanceGameManager == null)
+			synchronized (GameManager.class) {
+				if (instanceGameManager == null) {
+					instanceGameManager = new GameManager();
+				}
+			}
+
 		return instanceGameManager;
 	}
-	
+
 	/**
 	 * Start a game
 	 * @param _opponents[2]
 	 */
 	public void startGame(Hero _opponents[])
-	{
+		for (int i = 0; i < 4; i++) {
 		try {
 			opponents = _opponents;
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 		
-		
+			}
+			
 		startTurn();
+		}
 	}
-	
+
 	/**
 	 * Finish a game
 	 */
-	public void finishGame()
-	{
-		
+	public void finishGame() {
+
 	}
-	
+
 	/**
 	 * Start a turn
+	 * 
 	 */
 	public void startTurn()
-	{
 		opponents[activeHero].regenerateCristals();
 		inTurn();
 	}
-	
+
 	/**
 	 * Timer running while a hero is playing
+	 * 
 	 */
 	public void inTurn()
 	{
@@ -99,9 +103,8 @@ public class GameManager {
 				
 			}
 		}, turnMaxSeconds*1000);
-		
+
 		finishTurn();
-		
 		
 		
 //		SwingWorker sw = new SwingWorker()
@@ -119,18 +122,19 @@ public class GameManager {
 //		};
 //		sw.execute();
 	}
-	
+
 	/**
 	 * Finish turn, pass to another player or finish the game
+	 * 
 	 */
 	public void finishTurn()
-	{
 		if(!opponents[0].isAlive() || !opponents[1].isAlive())
 		{
 			finishGame();
 		}
 		
 		else 
+	 * 
 		{
 			switch (activeHero) {
 			case 0:
