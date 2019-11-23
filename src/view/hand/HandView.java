@@ -136,15 +136,9 @@ public class HandView extends JPanel implements MouseListener, IObserver {
 		// TODO Auto-generated method stub
 
 	}
-
+////this.hero.draw();
 	@Override
 	public void update() {
-		try {
-			this.hero.draw();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 		cardViews = new ArrayList<CardView>();
 
 		// We remove all the cards
