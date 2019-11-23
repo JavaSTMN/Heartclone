@@ -80,19 +80,20 @@ public class HandView extends JPanel implements MouseListener, IObserver {
 	public void mouseClicked(MouseEvent e) {
 		// We deselect all the cards
 		for (CardView cardView : this.cardViews) {
-			Border border = BorderFactory.createLineBorder(Color.GRAY, 2);
 			cardView.setSelected(false);
-			cardView.setBorder(border);
+			cardView.setSelectedToAttack(false);
+		}
+		
+		//We deselect all the cards on the gameboard
+		for (Card card: this.hero.getGameboard().getCards()) {
+			card.setSelectedToAttack(false);
 		}
 		
 		// We select the card clicked by the player
 		if (e.getSource() instanceof CardView) {
 			CardView cardView = (CardView) (e.getSource());
-			Border border = BorderFactory.createLineBorder(Color.ORANGE, 4);
 			cardView.setSelected(true);
-			cardView.setBorder(border);
 		}
-		
 	}
 
 	@Override
@@ -123,7 +124,6 @@ public class HandView extends JPanel implements MouseListener, IObserver {
 
 			cardView.setBorder(border);
 		}
-		
 	}
 
 	@Override

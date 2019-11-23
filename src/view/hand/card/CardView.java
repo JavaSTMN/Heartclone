@@ -51,6 +51,8 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 	private int panelHeight = 150;
 	
 	private boolean selected;
+	private boolean selectedToAttack;
+	
 	private Card card;
 	private Hero hero;
 
@@ -64,6 +66,7 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 		// JPanel configuration
 		this.setOpaque(false);
 		this.selected = false;
+		this.selectedToAttack = false;
 		this.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		this.setSize(panelWidth, panelHeight);
@@ -72,6 +75,16 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 		// Default card border
 		Border border = BorderFactory.createLineBorder(Color.GRAY, 2);
 		this.setBorder(border);
+		
+		if(this.card.getSelected()) {
+			border = BorderFactory.createLineBorder(Color.ORANGE, 4);
+			this.setBorder(border);
+		}
+		
+		if(this.card.getSelectedToAttack()) {
+			border = BorderFactory.createLineBorder(Color.ORANGE, 4);
+			this.setBorder(border);
+		}
 		
 		// Mana label
 		this.mana = new JLabel();
@@ -115,6 +128,10 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 			health.setForeground(Color.WHITE);
 			
 		}
+		
+		if(this.card.getSelectedToAttack()) {
+			
+		}
 
 		this.setVisible(true);
 	}
@@ -124,6 +141,12 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 		this.selected = value;
 		this.card.setSelected(value);
 	}
+	
+	public void setSelectedToAttack(boolean value) {
+		this.selectedToAttack = value;
+		this.card.setSelectedToAttack(value);
+	}
+	
 	
 	public boolean getSelected() {
 		return this.selected;
@@ -136,12 +159,20 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 
 	@Override
 	public void update() {
-		System.out.println("update on CardView called");
 		if(this.card instanceof MinionCard) {
 			MinionCard card = (MinionCard)this.card;
 			this.health.setText("Vie: "+card.getHealthPoints().toString());
 			this.attack.setText("Atk: "+card.getDamagePoints().toString());
 		}
+		
+		Border border = BorderFactory.createLineBorder(Color.GRAY, 2);
+		this.setBorder(border);
+		
+		if(this.card.getSelected() || this.card.getSelectedToAttack() ) {
+			border = BorderFactory.createLineBorder(Color.ORANGE, 4);
+			this.setBorder(border);
+		}
+		
 	}
 
 
@@ -162,17 +193,16 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 				for(Card card : hero.getGameboard().getCards()) {
 					card.setSelectedToAttack(false);
 					card.setSelected(false);
-					
 				}
 				for(Card card : hero.getHand().getCards()) {
 					card.setSelected(false);
-					Border border = BorderFactory.createLineBorder(Color.GRAY, 2);
-					this.setBorder(border);
+					//Border border = BorderFactory.createLineBorder(Color.GRAY, 2);
+					//this.setBorder(border);
 				}
 				
 				card.setSelectedToAttack(true);
-				Border border = BorderFactory.createLineBorder(Color.ORANGE, 4);
-				this.setBorder(border);
+				//Border border = BorderFactory.createLineBorder(Color.ORANGE, 4);
+				//this.setBorder(border);
 			}
 			
 		}else{
@@ -187,6 +217,7 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 							if(attackerCard instanceof MinionCard) {
 								MinionCard mAttackerCard = (MinionCard)attackerCard;
 								mCard.receiveDamage(mAttackerCard.getDamagePoints());
+								mAttackerCard.setSelectedToAttack(false);
 							}
 						}
 					}
@@ -197,15 +228,7 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 				e1.printStackTrace();
 			}	
 			
-		}
-//		if(e.getSource() instanceof CardView) {
-//			CardView cardView = (CardView)e.getSource();
-//			Card card = cardView.getCard();
-//			if(card instanceof MinionCard) {
-//				MinionCard mCard = (MinionCard)card;
-//				mCard.receiveDamage(1);
-//			}
-//		}	
+		}	
 	}
 
 

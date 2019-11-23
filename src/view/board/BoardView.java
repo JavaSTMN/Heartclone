@@ -84,6 +84,7 @@ public class BoardView extends JPanel implements IObserver, MouseListener {
 				if(card.getSelected()) {
 					try {
 						this.hero.play(card);
+						card.setSelected(false);
 					} catch (Exception e1) {
 						e1.getMessage();
 					}
