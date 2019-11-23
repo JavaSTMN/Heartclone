@@ -128,7 +128,7 @@ public class Hero implements Attacker, Target {
 	 * Substract cristals from the hero
 	 * @param nbCristalsUsed
 	 */
-	public Boolean useCristals(int nbCristalsUsed) {
+	public void useCristals(int nbCristalsUsed) {
 		if(nbCristalsUsed <= cristals)
 		{
 			cristals -= nbCristalsUsed;

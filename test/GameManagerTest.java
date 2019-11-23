@@ -14,7 +14,7 @@ class GameManagerTest {
 	@Test
 	void startTurnTest()
 	{
-		GameManager gm = new GameManager();
+//		GameManager gm = new GameManager();
 //		gm.startTurn(new Hero());
 	}
 
