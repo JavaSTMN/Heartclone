@@ -90,6 +90,19 @@ public class Hero implements Attacker, Target {
 		return this.isActive;
 	}
 	
+	public Integer getCristals() {
+		return this.cristals;
+	}
+	
+	public void setCristals(int value) {
+		this.cristals = value;
+		try {
+			this.observable.notifyObservers();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void setIsActive(boolean value) {
 		this.isActive = value;
 		try {

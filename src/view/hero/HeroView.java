@@ -27,6 +27,7 @@ public class HeroView extends JPanel implements MouseListener, IObserver {
 	private Hero hero;
 
 	private JLabel heroHealth;
+	private JLabel heroCristals;
 	private JPanel spellButton;
 
 	private boolean selected;
@@ -46,22 +47,34 @@ public class HeroView extends JPanel implements MouseListener, IObserver {
 		containerButton.setLayout(new FlowLayout(FlowLayout.CENTER));
 		containerButton.setBackground(Color.DARK_GRAY);
 		containerButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		
+		JPanel containerCristals = new JPanel();
+		containerCristals.setLayout(new FlowLayout(FlowLayout.CENTER));
+		containerCristals.setBackground(Color.DARK_GRAY);
+		
 
 		heroHealth = new JLabel("VIE: " + this.hero.getLifePoints().toString());
 		heroHealth.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
 		heroHealth.setForeground(Color.WHITE);
+		
+		heroCristals = new JLabel("CRISTALS: "+ this.hero.getCristals()+"/10");
+		heroCristals.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
+		heroCristals.setForeground(Color.WHITE);
 
 		spellButton = new JPanel();
 		spellButton.add(new JLabel("Utiliser Sort"));
 
 		containerLabel.add(heroHealth);
 		containerButton.add(spellButton);
+		containerCristals.add(heroCristals);
 
 		try {
 			if (GameManager.getInstance().isPlayerOne(this.hero)) {
 				this.add(containerLabel);
 				this.add(containerButton);
+				this.add(containerCristals);
 			} else {
+				this.add(containerCristals);
 				this.add(containerButton);
 				this.add(containerLabel);
 			}
@@ -138,6 +151,7 @@ public class HeroView extends JPanel implements MouseListener, IObserver {
 	@Override
 	public void update() {
 		this.heroHealth.setText("VIE: " + this.hero.getLifePoints().toString());
+		this.heroCristals.setText("CRISTALS: "+this.hero.getCristals()+"/10");
 
 		if (this.hero.getSpellSelected()) {
 			spellButton.setBackground(Color.ORANGE);
