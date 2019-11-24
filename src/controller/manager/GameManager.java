@@ -71,7 +71,7 @@ public class GameManager {
 	 * Finish a game
 	 */
 	public void finishGame() {
-
+		System.out.println("partie terminée");
 	}
 
 	/**

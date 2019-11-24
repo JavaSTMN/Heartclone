@@ -11,6 +11,7 @@ import controller.Attacker;
 import controller.IObserver;
 import controller.Observable;
 import controller.Target;
+import controller.manager.GameManager;
 import model.card.Card;
 import model.card.CardContainer;
 import model.card.Deck;
@@ -192,11 +193,21 @@ public class Hero implements Attacker, Target {
 	@Override
 	public void receiveDamage(int nb) throws IllegalArgumentException {
 		lifePoints -= nb;
+		
 		try {
 			this.observable.notifyObservers();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		
+		if(!this.isAlive()) {
+			try {
+				GameManager.getInstance().finishGame();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 

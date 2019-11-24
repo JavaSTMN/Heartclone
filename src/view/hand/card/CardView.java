@@ -222,7 +222,6 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 								if(attackerCard instanceof MinionCard) {
 									MinionCard mAttackerCard = (MinionCard)attackerCard;
 									mAttackerCard.dealDamage(mCard);
-//									mCard.receiveDamage(mAttackerCard.getDamagePoints());
 									mAttackerCard.setSelectedToAttack(false);
 								}
 							}

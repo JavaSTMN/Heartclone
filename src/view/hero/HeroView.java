@@ -116,7 +116,19 @@ public class HeroView extends JPanel implements MouseListener, IObserver {
 
 				if (opponent.getSpellSelected()) {
 					opponent.useSpell(this.hero);
+					
 				}
+				
+				for(Card card: opponent.getGameboard().getCards()) {
+					if(card.getSelectedToAttack()) {
+						if(card instanceof MinionCard) {
+							MinionCard mCard = (MinionCard)card;
+							this.hero.receiveDamage(mCard.getDamagePoints());
+						}
+					}
+				}
+				
+				
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -150,6 +162,7 @@ public class HeroView extends JPanel implements MouseListener, IObserver {
 
 	@Override
 	public void update() {
+		
 		this.heroHealth.setText("VIE: " + this.hero.getLifePoints().toString());
 		this.heroCristals.setText("CRISTALS: "+this.hero.getCristals()+"/10");
 
