@@ -45,7 +45,7 @@ public class Hero implements Attacker, Target {
 	
 	public Hero() {
 		
-		cristals = 10;
+		cristals = 4;
 		deck = new Deck(StartDeck.getDeck());		
 		hand = new CardContainer(10);
 		gameboard = new CardContainer(7);
@@ -138,9 +138,10 @@ public class Hero implements Attacker, Target {
 		if(this.canPlay(playableCard)) {
 			// We fetch the card to play from the hand
 			playableCard = this.hand.fetchCard(playableCard);
-			
 			// We add it to the gameboard
 			this.gameboard.addCard(playableCard);
+			// We spend cristals
+			this.setCristals(this.getCristals() - playableCard.getCristalCost());
 		}else {
 			throw new Exception("Not enough cristals to play this card");
 		}
@@ -246,7 +247,7 @@ public class Hero implements Attacker, Target {
 	 * @return true if the player can play the card, false if not
 	 */
 	public boolean canPlay(Card card) {
-		return (card.getCristalCost() <= this.cristals);
+		return (this.cristals >= card.getCristalCost());
 	}
 	
 	public boolean canUseSpell() {

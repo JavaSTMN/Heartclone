@@ -112,7 +112,7 @@ public class GameManager {
 	 * @param hero
 	 */
 	public void finishTurn(Hero hero) {
-
+		System.out.println("le tour a été passée");
 	}
 
 	/**

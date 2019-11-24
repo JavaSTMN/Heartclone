@@ -64,14 +64,15 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 		this.hero = hero;
 		
 		// JPanel configuration
-		this.setOpaque(false);
+		this.setOpaque(true);
 		this.selected = false;
 		this.selectedToAttack = false;
 		this.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		this.setSize(panelWidth, panelHeight);
 		this.setPreferredSize(new Dimension(panelWidth, panelHeight));
-	
+		this.setBackground(Color.DARK_GRAY);
+		
 		// Default card border
 		Border border = BorderFactory.createLineBorder(Color.GRAY, 2);
 		this.setBorder(border);
@@ -103,6 +104,7 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 		// Description Label
 		this.description = new JLabel();
 		this.description.setText(card.getDescription());
+		this.description.setForeground(Color.LIGHT_GRAY);
 		
 		
 		this.add(mana);
@@ -129,10 +131,6 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 			
 		}
 		
-		if(this.card.getSelectedToAttack()) {
-			
-		}
-
 		this.setVisible(true);
 	}
 
@@ -172,7 +170,6 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 			border = BorderFactory.createLineBorder(Color.ORANGE, 4);
 			this.setBorder(border);
 		}
-		
 	}
 
 
@@ -224,7 +221,8 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 							if(attackerCard.getSelectedToAttack()) {
 								if(attackerCard instanceof MinionCard) {
 									MinionCard mAttackerCard = (MinionCard)attackerCard;
-									mCard.receiveDamage(mAttackerCard.getDamagePoints());
+									mAttackerCard.dealDamage(mCard);
+//									mCard.receiveDamage(mAttackerCard.getDamagePoints());
 									mAttackerCard.setSelectedToAttack(false);
 								}
 							}
