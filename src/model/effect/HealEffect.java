@@ -1,4 +1,7 @@
 package model.effect;
+
+import controller.Target;
+
 /**
  * 
  */
@@ -8,12 +11,16 @@ package model.effect;
  *
  */
 public class HealEffect extends Effect {
-
+	
+	private int amount;
 	/**
 	 * 
 	 */
-	public HealEffect() {
-		// TODO Auto-generated constructor stub
+	public HealEffect(int amount) {
+		this.amount = amount;
 	}
-
+	
+	public void activateEffect(Target target, int amount) {
+		target.receiveHealthPoints(amount);
+	}
 }
