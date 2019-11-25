@@ -32,6 +32,8 @@ public class GameManager {
 		opponents[0] = new Hero();
 		opponents[1] = new Hero();
 		
+		opponents[0].setIsTurn(true);
+		
 		turnCount = 0;
 		turnMaxSeconds = 30;
 		turnStartDate = Date.valueOf(LocalDate.now());
@@ -62,7 +64,6 @@ public class GameManager {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
 		}
 	}
 
@@ -135,6 +136,13 @@ public class GameManager {
 
 	public Hero[] getHeros() {
 		return this.opponents;
+	}
+	
+	public Hero getOpponent(Hero hero) {
+		if(this.opponents[0] == hero)
+			return this.opponents[1];
+		else
+			return this.opponents[0];
 	}
 
 }

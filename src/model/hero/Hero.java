@@ -40,6 +40,7 @@ public class Hero implements Attacker, Target {
 	private CardContainer discard;
 	boolean isActive;
 	private Image image;
+	private boolean isTurn = false;
 	
 	public Hero() {
 		
@@ -70,6 +71,14 @@ public class Hero implements Attacker, Target {
 	
 	public Observable getObservable() {
 		return this.observable;
+	}
+	
+	public boolean getIsTurn() {
+		return this.isTurn;
+	}
+	
+	public void setIsTurn(boolean value) {
+		this.isTurn = value;
 	}
 	
 	
@@ -199,6 +208,15 @@ public class Hero implements Attacker, Target {
 	 */
 	public boolean canPlay(Card card) {
 		return (card.getCristalCost() <= this.cristals);
+	}
+	
+	public void discard(Card card) {
+		try {
+			this.discard.addCard(this.gameboard.fetchCard(card));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	
