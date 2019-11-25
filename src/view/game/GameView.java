@@ -93,7 +93,7 @@ public class GameView extends JFrame {
 		this.window.setIconImage(image);
 		this.window.setSize(getMaximumSize());
 		this.window.setContentPane(this.gameView);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		this.window.setVisible(true);
 	}

@@ -56,6 +56,7 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 
 	private boolean selected;
 	private boolean selectedToAttack;
+	private boolean isActive = false;
 
 	private Card card;
 	private Hero hero;
@@ -70,11 +71,14 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 		this.setOpaque(true);
 		this.selected = false;
 		this.selectedToAttack = false;
-		this.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		this.setSize(panelWidth, panelHeight);
 		this.setPreferredSize(new Dimension(panelWidth, panelHeight));
 		this.setBackground(Color.DARK_GRAY);
+
+
+		if(this.hero.getIsTurn())
+			this.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
 		// Default card border
 		Border border = BorderFactory.createLineBorder(Color.GRAY, 2);
@@ -251,6 +255,7 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 							}
 						}
 
+
 						for (Card attackerCard : opponent.getHand().getCards()) {
 							if (attackerCard.getSelected()) {
 								if (attackerCard instanceof SpellCard) {
@@ -308,14 +313,28 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
 
+		if(this.card instanceof MinionCard && this.hero.getIsTurn()) {
+			MinionCard mCard = (MinionCard)this.card;
+			if(!mCard.getActive()) {
+				Border border = BorderFactory.createLineBorder(Color.RED, 4);
+				this.setBorder(border);
+			}else {
+				Border border = BorderFactory.createLineBorder(Color.GRAY, 4);
+				this.setBorder(border);
+			}
+		}
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
 
+		if(this.card.getSelectedToAttack()) {
+			Border border = BorderFactory.createLineBorder(Color.ORANGE, 4);
+			this.setBorder(border);
+		}else {
+			Border border = BorderFactory.createLineBorder(Color.GRAY, 2);
+			this.setBorder(border);
+		}
 	}
-
 }
