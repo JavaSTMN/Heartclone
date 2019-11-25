@@ -63,6 +63,14 @@ public class MinionCard extends Card implements Attacker, Target {
 	public void setDamagePoints(int value) {
 		this.damagePoints = value;
 	}
+	
+	public boolean getActive() {
+		return this.active;
+	}
+	
+	public void setActive(boolean value) {
+		this.active = value;
+	}
 
 	/* METHODS REGION */
 
@@ -82,6 +90,8 @@ public class MinionCard extends Card implements Attacker, Target {
 			MinionCard mTarget = (MinionCard)target;
 			this.receiveDamage(mTarget.damagePoints);
 		}
+		
+		this.active = false;
 	}
 	
 	@Override

@@ -37,9 +37,7 @@ public class HeroView extends JPanel implements MouseListener, IObserver {
 	public HeroView(Hero hero) {
 		this.hero = hero;
 		this.hero.getObservable().subscribe(this);
-		
-		if(this.hero.getIsTurn())
-			this.addMouseListener(this);
+		this.addMouseListener(this);
 
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
@@ -158,6 +156,7 @@ public class HeroView extends JPanel implements MouseListener, IObserver {
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
+		
 
 	}
 
@@ -181,10 +180,8 @@ public class HeroView extends JPanel implements MouseListener, IObserver {
 		
 		if(this.hero.getIsTurn()) {
 			containerButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			this.addMouseListener(this);
 		} else {
 			containerButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-			this.addMouseListener(null);
 		}
 		
 

@@ -52,6 +52,7 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 	
 	private boolean selected;
 	private boolean selectedToAttack;
+	private boolean isActive = false;
 	
 	private Card card;
 	private Hero hero;
@@ -71,6 +72,7 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 		this.setSize(panelWidth, panelHeight);
 		this.setPreferredSize(new Dimension(panelWidth, panelHeight));
 		this.setBackground(Color.DARK_GRAY);
+		
 		
 		if(this.hero.getIsTurn())
 			this.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -183,27 +185,37 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		
+		if(this.card instanceof MinionCard) {
+			MinionCard mCard = (MinionCard)this.card;
+			isActive = mCard.getActive();
+		}
 		// If the player clicks on his card he selects it. 
 		// If he clicks on the opponents card with a card selected, he attacks it
 		if(this.hero.getIsTurn()) {
-			if(this.card.getSelectedToAttack()) {
-				
-			}else {
-				for(Card card : hero.getGameboard().getCards()) {
-					card.setSelectedToAttack(false);
-					card.setSelected(false);
-				}
-				for(Card card : hero.getHand().getCards()) {
-					card.setSelected(false);
-					//Border border = BorderFactory.createLineBorder(Color.GRAY, 2);
+			
+			if(isActive) {
+				if(this.card.getSelectedToAttack()) {
+					
+				}else {
+					for(Card card : hero.getGameboard().getCards()) {
+						card.setSelectedToAttack(false);
+						card.setSelected(false);
+					}
+					for(Card card : hero.getHand().getCards()) {
+						card.setSelected(false);
+						//Border border = BorderFactory.createLineBorder(Color.GRAY, 2);
+						//this.setBorder(border);
+					}
+					
+					this.hero.setSpellSelected(false);
+					
+					card.setSelectedToAttack(true);
+					//Border border = BorderFactory.createLineBorder(Color.ORANGE, 4);
 					//this.setBorder(border);
 				}
+			}else {
 				
-				this.hero.setSpellSelected(false);
-				
-				card.setSelectedToAttack(true);
-				//Border border = BorderFactory.createLineBorder(Color.ORANGE, 4);
-				//this.setBorder(border);
 			}
 			
 		}else{
@@ -228,8 +240,7 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 								}
 							}
 						}
-					}
-					
+					}	
 				}
 				
 			} catch (Exception e1) {

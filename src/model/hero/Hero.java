@@ -330,6 +330,23 @@ public class Hero implements Attacker, Target {
 	{
 		cristals += amount;
 	}
+
+	public void activateMinions() {
+		for(Card card: this.gameboard.getCards()) {
+			if(card instanceof MinionCard) {
+				MinionCard mCard = (MinionCard)card;
+				mCard.setActive(true);
+			}
+		}
+		
+		try {
+			this.observable.notifyObservers();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	
 	
 

@@ -88,6 +88,7 @@ public class GameManager {
 	public void startTurn(Hero hero) {
 		opponents[activeHero].setIsTurn(true);
 		opponents[activeHero].regenerateCristals();
+		opponents[activeHero].activateMinions();
 		inTurn();
 		
 		// the hero tries to draw a card at the beginning of his turn
