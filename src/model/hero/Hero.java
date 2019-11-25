@@ -33,6 +33,7 @@ public class Hero implements Attacker, Target {
 	private Observable observable;
 	
 	private int cristals;
+	private int cristalsRegeneration;
 	private int lifePoints;
 	private int maxLifePoints;
 	private Deck deck;
@@ -48,6 +49,7 @@ public class Hero implements Attacker, Target {
 		
 		cristals = 4;
 		deck = new Deck(StartDeck.getDeck());		
+		cristalsRegeneration = 1;
 		hand = new CardContainer(10);
 		gameboard = new CardContainer(7);
 		discard = new CardContainer(); 
@@ -163,7 +165,9 @@ public class Hero implements Attacker, Target {
 	 * @throws Exception 
 	 */
 	public void draw() throws Exception {
+		try {
 		hand.addCard(deck.fetchCard(0));
+
 		observable.notifyObservers();
 	}
 	
@@ -182,7 +186,9 @@ public class Hero implements Attacker, Target {
 	 * @param nbCristalsUsed
 	 */
 	public void useCristals(int nbCristalsUsed) {
-		cristals -= nbCristalsUsed;
+		if(nbCristalsUsed <= cristals)
+		{
+			cristals -= nbCristalsUsed;
 		try {
 			this.observable.notifyObservers();
 		} catch (IOException e) {
@@ -190,11 +196,13 @@ public class Hero implements Attacker, Target {
 			e.printStackTrace();
 		}
 	}
+	}
 
 	@Override
-	public void receiveDamage(int nb) throws IllegalArgumentException {
-		lifePoints -= nb;
-		
+
+	public void receiveDamage(int amount) throws IllegalArgumentException {
+		lifePoints -= amount;
+
 		try {
 			this.observable.notifyObservers();
 		} catch (IOException e) {
@@ -227,32 +235,33 @@ public class Hero implements Attacker, Target {
 	}
 
 	@Override
-	public void dealDamage(Target target) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+	public void dealDamage(Target target, int amount) throws IllegalArgumentException {
+		target.receiveDamage(amount);
 		
 	}
 
 	@Override
 	public void disable() {
-		// TODO Auto-generated method stub
-		
+		isActive = false;
 	}
 
 	@Override
 	public void enable() {
-		// TODO Auto-generated method stub
+		isActive = true;
 		
 	}
 
 	@Override
 	public boolean getState() {
-		// TODO Auto-generated method stub
-		return false;
+		return isActive;
 	}
 
 	@Override
 	public void receiveHealthPoints(int amount) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		if(lifePoints + amount > maxLifePoints)
+			lifePoints = maxLifePoints;
+		else 
+			lifePoints += amount;
 		try {
 			this.observable.notifyObservers();
 		} catch (IOException e) {
@@ -285,6 +294,30 @@ public class Hero implements Attacker, Target {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void dealDamage(Target target) throws IllegalArgumentException {
+		this.dealDamage(target, 2);
+		
+	}
+	
+	/**
+	 * Regenerate all cristals
+	 */
+	public void regenerateCristals()
+	{
+		cristalsRegeneration += 1;
+		cristals = cristalsRegeneration;
+	}
+	
+	/**
+	 * Add cristals to the hero reserve
+	 * @param amount
+	 */
+	public void addCristals(int amount)
+	{
+		cristals += amount;
 	}
 	
 	
