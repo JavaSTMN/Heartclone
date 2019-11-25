@@ -33,6 +33,7 @@ import controller.manager.GameManager;
 import service.StretchIcon;
 import model.card.Card;
 import model.card.MinionCard;
+import model.card.SpellCard;
 import model.hero.Hero;
 
 public class CardView extends JPanel implements IObserver, MouseListener {
@@ -103,9 +104,10 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 		
 		// Description Label
 		this.description = new JLabel();
-		this.description.setText(card.getDescription());
+		this.description.setText("<html>"+card.getDescription()+"</html>");
+		this.description.setVerticalAlignment(JLabel.CENTER);
+		this.description.setHorizontalAlignment(JLabel.CENTER);
 		this.description.setForeground(Color.LIGHT_GRAY);
-		
 		
 		this.add(mana);
 		this.add(image);
@@ -184,6 +186,20 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 		// If the player clicks on his card he selects it. 
 		// If he clicks on the opponents card with a card selected, he attacks it
 		if(this.hero.getIsTurn()) {
+			
+			// TODO: check if the player wants to play a spell card
+			// TODO: if its to play a spell card the player should not select a card
+			
+			for(Card card : this.hero.getHand().getCards()) {
+				if(card.getSelected()) {
+					if(card instanceof SpellCard) {
+						System.out.println("activateSpell");
+						SpellCard sCard = (SpellCard)card;
+						sCard.activateEffect();
+					}
+				}
+			}
+			
 			if(this.card.getSelectedToAttack()) {
 				
 			}else {
@@ -227,7 +243,6 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 							}
 						}
 					}
-					
 				}
 				
 			} catch (Exception e1) {

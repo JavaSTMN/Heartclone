@@ -46,7 +46,7 @@ public class Hero implements Attacker, Target {
 	
 	public Hero() {
 		
-		cristals = 4;
+		cristals = 10;
 		deck = new Deck(StartDeck.getDeck());		
 		hand = new CardContainer(10);
 		gameboard = new CardContainer(7);
