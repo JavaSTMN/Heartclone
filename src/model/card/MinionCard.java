@@ -1,7 +1,15 @@
 package model.card;
 
+
 import controller.Attacker;
 import controller.Target;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import controller.Attacker;
+import controller.Target;
+import controller.manager.GameManager;
+
 
 /**
  * 
@@ -14,12 +22,10 @@ import controller.Target;
  */
 public class MinionCard extends Card implements Attacker, Target {
 
-	
 	private int healthPoints;
 	private int maxHealtPoints;
 	private int damagePoints;
 	private boolean active;
-
 
 	/**
 	 * Constructor
@@ -28,13 +34,14 @@ public class MinionCard extends Card implements Attacker, Target {
 	 * @param damagePoints
 	 * @param active
 	 */
-	public MinionCard(int maxHealthPoints, int damagePoints, boolean active, String name, String description, int cristalCost) {
+	public MinionCard(int maxHealthPoints, int damagePoints, boolean active, String name, String description,
+			int cristalCost) {
 		super(name, description, cristalCost);
 		this.maxHealtPoints = this.healthPoints = maxHealthPoints;
 		this.damagePoints = damagePoints;
 		this.active = active;
 	}
-	
+
 	public MinionCard(int maxHealthPoints, int damagePoints, boolean active) {
 		this.maxHealtPoints = this.healthPoints = maxHealthPoints;
 		this.damagePoints = damagePoints;
@@ -69,6 +76,18 @@ public class MinionCard extends Card implements Attacker, Target {
 	@Override
 	public void dealDamage(Target target) {
 		target.receiveDamage(this.damagePoints);
+		
+		if(target instanceof MinionCard) {
+			System.out.println("test");
+			MinionCard mTarget = (MinionCard)target;
+			this.receiveDamage(mTarget.damagePoints);
+		}
+	}
+	
+	@Override
+	public void dealDamage(Target target, int amount) throws IllegalArgumentException {
+		this.dealDamage(target);
+		
 	}
 
 	/**
@@ -108,16 +127,20 @@ public class MinionCard extends Card implements Attacker, Target {
 	@Override
 	public void receiveDamage(int nb) throws IllegalArgumentException {
 
-		if (nb < 0)
-			throw new IllegalArgumentException("Amount of damage is less than 0");
+		if (nb <= 0)
+			throw new IllegalArgumentException("Amount of damage is less or equal to 0");
 
 		this.healthPoints -= nb;
 
 		if (!isAlive()) {
-			System.out.println("La carte a été détruite");
-			//TODO: Send the card to the Discard
-			// Solution: If the game manager contains the Discard instance and we have a singleton pattern
-			// we can use the the addCard of Discard through the GameManager to send the card to the Discard
+			discard(this);
+
+		}
+		try {
+			this.getObservable().notifyObservers();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -145,10 +168,27 @@ public class MinionCard extends Card implements Attacker, Target {
 	 * @return true if the minion is alive, false if not
 	 */
 	public boolean isAlive() {
-		if (this.healthPoints < 0)
+		if (this.healthPoints <= 0)
 			return false;
 
 		return true;
 	}
 
+
+	public void discard(Card card) {
+		GameManager gameManager;
+		try {
+			gameManager = GameManager.getInstance();
+			ArrayList<Card> cards = gameManager.getHeros()[0].getGameboard().getCards();
+			if(cards.contains(card))
+				gameManager.getHeros()[0].discard(card);
+			else {
+				gameManager.getHeros()[1].discard(card);
+			}
+			
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
 }

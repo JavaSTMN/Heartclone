@@ -4,7 +4,10 @@ package model.card;
  * 
  */
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import controller.Observable;
 
 
 /**
@@ -13,6 +16,8 @@ import java.util.ArrayList;
  * - remove/add card
  */
 public class CardContainer {
+	
+	private Observable observable;
 
 	/* contains the cards */
 	protected ArrayList<Card> cards;
@@ -36,6 +41,8 @@ public class CardContainer {
 		
 		this.cards = cards;
 		this.cardLimit = cardLimit;
+		
+		this.observable = new Observable();
 	}
 	
 	/**
@@ -47,6 +54,7 @@ public class CardContainer {
 		
 		// unlimited number of cards
 		this.cardLimit = Integer.MAX_VALUE;
+		this.observable = new Observable();
 	}
 	
 	/**
@@ -58,6 +66,7 @@ public class CardContainer {
 		
 		// unlimited number of cards
 		this.cardLimit = cardLimit;
+		this.observable = new Observable();
 	}
 	
 	/**
@@ -68,11 +77,12 @@ public class CardContainer {
 		
 		// unlimited number of cards
 		this.cardLimit = Integer.MAX_VALUE;
+		this.observable = new Observable();
 	}
 	
 	
 	
-	public int getCardNumber() {
+	public Integer getCardNumber() {
 		return this.cards.size();
 	}
 
@@ -88,6 +98,10 @@ public class CardContainer {
 		return this.cards;
 	}
 	
+	public Observable getObservable() {
+		return this.observable;
+	}
+	
 	
 	/**
 	 * Adds a card to the container if there is enough space
@@ -100,6 +114,8 @@ public class CardContainer {
 			throw new Exception("Can't add a new Card: the limit have been reached");
 			
 		this.cards.add(card);
+		
+		observable.notifyObservers();
 	}
 	
 
@@ -112,7 +128,9 @@ public class CardContainer {
 		boolean success = this.cards.remove(card);
 		
 		if (!success) 
-			throw new Exception("The card does not exist in the container");	
+			throw new Exception("The card does not exist in the container");
+		
+		observable.notifyObservers();
 	}
 
 	/**
@@ -125,19 +143,23 @@ public class CardContainer {
 			throw new Exception("The index specified does not exist");
 		
 		this.cards.remove(index);
+		observable.notifyObservers();
 	}
 	
 	public Card fetchCard(Card card) throws Exception {
 		Card cardToReturn = card;
 		this.deleteCard(card);
+		observable.notifyObservers();
 		return cardToReturn;
 	}
 	
 	public Card fetchCard(int index) throws Exception {
 		Card cardToReturn = this.cards.get(index);
 		this.deleteCard(index);
+		observable.notifyObservers();
 		return cardToReturn;
 	}
+	
 	
 }
 
