@@ -71,7 +71,7 @@ public class GameManager {
 			}
 		}
 			
-		startTurn();
+		startTurn(opponents[activeHero]);
 	}
 
 
@@ -87,7 +87,7 @@ public class GameManager {
 	 * 
 	 */
 
-	public void startTurn() {
+	public void startTurn(Hero hero) {
 		opponents[activeHero].regenerateCristals();
 		inTurn();
 		
@@ -171,7 +171,7 @@ public class GameManager {
 				break;
 			}
 			
-			startTurn();
+			startTurn(opponents[activeHero]);
 		}
 	}
 	

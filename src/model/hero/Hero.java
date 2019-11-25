@@ -169,6 +169,10 @@ public class Hero implements Attacker, Target {
 		hand.addCard(deck.fetchCard(0));
 
 		observable.notifyObservers();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
