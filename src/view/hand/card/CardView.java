@@ -33,8 +33,9 @@ import controller.manager.GameManager;
 import service.StretchIcon;
 import model.card.Card;
 import model.card.MinionCard;
+import model.hero.Hero;
 
-public class CardView extends JPanel implements IObserver {
+public class CardView extends JPanel implements IObserver, MouseListener {
 	
 	// Card
 	private JLabel mana;
@@ -50,24 +51,41 @@ public class CardView extends JPanel implements IObserver {
 	private int panelHeight = 150;
 	
 	private boolean selected;
+	private boolean selectedToAttack;
+	
 	private Card card;
+	private Hero hero;
 
 	
-	public CardView(Card card) throws IOException {
+	public CardView(Card card, Hero hero) throws IOException {
 		this.card = card;
 		this.card.getObservable().subscribe(this);
 		
+		this.hero = hero;
+		
 		// JPanel configuration
-		this.setOpaque(false);
+		this.setOpaque(true);
 		this.selected = false;
+		this.selectedToAttack = false;
 		this.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		this.setSize(panelWidth, panelHeight);
 		this.setPreferredSize(new Dimension(panelWidth, panelHeight));
-	
+		this.setBackground(Color.DARK_GRAY);
+		
 		// Default card border
 		Border border = BorderFactory.createLineBorder(Color.GRAY, 2);
 		this.setBorder(border);
+		
+		if(this.card.getSelected()) {
+			border = BorderFactory.createLineBorder(Color.ORANGE, 4);
+			this.setBorder(border);
+		}
+		
+		if(this.card.getSelectedToAttack()) {
+			border = BorderFactory.createLineBorder(Color.ORANGE, 4);
+			this.setBorder(border);
+		}
 		
 		// Mana label
 		this.mana = new JLabel();
@@ -86,6 +104,7 @@ public class CardView extends JPanel implements IObserver {
 		// Description Label
 		this.description = new JLabel();
 		this.description.setText(card.getDescription());
+		this.description.setForeground(Color.LIGHT_GRAY);
 		
 		
 		this.add(mana);
@@ -111,7 +130,7 @@ public class CardView extends JPanel implements IObserver {
 			health.setForeground(Color.WHITE);
 			
 		}
-
+		
 		this.setVisible(true);
 	}
 
@@ -120,6 +139,12 @@ public class CardView extends JPanel implements IObserver {
 		this.selected = value;
 		this.card.setSelected(value);
 	}
+	
+	public void setSelectedToAttack(boolean value) {
+		this.selectedToAttack = value;
+		this.card.setSelectedToAttack(value);
+	}
+	
 	
 	public boolean getSelected() {
 		return this.selected;
@@ -132,18 +157,112 @@ public class CardView extends JPanel implements IObserver {
 
 	@Override
 	public void update() {
-		System.out.println("update on CardView called");
 		if(this.card instanceof MinionCard) {
 			MinionCard card = (MinionCard)this.card;
 			this.health.setText("Vie: "+card.getHealthPoints().toString());
 			this.attack.setText("Atk: "+card.getDamagePoints().toString());
 		}
 		
+		Border border = BorderFactory.createLineBorder(Color.GRAY, 2);
+		this.setBorder(border);
+		
+		if(this.card.getSelected() || this.card.getSelectedToAttack() ) {
+			border = BorderFactory.createLineBorder(Color.ORANGE, 4);
+			this.setBorder(border);
+		}
 	}
 
 
 	@Override
 	public void setObservable(Observable obj) {
+		
+	}
+
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// If the player clicks on his card he selects it. 
+		// If he clicks on the opponents card with a card selected, he attacks it
+		if(this.hero.getIsTurn()) {
+			if(this.card.getSelectedToAttack()) {
+				
+			}else {
+				for(Card card : hero.getGameboard().getCards()) {
+					card.setSelectedToAttack(false);
+					card.setSelected(false);
+				}
+				for(Card card : hero.getHand().getCards()) {
+					card.setSelected(false);
+					//Border border = BorderFactory.createLineBorder(Color.GRAY, 2);
+					//this.setBorder(border);
+				}
+				
+				this.hero.setSpellSelected(false);
+				
+				card.setSelectedToAttack(true);
+				//Border border = BorderFactory.createLineBorder(Color.ORANGE, 4);
+				//this.setBorder(border);
+			}
+			
+		}else{
+			try {
+				
+				Hero opponent = GameManager.getInstance().getOpponent(this.hero);
+				
+				
+				
+				if(this.card instanceof MinionCard) {
+					MinionCard mCard = (MinionCard)this.card;
+					
+					if(opponent.getSpellSelected()) {
+						opponent.useSpell(mCard);
+					} else {
+						for(Card attackerCard : opponent.getGameboard().getCards()) {
+							if(attackerCard.getSelectedToAttack()) {
+								if(attackerCard instanceof MinionCard) {
+									MinionCard mAttackerCard = (MinionCard)attackerCard;
+									mAttackerCard.dealDamage(mCard);
+									mAttackerCard.setSelectedToAttack(false);
+								}
+							}
+						}
+					}
+					
+				}
+				
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}	
+			
+		}	
+	}
+
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 

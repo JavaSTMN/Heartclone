@@ -1,4 +1,5 @@
 package model.card;
+import java.io.IOException;
 import java.util.UUID;
 
 import controller.Observable;
@@ -20,6 +21,7 @@ public abstract class Card{
 	private int cristalCost;			// Amount of cristal needed to play the card
 	
 	private boolean selected = false;
+	private boolean selectedToAttack = false;
 	
 	private Observable observable;
 
@@ -71,6 +73,28 @@ public abstract class Card{
 	
 	public void setSelected(boolean value) {
 		this.selected = value;
+		
+		try {
+			this.observable.notifyObservers();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public boolean getSelectedToAttack() {
+		return this.selectedToAttack;
+	}
+	
+	public void setSelectedToAttack(boolean value) {
+		this.selectedToAttack = value;
+		
+		try {
+			this.observable.notifyObservers();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	

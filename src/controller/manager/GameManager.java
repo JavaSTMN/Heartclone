@@ -36,6 +36,8 @@ public class GameManager {
 		opponents[0] = new Hero();
 		opponents[1] = new Hero();
 		
+		opponents[0].setIsTurn(true);
+		
 		turnCount = 0;
 		turnMaxSeconds = 30;
 		turnStartDate = Date.valueOf(LocalDate.now());
@@ -67,7 +69,6 @@ public class GameManager {
 			} catch (Exception e) {
 				System.out.println(e);
 			}
-		
 		}
 			
 		startTurn();
@@ -78,16 +79,25 @@ public class GameManager {
 	 * Finish a game
 	 */
 	public void finishGame() {
-
+		System.out.println("partie terminée");
 	}
 
 	/**
 	 * Start a turn
 	 * 
 	 */
+
 	public void startTurn() {
 		opponents[activeHero].regenerateCristals();
 		inTurn();
+		
+		// the hero tries to draw a card at the beginning of his turn
+		try {
+			hero.draw();
+		} catch (Exception e) {
+			// impossible to draw a card => suffer fatigue
+			hero.sufferFatigue();
+		}
 	}
 
 	/**
@@ -127,6 +137,18 @@ public class GameManager {
 	/**
 	 * Finish turn, pass to another player or finish the game
 	 * 
+
+	 * @param hero
+	 */
+	public void finishTurn(Hero hero) {
+		System.out.println("le tour a été passée");
+	}
+
+	/**
+	 * Time left for the turn in seconds
+	 * 
+	 * @return
+
 	 */
 	public void finishTurn() {
 		if(!opponents[0].isAlive() || !opponents[1].isAlive())
@@ -156,4 +178,20 @@ public class GameManager {
 	public Hero[] getHeros() {
 		return this.opponents;
 	}
+
+	
+	public Hero getOpponent(Hero hero) {
+		if(this.opponents[0] == hero)
+			return this.opponents[1];
+		else
+			return this.opponents[0];
+	}
+	
+	public boolean isPlayerOne(Hero hero) {
+		if(hero == this.opponents[1])
+			return false;
+		else
+			return true;
+	}
+
 }
