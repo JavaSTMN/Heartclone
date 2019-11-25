@@ -41,8 +41,7 @@ public class BoardView extends JPanel implements IObserver, MouseListener {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
-		
+		}	
 	}
 
 	@Override

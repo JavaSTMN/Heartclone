@@ -268,14 +268,31 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
+		if(this.card instanceof MinionCard && this.hero.getIsTurn()) {
+			MinionCard mCard = (MinionCard)this.card;
+			if(!mCard.getActive()) {
+				Border border = BorderFactory.createLineBorder(Color.RED, 4);
+				this.setBorder(border);
+			}else {
+				Border border = BorderFactory.createLineBorder(Color.GRAY, 4);
+				this.setBorder(border);
+			}
+		}
+		
+		
 		
 	}
 
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
+		if(this.card.getSelectedToAttack()) {
+			Border border = BorderFactory.createLineBorder(Color.ORANGE, 4);
+			this.setBorder(border);
+		}else {
+			Border border = BorderFactory.createLineBorder(Color.GRAY, 2);
+			this.setBorder(border);
+		}
 		
 	}
 
