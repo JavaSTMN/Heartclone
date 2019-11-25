@@ -86,6 +86,12 @@ public class Hero implements Attacker, Target {
 	
 	public void setIsTurn(boolean value) {
 		this.isTurn = value;
+		try {
+			this.getHand().getObservable().notifyObservers();
+			this.getObservable().notifyObservers();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public Integer getLifePoints() {
@@ -157,8 +163,6 @@ public class Hero implements Attacker, Target {
 		} catch (Exception e) {
 			e.getMessage();
 		}
-		
-		
 	}
 	
 	/**
@@ -312,7 +316,9 @@ public class Hero implements Attacker, Target {
 	 */
 	public void regenerateCristals()
 	{
-		cristalsRegeneration += 1;
+		if( cristalsRegeneration < 10) {
+			cristalsRegeneration += 1;
+		}
 		cristals = cristalsRegeneration;
 	}
 	

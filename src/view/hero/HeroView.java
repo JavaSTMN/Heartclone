@@ -29,13 +29,17 @@ public class HeroView extends JPanel implements MouseListener, IObserver {
 	private JLabel heroHealth;
 	private JLabel heroCristals;
 	private JPanel spellButton;
+	
+	private JPanel containerButton;
 
 	private boolean selected;
 
 	public HeroView(Hero hero) {
 		this.hero = hero;
 		this.hero.getObservable().subscribe(this);
-		this.addMouseListener(this);
+		
+		if(this.hero.getIsTurn())
+			this.addMouseListener(this);
 
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
@@ -43,10 +47,13 @@ public class HeroView extends JPanel implements MouseListener, IObserver {
 		containerLabel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		containerLabel.setBackground(Color.DARK_GRAY);
 
-		JPanel containerButton = new JPanel();
+		containerButton = new JPanel();
 		containerButton.setLayout(new FlowLayout(FlowLayout.CENTER));
 		containerButton.setBackground(Color.DARK_GRAY);
-		containerButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		
+		if(this.hero.getIsTurn())
+			containerButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			
 		
 		JPanel containerCristals = new JPanel();
 		containerCristals.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -171,6 +178,15 @@ public class HeroView extends JPanel implements MouseListener, IObserver {
 		} else {
 			spellButton.setBackground(Color.WHITE);
 		}
+		
+		if(this.hero.getIsTurn()) {
+			containerButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			this.addMouseListener(this);
+		} else {
+			containerButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			this.addMouseListener(null);
+		}
+		
 
 	}
 

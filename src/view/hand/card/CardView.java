@@ -67,11 +67,13 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 		this.setOpaque(true);
 		this.selected = false;
 		this.selectedToAttack = false;
-		this.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		this.setSize(panelWidth, panelHeight);
 		this.setPreferredSize(new Dimension(panelWidth, panelHeight));
 		this.setBackground(Color.DARK_GRAY);
+		
+		if(this.hero.getIsTurn())
+			this.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		
 		// Default card border
 		Border border = BorderFactory.createLineBorder(Color.GRAY, 2);

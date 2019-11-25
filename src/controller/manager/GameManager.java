@@ -5,9 +5,6 @@ import java.time.LocalDate;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javax.swing.SwingWorker;
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.IconifyAction;
-
 import controller.Observable;
 import model.hero.Hero;
 
@@ -26,6 +23,7 @@ public class GameManager {
 	private int turnCount;
 	private Date turnStartDate;
 	private long turnMaxSeconds;
+	private Timer timer;
 
 	private static GameManager instanceGameManager = null;
 
@@ -33,16 +31,16 @@ public class GameManager {
 		
 		opponents = new Hero[2];
 		activeHero = 0;
+		
 		opponents[0] = new Hero();
 		opponents[1] = new Hero();
 		
-		opponents[0].setIsTurn(true);
+		opponents[activeHero].setIsTurn(true);
+		opponents[1].setIsTurn(false);
 		
 		turnCount = 0;
 		turnMaxSeconds = 30;
 		turnStartDate = Date.valueOf(LocalDate.now());
-
-
 	}
 
 	public static GameManager getInstance() throws Exception {
@@ -61,20 +59,13 @@ public class GameManager {
 	 * @param _opponents[2]
 	 */
 	public void startGame() {
-		try {
-			opponents[1].draw();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 		
 		for (int i = 0; i < 3; i++) {
 			try {
-//				opponents = _opponents;
 				opponents[0].draw();
 				opponents[1].draw();
 			} catch (Exception e) {
-				System.out.println(e);
+				e.printStackTrace();
 			}
 		}
 			
@@ -95,6 +86,7 @@ public class GameManager {
 	 */
 
 	public void startTurn(Hero hero) {
+		opponents[activeHero].setIsTurn(true);
 		opponents[activeHero].regenerateCristals();
 		inTurn();
 		
@@ -113,34 +105,22 @@ public class GameManager {
 	 */
 	public void inTurn()
 	{
-		Timer timer = new Timer();
-		System.out.println("timer instanciation");
-		timer.schedule(new TimerTask() {	
+		this.timer = new Timer();
+		timer.schedule(new TimerTask() {
+			
 			@Override
 			public void run() {
-//				opponents[activeHero]
+				System.out.println(System.currentTimeMillis() - scheduledExecutionTime());
 				finishTurn();
-				
 			}
 		}, turnMaxSeconds*1000);
-
 		
 		
-		
-//		SwingWorker sw = new SwingWorker()
-//		{
-//			protected Object doInBackground() throws Exception
-//			{
-//				do {System.out.println(turnTimeLeft());} while (turnTimeLeft() > 0);
-//				return null;
-//			}
-//			
-//			public void done()
-//			{
-//				finishTurn(hero);
-//			}
-//		};
-//		sw.execute();
+	}
+	
+	public void cancelTimer() {
+		this.timer.cancel();
+		this.timer.purge();
 	}
 
 	/**
@@ -168,6 +148,8 @@ public class GameManager {
 		else 
 	 
 		{
+			opponents[activeHero].setIsTurn(false);
+			
 			switch (activeHero) {
 			case 0:
 					activeHero = 1;

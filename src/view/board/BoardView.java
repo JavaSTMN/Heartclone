@@ -90,9 +90,7 @@ public class BoardView extends JPanel implements IObserver, MouseListener {
 					}
 				}
 			}
-		}
-		
-		
+		}	
 	}
 
 	@Override
