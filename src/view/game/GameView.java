@@ -3,6 +3,7 @@ package view.game;
 import service.ImageFetcher;
 import service.StartDeck;
 import view.board.BoardView;
+import view.hand.HandContentView;
 import view.hand.HandView;
 import view.hand.card.CardView;
 
@@ -65,8 +66,8 @@ public class GameView extends JFrame {
 		
 
 		// Hands
-		this.handPlayerOne = new HandView(player1);
-		this.handPlayerTwo = new HandView(player2);
+		this.handPlayerOne = new HandContentView(player1);
+		this.handPlayerTwo = new HandContentView(player2);
 		
 		
 		this.gameView.add(handPlayerOne, BorderLayout.PAGE_END);

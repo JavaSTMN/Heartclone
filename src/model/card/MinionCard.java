@@ -72,6 +72,12 @@ public class MinionCard extends Card implements Attacker, Target {
 	@Override
 	public void dealDamage(Target target) {
 		target.receiveDamage(this.damagePoints);
+		
+		if(target instanceof MinionCard) {
+			System.out.println("test");
+			MinionCard mTarget = (MinionCard)target;
+			this.receiveDamage(mTarget.damagePoints);
+		}
 	}
 
 	/**

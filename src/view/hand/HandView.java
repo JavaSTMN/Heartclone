@@ -13,18 +13,23 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 
 import controller.IObserver;
 import controller.Observable;
+import controller.manager.GameManager;
 import model.card.Card;
 import model.card.CardContainer;
 import model.card.MinionCard;
 import model.hero.Hero;
 import view.deck.DeckView;
 import view.hand.card.CardView;
+import view.hand.skipturn.SkipTurn;
+import view.hero.HeroView;
 
 
 public class HandView extends JPanel implements MouseListener, IObserver {
@@ -40,22 +45,31 @@ public class HandView extends JPanel implements MouseListener, IObserver {
 		this.hero = hero;
 		this.hero.getHand().getObservable().subscribe(this);
 		
+		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+		this.setBackground(Color.DARK_GRAY);
+		
+		cardViews = new ArrayList<CardView>();
+		
+		// Container
+		JPanel handContainer = new JPanel();
+		handContainer.setLayout(new FlowLayout());
+		handContainer.setBackground(Color.DARK_GRAY);
+		
+		JPanel skipTurn = new JPanel();
+		skipTurn.add(new JLabel("Passer le tour"));
+		
+		
 		// JPanel for the cards
 		cardContainer = new JPanel();
 		cardContainer.setLayout(new FlowLayout(FlowLayout.CENTER));
 		cardContainer.setBackground(Color.DARK_GRAY);
 		
 		
-		// Widget setup
-		this.setLayout(new FlowLayout());
-		this.setBackground(Color.DARK_GRAY);
 
-		cardViews = new ArrayList<CardView>();
-		
-		
 		// We create the CardViews from the card models
 		for (Card card : hero.getHand().getCards()) {
 			cardViews.add(new CardView(card, this.hero));
+			
 		}
 
 		// Instantiation of the card views
@@ -64,12 +78,14 @@ public class HandView extends JPanel implements MouseListener, IObserver {
 			cardContainer.add(cardView);
 		}
 		
-		JPanel filler = new JPanel();
-		filler.setBackground(Color.DARK_GRAY);
+		handContainer.add(new DeckView(this.hero.getDeck()));
+		handContainer.add(cardContainer);
+		handContainer.add(new SkipTurn(this.hero));
 		
-		this.add(new DeckView(this.hero.getDeck()));
-		this.add(cardContainer);
-		this.add(filler);
+		JPanel heroView = new HeroView(this.hero);
+		
+		this.add(handContainer);
+
 	}
 
 	/**
@@ -88,6 +104,8 @@ public class HandView extends JPanel implements MouseListener, IObserver {
 		for (Card card: this.hero.getGameboard().getCards()) {
 			card.setSelectedToAttack(false);
 		}
+		
+		this.hero.setSpellSelected(false);
 		
 		// We select the card clicked by the player
 		if (e.getSource() instanceof CardView) {
@@ -148,23 +166,26 @@ public class HandView extends JPanel implements MouseListener, IObserver {
 		this.cardContainer.setLayout(new FlowLayout(FlowLayout.CENTER));
 		cardContainer.setBackground(Color.DARK_GRAY);
 		
+		JPanel skipTurn = new JPanel();
+		skipTurn.add(new JLabel("Passer le tour"));
+		
 		this.setLayout(new FlowLayout());
 		this.setBackground(Color.DARK_GRAY);
 		
 		// We add all the cards with the modifications
 		for (Card card : this.hero.getHand().getCards()) {
 			try {
-				cardViews.add(new CardView(card, this.hero));
+				CardView cardView = new CardView(card, this.hero);
+				cardView.addMouseListener(this);
+				this.cardContainer.add(cardView);
+				
+				
+				cardViews.add(cardView);
+				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
-
-		// Instantiation of the card views
-		for (CardView cardView : cardViews) {
-			cardView.addMouseListener(this);
-			this.cardContainer.add(cardView);
 		}
 		
 		JPanel filler = new JPanel();
@@ -172,7 +193,7 @@ public class HandView extends JPanel implements MouseListener, IObserver {
 		
 		this.add(new DeckView(this.hero.getDeck()));
 		this.add(cardContainer);
-		this.add(filler);
+		this.add(skipTurn);
 		this.repaint();
 		this.revalidate();
 	}

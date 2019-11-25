@@ -71,7 +71,7 @@ public class GameManager {
 	 * Finish a game
 	 */
 	public void finishGame() {
-
+		System.out.println("partie terminée");
 	}
 
 	/**
@@ -120,7 +120,7 @@ public class GameManager {
 	 * @param hero
 	 */
 	public void finishTurn(Hero hero) {
-
+		System.out.println("le tour a été passée");
 	}
 
 	/**
@@ -143,6 +143,13 @@ public class GameManager {
 			return this.opponents[1];
 		else
 			return this.opponents[0];
+	}
+	
+	public boolean isPlayerOne(Hero hero) {
+		if(hero == this.opponents[1])
+			return false;
+		else
+			return true;
 	}
 
 }
