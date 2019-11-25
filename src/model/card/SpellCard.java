@@ -2,7 +2,10 @@ package model.card;
 
 import java.util.ArrayList;
 
+import controller.Target;
+import controller.manager.GameManager;
 import model.effect.Effect;
+import model.hero.Hero;
 
 /**
  * 
@@ -14,21 +17,33 @@ import model.effect.Effect;
  */
 public class SpellCard extends Card {
 	
+	private int amount;
 	
-	private ArrayList<Effect> effects;
+	private Effect effect;
 	/**
 	 * 
 	 */
 	public SpellCard(String name, String description, int cristalCost, Effect effect) {
 		super(name, description, cristalCost);
-		this.effects = new ArrayList<Effect>();
-		this.effects.add(effect);
+		this.effect = effect;
 	}
 	
-	public void activateEffect() {
-		for(Effect effect : effects) {
-			effect.activateEffect();
-		}
+	public Effect getEffect() {
+		return this.effect;
+	}
+	
+	
+	public void activateEffect(Target target) {
+		effect.activateEffect(target);
+		setSelected(false);
+		discard(this);
+	}
+	
+	public void activateEffect(Hero target) {
+		effect.activateEffect(target);
+		setSelected(false);
+		discard(this);
+		
 	}
 
 }

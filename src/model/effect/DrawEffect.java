@@ -18,13 +18,14 @@ public class DrawEffect extends Effect {
 	/**
 	 * 
 	 */
-	public DrawEffect(int amount) {
+	
+	public DrawEffect (int amount) {
 		this.amount = amount;
 	}
 	
-	public void activateEffect(Hero target, int amount) {
+	public void activateEffect(Hero target) {
 		try {
-			for(int i=0; i<amount ; i++) {
+			for(int i=0; i<this.amount ; i++) {
 				target.draw();
 			}
 			

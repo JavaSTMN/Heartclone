@@ -19,9 +19,8 @@ public class DealDamageEffect extends Effect {
 		this.amount = amount;
 	}
 	
-
-	public void activateEffect(Target target, int amount){
-		target.receiveDamage(amount);
+	public void activateEffect(Target target){
+		target.receiveDamage(this.amount);
 	}
 
 }

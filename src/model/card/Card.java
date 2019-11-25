@@ -1,5 +1,6 @@
 package model.card;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import controller.Observable;
@@ -116,5 +117,26 @@ public abstract class Card{
 
 	public UUID getId() {
 		return id;
+	}
+	
+	public void discard(Card card) {
+		GameManager gameManager;
+		try {
+			gameManager = GameManager.getInstance();
+			
+			ArrayList<Card> boardCards = gameManager.getHeros()[0].getGameboard().getCards();
+			ArrayList<Card> handCards = gameManager.getHeros()[0].getHand().getCards();
+			
+			if(boardCards.contains(card) || handCards.contains(card))
+				gameManager.getHeros()[0].discard(card);
+			else {
+				gameManager.getHeros()[1].discard(card);
+			}
+			
+			
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 }

@@ -17,6 +17,9 @@ import javax.swing.border.Border;
 import controller.IObserver;
 import controller.Observable;
 import model.card.Card;
+import model.card.MinionCard;
+import model.card.SpellCard;
+import model.effect.DrawEffect;
 import model.hero.Hero;
 import view.hand.card.CardView;
 
@@ -81,7 +84,7 @@ public class BoardView extends JPanel implements IObserver, MouseListener {
 		// If the player click his board with a card selected, he plays it
 		if(e.getSource() instanceof BoardView) {
 			for(Card card: this.hero.getHand().getCards()) {
-				if(card.getSelected()) {
+				if(card.getSelected() && card instanceof MinionCard) {
 					try {
 						this.hero.play(card);
 						card.setSelected(false);
@@ -89,10 +92,19 @@ public class BoardView extends JPanel implements IObserver, MouseListener {
 						e1.getMessage();
 					}
 				}
+				if(card.getSelected() && card instanceof SpellCard) {
+					SpellCard sCard = (SpellCard)card;
+					if(sCard.getEffect() instanceof DrawEffect) {
+						try {
+							this.hero.activateSpell(sCard, this.hero);
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+				}
 			}
 		}
-		
-		
 	}
 
 	@Override

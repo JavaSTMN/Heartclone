@@ -16,11 +16,12 @@ public class HealEffect extends Effect {
 	/**
 	 * 
 	 */
+	
 	public HealEffect(int amount) {
 		this.amount = amount;
 	}
 	
-	public void activateEffect(Target target, int amount) {
-		target.receiveHealthPoints(amount);
+	public void activateEffect(Target target) {
+		target.receiveHealthPoints(this.amount);
 	}
 }

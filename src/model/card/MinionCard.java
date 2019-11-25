@@ -121,16 +121,16 @@ public class MinionCard extends Card implements Attacker, Target {
 			throw new IllegalArgumentException("Amount of damage is less or equal to 0");
 
 		this.healthPoints -= nb;
-
-		if (!isAlive()) {
-			discard(this);
-
-		}
+		
 		try {
 			this.getObservable().notifyObservers();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+
+		if (!isAlive()) {
+			discard(this);
 		}
 	}
 
@@ -150,6 +150,13 @@ public class MinionCard extends Card implements Attacker, Target {
 			this.healthPoints = this.maxHealtPoints;
 		else
 			this.healthPoints += amount;
+		
+		try {
+			this.getObservable().notifyObservers();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -164,21 +171,6 @@ public class MinionCard extends Card implements Attacker, Target {
 		return true;
 	}
 
-	public void discard(Card card) {
-		GameManager gameManager;
-		try {
-			gameManager = GameManager.getInstance();
-			ArrayList<Card> cards = gameManager.getHeros()[0].getGameboard().getCards();
-			if(cards.contains(card))
-				gameManager.getHeros()[0].discard(card);
-			else {
-				gameManager.getHeros()[1].discard(card);
-			}
-			
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-	}
+	
 
 }
