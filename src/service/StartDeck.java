@@ -6,6 +6,7 @@ import java.util.Arrays;
 import model.card.Card;
 import model.card.MinionCard;
 import model.card.SpellCard;
+import model.effect.ArcanesMissilesEffect;
 import model.effect.DealDamageEffect;
 import model.effect.DrawEffect;
 import model.effect.HealEffect;
@@ -35,7 +36,9 @@ public class StartDeck {
 				new MinionCard(2, 3, false, "Crocillisque des rivières", "", 2),
 				new SpellCard("pioche", "permet de piocher 2 cartes", 3, drawEffect),
 				new SpellCard("soin", "permet de soigner 2 dommages", 3, healEffect),
-				new SpellCard("dmg", "inflige 2 dmg", 3,dealDamageEffect)
+				new SpellCard("dmg", "inflige 2 dmg", 3, dealDamageEffect),
+				new SpellCard("Projectiles des arcanes", "inflige 3 dmg aléatoires", 1, new ArcanesMissilesEffect()),
+				new SpellCard("Projectiles des arcanes", "inflige 3 dmg aléatoires", 1, new ArcanesMissilesEffect())
 		));
 		
 		return deck;
