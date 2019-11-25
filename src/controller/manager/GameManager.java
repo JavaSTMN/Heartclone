@@ -100,7 +100,7 @@ public class GameManager {
 		timer.schedule(new TimerTask() {	
 			@Override
 			public void run() {
-				
+//				opponents[activeHero]
 				
 			}
 		}, turnMaxSeconds*1000);
