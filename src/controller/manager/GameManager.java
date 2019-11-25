@@ -61,7 +61,14 @@ public class GameManager {
 	 * @param _opponents[2]
 	 */
 	public void startGame() {
-		for (int i = 0; i < 4; i++) {
+		try {
+			opponents[1].draw();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		for (int i = 0; i < 3; i++) {
 			try {
 //				opponents = _opponents;
 				opponents[0].draw();
@@ -107,15 +114,17 @@ public class GameManager {
 	public void inTurn()
 	{
 		Timer timer = new Timer();
+		System.out.println("timer instanciation");
 		timer.schedule(new TimerTask() {	
 			@Override
 			public void run() {
 //				opponents[activeHero]
+				finishTurn();
 				
 			}
 		}, turnMaxSeconds*1000);
 
-		finishTurn();
+		
 		
 		
 //		SwingWorker sw = new SwingWorker()
