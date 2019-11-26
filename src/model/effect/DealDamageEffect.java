@@ -4,6 +4,7 @@ package model.effect;
  */
 
 import controller.Target;
+import model.hero.Hero;
 
 /**
  * @author adrien
@@ -20,6 +21,10 @@ public class DealDamageEffect extends Effect {
 	}
 	
 	public void activateEffect(Target target){
+		target.receiveDamage(this.amount);
+	}
+	
+	public void activateEffect(Hero target){
 		target.receiveDamage(this.amount);
 	}
 
