@@ -2,17 +2,9 @@ package model.hero;
 
 import java.awt.Image;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Observer;
-import java.util.logging.Handler;
-
 import controller.Attacker;
 import controller.Target;
-import controller.IObserver;
 import controller.Observable;
-import controller.Target;
-import controller.manager.GameManager;
 import model.card.Card;
 import model.card.CardContainer;
 import model.card.Deck;

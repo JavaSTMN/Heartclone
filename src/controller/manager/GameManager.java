@@ -18,7 +18,7 @@ import view.game.GameView;
  * @author adrien
  *
  */
-public class GameManager  {
+public class GameManager {
 
 	private Hero opponents[];
 	private int activeHero;
@@ -26,7 +26,7 @@ public class GameManager  {
 	private Date turnStartDate;
 	private long turnMaxSeconds;
 	private Timer timer;
-	
+
 	private static GameManager instanceGameManager = null;
 
 	public GameManager() throws Exception {
@@ -80,7 +80,7 @@ public class GameManager  {
 	 */
 	public void finishGame() {
 		System.out.println("Partie terminée");
-		
+
 		try {
 			GameView.getInstance().showEndView(opponents[0].isAlive());
 		} catch (Exception e) {
@@ -119,7 +119,6 @@ public class GameManager  {
 
 			@Override
 			public void run() {
-				System.out.println(System.currentTimeMillis() - scheduledExecutionTime());
 				finishTurn();
 			}
 		}, turnMaxSeconds * 1000);
@@ -138,6 +137,7 @@ public class GameManager  {
 	 * 
 	 */
 	public void finishTurn() {
+		this.cancelTimer();
 		// if any hero is dead
 		if (!opponents[0].isAlive() || !opponents[1].isAlive()) {
 			// end the game

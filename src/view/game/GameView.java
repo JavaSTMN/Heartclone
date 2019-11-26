@@ -140,6 +140,9 @@ public class GameView extends JFrame {
 
 		window.getContentPane().removeAll();
 		window.getContentPane().add(outerPanel);
+		
+		window.repaint();
+		window.revalidate();
 	}
 
 	public static GameView getInstance() throws Exception {
