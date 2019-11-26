@@ -119,7 +119,6 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 		// Image label
 		this.image = new JLabel();
 		this.image.setIcon(img);
-		this.image.setBorder(new EmptyBorder(0,0,0,0));
 
 		// Description Label
 		this.description = new JLabel();

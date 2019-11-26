@@ -64,7 +64,6 @@ public class GameView extends JFrame {
 		this.gameView.setBackground(Color.DARK_GRAY);
 		this.gameView.setLayout(new BorderLayout());
 		
-
 		// Hands
 		this.handPlayerOne = new HandContentView(player1);
 		this.handPlayerTwo = new HandContentView(player2);
@@ -80,11 +79,13 @@ public class GameView extends JFrame {
 		
 
 		this.boardPlayerTwo = new BoardView(player2);
+		this.boardPlayerTwo.setPreferredSize(new Dimension(0, 180));
 		
 		centerPart.add(this.boardPlayerTwo);
 		
 		
 		this.boardPlayerOne = new BoardView(player1);
+		this.boardPlayerOne.setPreferredSize(new Dimension(0, 180));
 
 		centerPart.add(this.boardPlayerOne);
 			
