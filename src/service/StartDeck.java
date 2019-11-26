@@ -10,6 +10,7 @@ import model.effect.ArcanesMissilesEffect;
 import model.effect.DealDamageEffect;
 import model.effect.DrawEffect;
 import model.effect.HealEffect;
+import model.minioneffect.ChargeEffect;
 
 public class StartDeck {
 	private static ArrayList<Card> deck;
@@ -23,7 +24,7 @@ public class StartDeck {
 		
 		deck = new ArrayList<Card>(Arrays.asList(
 				// Life, Dmg, Active, Name, Description, ManaCost
-				new MinionCard(1, 2, false, "Docteur Vaudou", "", 1),
+				new MinionCard(1, 1, false, "Docteur Vaudou", "Charge", 1, new ChargeEffect()),
 				new MinionCard(2, 3, false, "Limon des marais acide", "", 2),
 				new MinionCard(2, 3, false, "Limon des marais acide", "", 2),
 				new MinionCard(3, 2, false, "Chasseuse de Tranchebauge", "", 3),
