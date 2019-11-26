@@ -215,7 +215,7 @@ public class Hero implements Attacker, Target {
 		observable.notifyObservers();
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			this.sufferFatigue();
 		}
 	}
 
@@ -256,15 +256,6 @@ public class Hero implements Attacker, Target {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-
-		if (!this.isAlive()) {
-			try {
-				GameManager.getInstance().finishGame();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 	}
 
