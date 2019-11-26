@@ -356,7 +356,6 @@ public class Hero implements Attacker, Target {
 	@Override
 	public void dealDamage(Target target) throws IllegalArgumentException {
 		this.dealDamage(target, 2);
-		
 	}
 	
 	/**

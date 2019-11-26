@@ -91,12 +91,13 @@ public class MinionCard extends Card implements Attacker, Target {
 			this.receiveDamage(mTarget.damagePoints);
 		}
 		
-		this.active = false;
+		this.setActive(false); 
+		this.setSelectedToAttack(false);
+		this.setSelected(false);
 	}
 	
 	@Override
-	public void dealDamage(Target target, int amount) throws IllegalArgumentException {
-		this.dealDamage(target);
+	public void dealDamage(Target target, int amount) throws IllegalArgumentException {		
 		
 	}
 

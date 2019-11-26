@@ -160,7 +160,7 @@ public class HeroView extends JPanel implements MouseListener, IObserver {
 						if (card.getSelectedToAttack()) {
 							if (card instanceof MinionCard) {
 								MinionCard mCard = (MinionCard) card;
-								this.hero.receiveDamage(mCard.getDamagePoints());
+								mCard.dealDamage(this.hero);
 							}
 						}
 					}
@@ -206,6 +206,11 @@ public class HeroView extends JPanel implements MouseListener, IObserver {
 				Hero opponent = GameManager.getInstance().getOpponent(this.hero);
 				if(opponent.getSpellSelected()) 
 					this.containerHero.setBorder(BorderFactory.createLineBorder(Color.CYAN));
+				
+				for(Card card: opponent.getGameboard().getCards()) {
+					if(card.getSelectedToAttack())
+						this.containerHero.setBorder(BorderFactory.createLineBorder(Color.CYAN));
+				}
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
