@@ -7,12 +7,12 @@ import java.util.Timer;
 
 import javax.swing.JFrame;
 
+import controller.manager.GameManager;
+
 public class Main extends JFrame {
 
 	public static void main(String[] args) throws Exception {
-		
-		
-		GameView gameView = new GameView();	
+		GameView.getInstance();	
 	}
 
 }

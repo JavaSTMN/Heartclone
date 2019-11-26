@@ -7,6 +7,7 @@ import java.util.TimerTask;
 
 import controller.Observable;
 import model.hero.Hero;
+import view.game.GameView;
 
 /**
  * 
@@ -16,7 +17,7 @@ import model.hero.Hero;
  * @author adrien
  *
  */
-public class GameManager {
+public class GameManager  {
 
 	private Hero opponents[];
 	private int activeHero;
@@ -24,20 +25,20 @@ public class GameManager {
 	private Date turnStartDate;
 	private long turnMaxSeconds;
 	private Timer timer;
-
+	
 	private static GameManager instanceGameManager = null;
 
 	public GameManager() throws Exception {
-		
+
 		opponents = new Hero[2];
 		activeHero = 0;
-		
+
 		opponents[0] = new Hero();
 		opponents[1] = new Hero();
-		
+
 		opponents[activeHero].setIsTurn(true);
 		opponents[1].setIsTurn(false);
-		
+
 		turnCount = 0;
 		turnMaxSeconds = 30;
 		turnStartDate = Date.valueOf(LocalDate.now());
@@ -56,10 +57,11 @@ public class GameManager {
 
 	/**
 	 * Start a game
+	 * 
 	 * @param _opponents[2]
 	 */
 	public void startGame() {
-		
+
 		for (int i = 0; i < 3; i++) {
 			try {
 				opponents[0].draw();
@@ -68,16 +70,21 @@ public class GameManager {
 				e.printStackTrace();
 			}
 		}
-			
+
 		startTurn(opponents[activeHero]);
 	}
-
 
 	/**
 	 * Finish a game
 	 */
 	public void finishGame() {
-		System.out.println("partie terminée");
+		System.out.println("Partie terminée");
+		
+		try {
+			GameView.getInstance().showEndView(opponents[0].isAlive());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -90,7 +97,7 @@ public class GameManager {
 		opponents[activeHero].regenerateCristals();
 		opponents[activeHero].activateMinions();
 		inTurn();
-		
+
 		// the hero tries to draw a card at the beginning of his turn
 		try {
 			hero.draw();
@@ -104,21 +111,19 @@ public class GameManager {
 	 * Timer running while a hero is playing
 	 * 
 	 */
-	public void inTurn()
-	{
+	public void inTurn() {
 		this.timer = new Timer();
 		timer.schedule(new TimerTask() {
-			
+
 			@Override
 			public void run() {
 				System.out.println(System.currentTimeMillis() - scheduledExecutionTime());
 				finishTurn();
 			}
-		}, turnMaxSeconds*1000);
-		
-		
+		}, turnMaxSeconds * 1000);
+
 	}
-	
+
 	public void cancelTimer() {
 		this.timer.cancel();
 		this.timer.purge();
@@ -127,7 +132,7 @@ public class GameManager {
 	/**
 	 * Finish turn, pass to another player or finish the game
 	 * 
-
+	 * 
 	 * @param hero
 	 */
 	public void finishTurn(Hero hero) {
@@ -138,49 +143,47 @@ public class GameManager {
 	 * Time left for the turn in seconds
 	 * 
 	 * @return
-
+	 * 
 	 */
 	public void finishTurn() {
-		if(!opponents[0].isAlive() || !opponents[1].isAlive())
-		{
+		// if any hero is dead
+		if (!opponents[0].isAlive() || !opponents[1].isAlive()) {
+			// end the game
 			finishGame();
-		}
-		
-		else 
-	 
-		{
+		} else {
+			// switch turns
+
 			opponents[activeHero].setIsTurn(false);
-			
+
 			switch (activeHero) {
 			case 0:
-					activeHero = 1;
+				activeHero = 1;
 				break;
 			case 1:
-					activeHero = 0;
+				activeHero = 0;
 				break;
 
 			default:
 				break;
 			}
-			
+
 			startTurn(opponents[activeHero]);
 		}
 	}
-	
+
 	public Hero[] getHeros() {
 		return this.opponents;
 	}
 
-	
 	public Hero getOpponent(Hero hero) {
-		if(this.opponents[0] == hero)
+		if (this.opponents[0] == hero)
 			return this.opponents[1];
 		else
 			return this.opponents[0];
 	}
-	
+
 	public boolean isPlayerOne(Hero hero) {
-		if(hero == this.opponents[1])
+		if (hero == this.opponents[1])
 			return false;
 		else
 			return true;
