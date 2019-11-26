@@ -19,6 +19,9 @@ import controller.Observable;
 import controller.manager.GameManager;
 import model.card.Card;
 import model.card.MinionCard;
+import model.card.SpellCard;
+import model.effect.DealDamageEffect;
+import model.effect.HealEffect;
 import model.hero.Hero;
 import view.hand.card.CardView;
 
@@ -128,6 +131,18 @@ public class HeroView extends JPanel implements MouseListener, IObserver {
 							if (card instanceof MinionCard) {
 								MinionCard mCard = (MinionCard) card;
 								this.hero.receiveDamage(mCard.getDamagePoints());
+							}
+						}
+					}
+					
+					for (Card attackerCard : opponent.getHand().getCards()) {
+						if (attackerCard.getSelected()) {
+							if (attackerCard instanceof SpellCard) {
+								SpellCard sCard = (SpellCard) attackerCard;
+								if (sCard.getEffect() instanceof DealDamageEffect
+										|| sCard.getEffect() instanceof HealEffect) {
+									sCard.activateEffect(this.hero);
+								}
 							}
 						}
 					}
