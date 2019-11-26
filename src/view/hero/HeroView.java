@@ -48,21 +48,20 @@ public class HeroView extends JPanel implements MouseListener, IObserver {
 		containerButton = new JPanel();
 		containerButton.setLayout(new FlowLayout(FlowLayout.CENTER));
 		containerButton.setBackground(Color.DARK_GRAY);
+
 		
 		if(this.hero.getIsTurn())
 			containerButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			
-		
 		JPanel containerCristals = new JPanel();
 		containerCristals.setLayout(new FlowLayout(FlowLayout.CENTER));
 		containerCristals.setBackground(Color.DARK_GRAY);
-		
 
 		heroHealth = new JLabel("VIE: " + this.hero.getLifePoints().toString());
 		heroHealth.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
 		heroHealth.setForeground(Color.WHITE);
-		
-		heroCristals = new JLabel("CRISTALS: "+ this.hero.getCristals()+"/10");
+
+		heroCristals = new JLabel("CRISTALS: " + this.hero.getCristals() + "/10");
 		heroCristals.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
 		heroCristals.setForeground(Color.WHITE);
 
@@ -121,19 +120,19 @@ public class HeroView extends JPanel implements MouseListener, IObserver {
 
 				if (opponent.getSpellSelected()) {
 					opponent.useSpell(this.hero);
-					
-				}
-				
-				for(Card card: opponent.getGameboard().getCards()) {
-					if(card.getSelectedToAttack()) {
-						if(card instanceof MinionCard) {
-							MinionCard mCard = (MinionCard)card;
-							this.hero.receiveDamage(mCard.getDamagePoints());
+
+				} else {
+
+					for (Card card : opponent.getGameboard().getCards()) {
+						if (card.getSelectedToAttack()) {
+							if (card instanceof MinionCard) {
+								MinionCard mCard = (MinionCard) card;
+								this.hero.receiveDamage(mCard.getDamagePoints());
+							}
 						}
 					}
 				}
-				
-				
+
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -168,9 +167,9 @@ public class HeroView extends JPanel implements MouseListener, IObserver {
 
 	@Override
 	public void update() {
-		
+
 		this.heroHealth.setText("VIE: " + this.hero.getLifePoints().toString());
-		this.heroCristals.setText("CRISTALS: "+this.hero.getCristals()+"/10");
+		this.heroCristals.setText("CRISTALS: " + this.hero.getCristals() + "/10");
 
 		if (this.hero.getSpellSelected()) {
 			spellButton.setBackground(Color.ORANGE);

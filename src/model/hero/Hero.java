@@ -17,8 +17,8 @@ import model.card.Card;
 import model.card.CardContainer;
 import model.card.Deck;
 import model.card.MinionCard;
+import model.card.SpellCard;
 import service.StartDeck;
-
 
 /**
  * 
@@ -30,9 +30,9 @@ import service.StartDeck;
  */
 
 public class Hero implements Attacker, Target {
-	
+
 	private Observable observable;
-	
+
 	private int cristals;
 	private int cristalsRegeneration;
 	private int lifePoints;
@@ -45,45 +45,46 @@ public class Hero implements Attacker, Target {
 	private Image image;
 	private boolean isTurn = false;
 	private boolean spellSelected = false;
-	
+
 	public Hero() {
+
 		
 		cristals = 4;
 		deck = new Deck(StartDeck.getDeck());		
 		cristalsRegeneration = 1;
 		hand = new CardContainer(10);
 		gameboard = new CardContainer(7);
-		discard = new CardContainer(); 
+		discard = new CardContainer();
 		lifePoints = 30;
 		maxLifePoints = 30;
 		isActive = true;
 		
 		observable = new Observable();
 //		image
-		
+
 		this.observable = new Observable();
 	}
-	
+
 	public CardContainer getHand() {
 		return this.hand;
 	}
-	
+
 	public CardContainer getGameboard() {
 		return this.gameboard;
 	}
-	
+
 	public Deck getDeck() {
 		return this.deck;
 	}
-	
+
 	public Observable getObservable() {
 		return this.observable;
 	}
-	
+
 	public boolean getIsTurn() {
 		return this.isTurn;
 	}
-	
+
 	public void setIsTurn(boolean value) {
 		this.isTurn = value;
 		try {
@@ -93,19 +94,19 @@ public class Hero implements Attacker, Target {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public Integer getLifePoints() {
 		return this.lifePoints;
 	}
-	
+
 	public boolean getIsActive() {
 		return this.isActive;
 	}
-	
+
 	public Integer getCristals() {
 		return this.cristals;
 	}
-	
+
 	public void setCristals(int value) {
 		this.cristals = value;
 		try {
@@ -114,7 +115,7 @@ public class Hero implements Attacker, Target {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void setIsActive(boolean value) {
 		this.isActive = value;
 		try {
@@ -124,11 +125,11 @@ public class Hero implements Attacker, Target {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public boolean getSpellSelected() {
 		return this.spellSelected;
 	}
-	
+
 	public void setSpellSelected(boolean value) {
 		this.spellSelected = value;
 		try {
@@ -138,23 +139,37 @@ public class Hero implements Attacker, Target {
 			e.printStackTrace();
 		}
 	}
-	
 
 	/**
 	 * Hero put a card from his hand to the gameboard
+	 * 
 	 * @param playableCard: the card to play
-	 * @throws Exception if the player doesn't have enough cristals 
+	 * @throws Exception if the player doesn't have enough cristals
 	 */
-	public void play(Card playableCard) throws Exception
-	{
-		if(this.canPlay(playableCard)) {
+	public void play(Card playableCard) throws Exception {
+		if (this.canPlay(playableCard)) {
 			// We fetch the card to play from the hand
 			playableCard = this.hand.fetchCard(playableCard);
 			// We add it to the gameboard
 			this.gameboard.addCard(playableCard);
 			// We spend cristals
 			this.setCristals(this.getCristals() - playableCard.getCristalCost());
-		}else {
+		} else {
+			throw new Exception("Not enough cristals to play this card");
+		}
+
+		try {
+			this.observable.notifyObservers();
+		} catch (Exception e) {
+			e.getMessage();
+		}
+	}
+
+	public void activateSpell(SpellCard card, Target target) throws Exception {
+		if (this.canPlay(card)) {
+			card.activateEffect(target);
+			this.setCristals(this.getCristals() - card.getCristalCost());
+		} else {
 			throw new Exception("Not enough cristals to play this card");
 		}
 		
@@ -165,9 +180,25 @@ public class Hero implements Attacker, Target {
 		}
 	}
 	
+	public void activateSpell(SpellCard card, Hero target) throws Exception {
+		if (this.canPlay(card)) {
+			card.activateEffect(target);
+			this.setCristals(this.getCristals() - card.getCristalCost());
+		} else {
+			throw new Exception("Not enough cristals to play this card");
+		}
+		
+		try {
+			this.observable.notifyObservers();
+		} catch (Exception e) {
+			e.getMessage();
+		}
+	}
+
 	/**
 	 * Hero draw a card from his deck to his hand
-	 * @throws Exception 
+	 * 
+	 * @throws Exception
 	 */
 	public void draw() throws Exception {
 		try {
@@ -179,19 +210,19 @@ public class Hero implements Attacker, Target {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Hero use his special spell which cost him 2 cristals
 	 */
-	public void useSpell(Target target) 
-	{
+	public void useSpell(Target target) {
 		useCristals(2);
 		target.receiveDamage(2);
 		this.setSpellSelected(false);
 	}
-	
+
 	/**
 	 * Substract cristals from the hero
+	 * 
 	 * @param nbCristalsUsed
 	 */
 	public void useCristals(int nbCristalsUsed) {
@@ -208,7 +239,6 @@ public class Hero implements Attacker, Target {
 	}
 
 	@Override
-
 	public void receiveDamage(int amount) throws IllegalArgumentException {
 		lifePoints -= amount;
 
@@ -218,8 +248,8 @@ public class Hero implements Attacker, Target {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		if(!this.isAlive()) {
+
+		if (!this.isAlive()) {
 			try {
 				GameManager.getInstance().finishGame();
 			} catch (Exception e) {
@@ -240,13 +270,13 @@ public class Hero implements Attacker, Target {
 	
 	@Override
 	public boolean isAlive() {
-		return(lifePoints>0);
+		return (lifePoints > 0);
 	}
 
 	@Override
 	public void dealDamage(Target target, int amount) throws IllegalArgumentException {
 		target.receiveDamage(amount);
-		
+
 	}
 
 	@Override
@@ -277,28 +307,37 @@ public class Hero implements Attacker, Target {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	/**
 	 * Check if the player can play a card
+	 * 
 	 * @param card
 	 * @return true if the player can play the card, false if not
 	 */
 	public boolean canPlay(Card card) {
 		return (this.cristals >= card.getCristalCost());
 	}
-	
+
 	public boolean canUseSpell() {
-		if(this.cristals < 2) 
+		if (this.cristals < 2)
 			return false;
-		
+
 		return true;
 	}
-	
+
 	public void discard(Card card) {
 		try {
 			this.discard.addCard(this.gameboard.fetchCard(card));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		try {
+			this.discard.addCard(this.hand.fetchCard(card));
+			this.hand.getObservable().notifyObservers();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -347,9 +386,5 @@ public class Hero implements Attacker, Target {
 		}
 		
 	}
-	
-	
 
 }
-
-
