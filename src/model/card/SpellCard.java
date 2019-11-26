@@ -34,6 +34,7 @@ public class SpellCard extends Card {
 	
 	
 	public void activateEffect(Target target) {
+		
 		effect.activateEffect(target);
 		setSelected(false);
 		discard(this);

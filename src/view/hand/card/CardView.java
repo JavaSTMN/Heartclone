@@ -26,6 +26,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 
 import controller.IObserver;
 import controller.Observable;
@@ -35,7 +36,9 @@ import service.StretchIcon;
 import model.card.Card;
 import model.card.MinionCard;
 import model.card.SpellCard;
+import model.effect.ArcanesMissilesEffect;
 import model.effect.DealDamageEffect;
+import model.effect.DrawEffect;
 import model.effect.HealEffect;
 import model.hero.Hero;
 
@@ -44,6 +47,7 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 	// Card
 	private JLabel mana;
 	private JLabel image;
+	private JLabel name;
 	private JLabel description;
 
 	// Minion Card Specific
@@ -74,7 +78,7 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		this.setSize(panelWidth, panelHeight);
 		this.setPreferredSize(new Dimension(panelWidth, panelHeight));
-		this.setBackground(Color.DARK_GRAY);
+		this.setBackground(Color.DARK_GRAY);	
 
 
 		if(this.hero.getIsTurn())
@@ -93,21 +97,29 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 			border = BorderFactory.createLineBorder(Color.ORANGE, 4);
 			this.setBorder(border);
 		}
-
+		
+		name = new JLabel();
+		name.setText("<html>"+card.getName()+"</html>");
+		name.setFont(new Font(Font.DIALOG, Font.BOLD, 10));
+		name.setForeground(Color.WHITE);
+		
 		// Mana label
 		this.mana = new JLabel();
 		this.mana.setText("Mana: " + card.getCristalCost().toString());
-		this.mana.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
+		this.mana.setFont(new Font(Font.DIALOG, Font.BOLD, 13));
 		this.mana.setForeground(Color.WHITE);
 
-		// Image label
-		this.image = new JLabel();
 
-		Image resizedImage = new ImageIcon("assets/card-images/ex-001.jpg").getImage(); // transform it
+		Image resizedImage = this.choseImage();	
+		
 		resizedImage = resizedImage.getScaledInstance(this.getWidth(), (int) (this.getHeight() * 0.3f),
 				Image.SCALE_SMOOTH); // scale it the smooth way
 		ImageIcon img = new ImageIcon(resizedImage); // transform it back
+		
+		// Image label
+		this.image = new JLabel();
 		this.image.setIcon(img);
+		this.image.setBorder(new EmptyBorder(0,0,0,0));
 
 		// Description Label
 		this.description = new JLabel();
@@ -116,8 +128,10 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 		this.description.setHorizontalAlignment(JLabel.CENTER);
 		this.description.setForeground(Color.LIGHT_GRAY);
 
+		
 		this.add(mana);
 		this.add(image);
+		this.add(name);
 		this.add(description);
 
 		// Specific layout for a minion card
@@ -128,16 +142,15 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 			attack = new JLabel();
 			attack.setText("Atk: " + minionCard.getDamagePoints().toString());
 			this.add(attack);
-			attack.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
+			attack.setFont(new Font(Font.DIALOG, Font.BOLD, 13));
 			attack.setForeground(Color.WHITE);
 
 			// Health label
 			health = new JLabel();
 			health.setText("Vie: " + minionCard.getHealthPoints().toString());
 			this.add(health);
-			health.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
+			health.setFont(new Font(Font.DIALOG, Font.BOLD, 13));
 			health.setForeground(Color.WHITE);
-
 		}
 
 		this.setVisible(true);
@@ -160,10 +173,36 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 	public Card getCard() {
 		return this.card;
 	}
+	
+	public Image choseImage() {
+		
+		if(this.card instanceof MinionCard) {
+			return new ImageIcon("assets/card-images/minion.jpg").getImage(); // transform it
+		}
+		
+		if(this.card instanceof SpellCard)
+		{
+			SpellCard sCard = (SpellCard)this.card;
+			if(sCard.getEffect() instanceof HealEffect) {
+				return new ImageIcon("assets/card-images/heal-spell.jpg").getImage();
+			}
+			
+			if(sCard.getEffect() instanceof DrawEffect) {
+				return new ImageIcon("assets/card-images/draw-spell.jpg").getImage();
+			}
+			
+			if(sCard.getEffect() instanceof ArcanesMissilesEffect) {
+				return new ImageIcon("assets/card-images/arcane-missiles-spell.png").getImage();
+			} 	
+		}
+		
+		return new ImageIcon("assets/card-images/damage-spell.jpg").getImage();
+	}
 
 	@Override
 	public void update() {
 		if (this.card instanceof MinionCard) {
+			
 			MinionCard card = (MinionCard) this.card;
 			this.health.setText("Vie: " + card.getHealthPoints().toString());
 			this.attack.setText("Atk: " + card.getDamagePoints().toString());

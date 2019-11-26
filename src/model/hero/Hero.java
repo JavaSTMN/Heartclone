@@ -49,9 +49,9 @@ public class Hero implements Attacker, Target {
 	public Hero() {
 
 		
-		cristals = 4;
+		cristals = 1;
 		deck = new Deck(StartDeck.getDeck());		
-		cristalsRegeneration = 1;
+		cristalsRegeneration = 0;
 		hand = new CardContainer(10);
 		gameboard = new CardContainer(7);
 		discard = new CardContainer();
@@ -114,6 +114,14 @@ public class Hero implements Attacker, Target {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public int getCristalRegeneration() {
+		return this.cristalsRegeneration;
+	}
+	
+	public void setCristalsRegeneration(int value) {
+		this.cristalsRegeneration = value;
 	}
 
 	public void setIsActive(boolean value) {
@@ -218,6 +226,7 @@ public class Hero implements Attacker, Target {
 		useCristals(2);
 		target.receiveDamage(2);
 		this.setSpellSelected(false);
+		this.setIsActive(false);
 	}
 
 	/**
@@ -312,7 +321,7 @@ public class Hero implements Attacker, Target {
 	}
 
 	public boolean canUseSpell() {
-		if (this.cristals < 2)
+		if (this.cristals < 2 || !this.getIsActive())
 			return false;
 
 		return true;
@@ -376,6 +385,19 @@ public class Hero implements Attacker, Target {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public void deselectAll() {
+		this.setSpellSelected(false);
+		
+		for(Card card : this.getHand().getCards()) {
+			card.setSelected(false);
+		}
+		
+		for(Card card : this.getGameboard().getCards()) {
+			card.setSelected(false);
+			card.setSelectedToAttack(false);
+		}
 	}
 
 }
