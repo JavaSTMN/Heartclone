@@ -74,13 +74,13 @@ public class HeroView extends JPanel implements MouseListener, IObserver {
 		heroHealth = new JLabel("VIE: " + this.hero.getLifePoints().toString());
 		heroHealth.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
 		heroHealth.setForeground(new Color(212, 53, 21));
-		heroHealth.setAlignmentX(CENTER_ALIGNMENT);
+		
 		
 		// CRISTALS LABEL
 		heroCristals = new JLabel("CRISTALS: " + this.hero.getCristals() + "/10");
 		heroCristals.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
 		heroCristals.setForeground(new Color(21, 167, 212));
-		heroCristals.setAlignmentX(CENTER_ALIGNMENT);
+		
 		
 		// SPELL BUTTON
 		spellButton = new JPanel();
@@ -105,11 +105,15 @@ public class HeroView extends JPanel implements MouseListener, IObserver {
 
 		try {
 			if (GameManager.getInstance().isPlayerOne(this.hero)) {
+				heroHealth.setAlignmentX(RIGHT_ALIGNMENT);
+				heroCristals.setAlignmentX(RIGHT_ALIGNMENT);
 				this.add(containerHero);
 				this.container.add(heroHealth);
 				this.container.add(heroCristals);
 				this.add(container);
 			} else {
+				heroHealth.setAlignmentX(LEFT_ALIGNMENT);
+				heroCristals.setAlignmentX(LEFT_ALIGNMENT);
 				this.container.add(heroCristals);
 				this.container.add(heroHealth);
 				this.add(container);
