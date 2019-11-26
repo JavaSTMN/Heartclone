@@ -20,23 +20,38 @@ public class StartDeck {
 	
 	public static ArrayList<Card> getDeck() {
 		
-		DrawEffect drawEffect = new DrawEffect(2);
-		HealEffect healEffect = new HealEffect(2);
-		DealDamageEffect dealDamageEffect = new DealDamageEffect(2);
-		
 		
 		deck = new ArrayList<Card>(Arrays.asList(
-				new MinionCard(3, 2, false, "Clerc du soleil brisé", "blablabla", 3),
-				new MinionCard(3, 2, false, "Clerc du soleil brisé", "blablabla", 3),
-				new MinionCard(4, 5, false, "Yeti noroit", "", 4),
-				new MinionCard(4, 5, false, "Yeti noroit", "", 4),
-				new MinionCard(1, 1, false, "Loup des bois", "", 1),
-				new MinionCard(1, 1, false, "Loup des bois", "", 1),
-				new MinionCard(2, 3, false, "Crocillisque des rivières", "", 2),
-				new MinionCard(2, 3, false, "Crocillisque des rivières", "", 2),
-				new SpellCard("pioche", "permet de piocher 2 cartes", 3, drawEffect),
-				new SpellCard("soin", "permet de soigner 2 dommages", 3, healEffect),
-				new SpellCard("dmg", "inflige 2 dmg", 3, dealDamageEffect),
+				// Life, Dmg, Active, Name, Description, ManaCost
+				new MinionCard(1, 2, false, "Docteur Vaudou", "", 1),
+				new MinionCard(2, 3, false, "Limon des marais acide", "", 2),
+				new MinionCard(2, 3, false, "Limon des marais acide", "", 2),
+				new MinionCard(3, 2, false, "Chasseuse de Tranchebauge", "", 3),
+				new MinionCard(3, 2, false, "Chasseuse de Tranchebauge", "", 3),
+				new MinionCard(2, 3, false, "Clerc du Soleil brisé", "", 3),
+				new MinionCard(2, 3, false, "Clerc du Soleil brisé", "", 3),
+				new MinionCard(4, 2, false, "Inventrice Gnome", "", 4),
+				new MinionCard(4, 2, false, "Inventrice Gnome", "", 4),
+				new MinionCard(5, 3, false, "Maitre bouclier de Sen'jin", "", 4),
+				new MinionCard(5, 3, false, "Maitre bouclier de Sen'jin", "", 4),
+				new MinionCard(5, 4, false, "Yéti noroît", "", 4),
+				new MinionCard(7, 5, false, "Berserker Gurubashi", "", 5),
+				new MinionCard(5, 5, false, "Chef de guerre loup de givre", "", 5),
+				new MinionCard(5, 5, false, "Chef de guerre loup de givre", "", 5),
+				new MinionCard(7, 4, false, "Archimage", "", 6),
+				new MinionCard(3, 5, false, "Missilière téméraire", "", 6),
+				new MinionCard(7, 6, false, "Ogre rochepoing", "", 6),
+				new MinionCard(6, 6, false, "Champion de Hurlevent", "", 7),
+				new MinionCard(6, 6, false, "Champion de Hurlevent", "", 7),
+				// Name, Description, Cristal Cost, Effect
+				new SpellCard("Eclair de givre", "Inflige 3 pts de dmg", 2, new DealDamageEffect(3)),
+				new SpellCard("Eclair de givre", "Inflige 3 pts de dmg", 2, new DealDamageEffect(3)),
+				new SpellCard("Intelligence des Arcanes", "permet de piocher 2 cartes", 3, new DrawEffect(2)),
+				new SpellCard("Intelligence des Arcanes", "permet de piocher 2 cartes", 3, new DrawEffect(2)),
+				new SpellCard("Mot de pouvoir: Soin", "permet de soigner 2 dommages", 1, new HealEffect(2)),
+				new SpellCard("Mot de pouvoir: Soin", "permet de soigner 2 dommages", 1, new HealEffect(2)),
+				new SpellCard("Boule de Feu", "inflige 6 pts de dmg", 4, new DealDamageEffect(6)),
+				new SpellCard("Boule de Feu", "inflige 6 pts de dmg", 4, new DealDamageEffect(6)),
 				new SpellCard("Projectiles des arcanes", "inflige 3 dmg aléatoires", 1, new ArcanesMissilesEffect()),
 				new SpellCard("Projectiles des arcanes", "inflige 3 dmg aléatoires", 1, new ArcanesMissilesEffect())
 		));
