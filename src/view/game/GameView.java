@@ -88,10 +88,11 @@ public class GameView extends JFrame {
 		centerPart.setLayout(new BoxLayout(centerPart, BoxLayout.PAGE_AXIS));
 
 		this.boardPlayerTwo = new BoardView(player2);
-
+		this.boardPlayerTwo.setPreferredSize(new Dimension(0, 180));
 		centerPart.add(this.boardPlayerTwo);
 
 		this.boardPlayerOne = new BoardView(player1);
+		this.boardPlayerOne.setPreferredSize(new Dimension(0, 180));
 
 		centerPart.add(this.boardPlayerOne);
 

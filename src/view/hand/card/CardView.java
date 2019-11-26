@@ -6,9 +6,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.ActionListener;
@@ -54,9 +56,12 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 	private JLabel attack;
 	private JLabel health;
 
+	private JPanel body;
+	private JPanel footer;
+
 	// Config
-	private int panelWidth = 100;
-	private int panelHeight = 150;
+	private int panelWidth = 110;
+	private int panelHeight = 140;
 
 	private boolean selected;
 	private boolean selectedToAttack;
@@ -68,92 +73,95 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 	public CardView(Card card, Hero hero) throws IOException {
 		this.card = card;
 		this.card.getObservable().subscribe(this);
-
 		this.hero = hero;
 
 		// JPanel configuration
 		this.setOpaque(true);
 		this.selected = false;
 		this.selectedToAttack = false;
-		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+		this.setLayout(new BorderLayout());
 		this.setSize(panelWidth, panelHeight);
 		this.setPreferredSize(new Dimension(panelWidth, panelHeight));
-		this.setBackground(Color.DARK_GRAY);	
+		this.setBackground(Color.DARK_GRAY);
+		this.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
 
-
-		if(this.hero.getIsTurn())
+		if (this.hero.getIsTurn())
 			this.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-		// Default card border
-		Border border = BorderFactory.createLineBorder(Color.GRAY, 2);
-		this.setBorder(border);
+		// BODY
+		this.body = new JPanel();
+		this.body.setLayout(new BoxLayout(this.body, BoxLayout.PAGE_AXIS));
+		this.body.setBackground(Color.DARK_GRAY);
 
-		if (this.card.getSelected()) {
-			border = BorderFactory.createLineBorder(Color.ORANGE, 4);
-			this.setBorder(border);
-		}
+		if (this.card.getSelected())
+			this.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 4));
 
-		if (this.card.getSelectedToAttack()) {
-			border = BorderFactory.createLineBorder(Color.ORANGE, 4);
-			this.setBorder(border);
-		}
-		
-		name = new JLabel();
-		name.setText("<html>"+card.getName()+"</html>");
-		name.setFont(new Font(Font.DIALOG, Font.BOLD, 10));
-		name.setForeground(Color.WHITE);
-		
-		// Mana label
+		if (this.card.getSelectedToAttack())
+			this.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 4));
+
+		// CARD NAME
+		this.name = new JLabel();
+		this.name.setText("<html>" + card.getName() + "</html>");
+		this.name.setFont(new Font(Font.DIALOG, Font.BOLD, 10));
+		this.name.setForeground(Color.WHITE);
+
+		// CARD MANA
 		this.mana = new JLabel();
 		this.mana.setText("Mana: " + card.getCristalCost().toString());
 		this.mana.setFont(new Font(Font.DIALOG, Font.BOLD, 13));
 		this.mana.setForeground(Color.WHITE);
 
+		// CARD IMAGE
+		Image resizedImage = this.choseImage();
 
-		Image resizedImage = this.choseImage();	
-		
 		resizedImage = resizedImage.getScaledInstance(this.getWidth(), (int) (this.getHeight() * 0.3f),
 				Image.SCALE_SMOOTH); // scale it the smooth way
 		ImageIcon img = new ImageIcon(resizedImage); // transform it back
-		
-		// Image label
+
 		this.image = new JLabel();
 		this.image.setIcon(img);
-		this.image.setBorder(new EmptyBorder(0,0,0,0));
 
-		// Description Label
+		// CARD DESCRIPTION
 		this.description = new JLabel();
 		this.description.setText("<html>" + card.getDescription() + "</html>");
-		this.description.setVerticalAlignment(JLabel.CENTER);
-		this.description.setHorizontalAlignment(JLabel.CENTER);
 		this.description.setForeground(Color.LIGHT_GRAY);
 
-		
-		this.add(mana);
-		this.add(image);
-		this.add(name);
-		this.add(description);
+		// ADDING TO THE BODY CONTAINER
+		this.body.add(mana);
+		this.body.add(image);
+		this.body.add(name);
+		this.body.add(description);
+		// ADDING TO THE CARD VIEW
+		this.add(body, BorderLayout.CENTER);
 
 		// Specific layout for a minion card
 		if (card instanceof MinionCard) {
 			MinionCard minionCard = (MinionCard) card;
 
-			// Attack label
+			// FOOTER
+			this.footer = new JPanel();
+			this.footer.setLayout(new GridLayout(0, 2));
+			this.footer.setOpaque(false);
+
+			// CARD ATTACK
 			attack = new JLabel();
 			attack.setText("Atk: " + minionCard.getDamagePoints().toString());
-			this.add(attack);
 			attack.setFont(new Font(Font.DIALOG, Font.BOLD, 13));
 			attack.setForeground(Color.WHITE);
+			attack.setAlignmentX(CENTER_ALIGNMENT);
 
-			// Health label
+			// CARD HEALTH
 			health = new JLabel();
 			health.setText("Vie: " + minionCard.getHealthPoints().toString());
-			this.add(health);
 			health.setFont(new Font(Font.DIALOG, Font.BOLD, 13));
 			health.setForeground(Color.WHITE);
-		}
 
-		this.setVisible(true);
+			// ADDING TO FOOTER CONTAINER
+			footer.add(attack);
+			footer.add(health);
+			// ADDING TO CARD VIEW
+			this.add(footer, BorderLayout.PAGE_END);
+		}
 	}
 
 	public void setSelected(boolean value) {
@@ -173,36 +181,35 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 	public Card getCard() {
 		return this.card;
 	}
-	
+
 	public Image choseImage() {
-		
-		if(this.card instanceof MinionCard) {
+
+		if (this.card instanceof MinionCard) {
 			return new ImageIcon("assets/card-images/minion.jpg").getImage(); // transform it
 		}
-		
-		if(this.card instanceof SpellCard)
-		{
-			SpellCard sCard = (SpellCard)this.card;
-			if(sCard.getEffect() instanceof HealEffect) {
+
+		if (this.card instanceof SpellCard) {
+			SpellCard sCard = (SpellCard) this.card;
+			if (sCard.getEffect() instanceof HealEffect) {
 				return new ImageIcon("assets/card-images/heal-spell.jpg").getImage();
 			}
-			
-			if(sCard.getEffect() instanceof DrawEffect) {
+
+			if (sCard.getEffect() instanceof DrawEffect) {
 				return new ImageIcon("assets/card-images/draw-spell.jpg").getImage();
 			}
-			
-			if(sCard.getEffect() instanceof ArcanesMissilesEffect) {
+
+			if (sCard.getEffect() instanceof ArcanesMissilesEffect) {
 				return new ImageIcon("assets/card-images/arcane-missiles-spell.png").getImage();
-			} 	
+			}
 		}
-		
+
 		return new ImageIcon("assets/card-images/damage-spell.jpg").getImage();
 	}
 
 	@Override
 	public void update() {
 		if (this.card instanceof MinionCard) {
-			
+
 			MinionCard card = (MinionCard) this.card;
 			this.health.setText("Vie: " + card.getHealthPoints().toString());
 			this.attack.setText("Atk: " + card.getDamagePoints().toString());
@@ -253,24 +260,25 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 			}
 
 			if (!spellPlayed) {
-				if (this.card.getSelectedToAttack()) {
+				if (!this.card.getSelectedToAttack()) {
+					if (this.card instanceof MinionCard && ((MinionCard) this.card).getActive()) {
 
-				} else {
-					for (Card card : hero.getGameboard().getCards()) {
-						card.setSelectedToAttack(false);
-						card.setSelected(false);
-					}
-					for (Card card : hero.getHand().getCards()) {
-						card.setSelected(false);
-						// Border border = BorderFactory.createLineBorder(Color.GRAY, 2);
+						for (Card card : hero.getGameboard().getCards()) {
+							card.setSelectedToAttack(false);
+							card.setSelected(false);
+						}
+						for (Card card : hero.getHand().getCards()) {
+							card.setSelected(false);
+							// Border border = BorderFactory.createLineBorder(Color.GRAY, 2);
+							// this.setBorder(border);
+						}
+
+						this.hero.setSpellSelected(false);
+
+						card.setSelectedToAttack(true);
+						// Border border = BorderFactory.createLineBorder(Color.ORANGE, 4);
 						// this.setBorder(border);
 					}
-
-					this.hero.setSpellSelected(false);
-
-					card.setSelectedToAttack(true);
-					// Border border = BorderFactory.createLineBorder(Color.ORANGE, 4);
-					// this.setBorder(border);
 				}
 			}
 		} else {
@@ -289,11 +297,9 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 								if (attackerCard instanceof MinionCard) {
 									MinionCard mAttackerCard = (MinionCard) attackerCard;
 									mAttackerCard.dealDamage(mCard);
-									mAttackerCard.setSelectedToAttack(false);
 								}
 							}
 						}
-
 
 						for (Card attackerCard : opponent.getHand().getCards()) {
 							if (attackerCard.getSelected()) {
@@ -323,7 +329,7 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 									if (sCard.getEffect() instanceof DealDamageEffect
 											|| sCard.getEffect() instanceof HealEffect)
 										this.hero.activateSpell(sCard, mCard);
-										spellPlayed = true;
+									spellPlayed = true;
 								}
 							}
 						}
@@ -353,12 +359,12 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 	@Override
 	public void mouseEntered(MouseEvent e) {
 
-		if(this.card instanceof MinionCard && this.hero.getIsTurn()) {
-			MinionCard mCard = (MinionCard)this.card;
-			if(!mCard.getActive()) {
+		if (this.card instanceof MinionCard && this.hero.getIsTurn()) {
+			MinionCard mCard = (MinionCard) this.card;
+			if (!mCard.getActive()) {
 				Border border = BorderFactory.createLineBorder(Color.RED, 4);
 				this.setBorder(border);
-			}else {
+			} else {
 				Border border = BorderFactory.createLineBorder(Color.GRAY, 4);
 				this.setBorder(border);
 			}
@@ -368,10 +374,10 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 	@Override
 	public void mouseExited(MouseEvent e) {
 
-		if(this.card.getSelectedToAttack()) {
+		if (this.card.getSelectedToAttack()) {
 			Border border = BorderFactory.createLineBorder(Color.ORANGE, 4);
 			this.setBorder(border);
-		}else {
+		} else {
 			Border border = BorderFactory.createLineBorder(Color.GRAY, 2);
 			this.setBorder(border);
 		}

@@ -24,7 +24,7 @@ public class DeckView extends JPanel implements MouseListener{
 		
 		
 		JPanel deckView = new JPanel();
-		deckView.setPreferredSize(new Dimension(100, 150));
+		deckView.setPreferredSize(new Dimension(100, 130));
 		deckView.setLayout(new BoxLayout(deckView, BoxLayout.PAGE_AXIS));
 		
 		JLabel deckText = new JLabel();
