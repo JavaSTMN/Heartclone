@@ -218,6 +218,7 @@ public class Hero implements Attacker, Target {
 		useCristals(2);
 		target.receiveDamage(2);
 		this.setSpellSelected(false);
+		this.setIsActive(false);
 	}
 
 	/**
@@ -321,7 +322,7 @@ public class Hero implements Attacker, Target {
 	}
 
 	public boolean canUseSpell() {
-		if (this.cristals < 2)
+		if (this.cristals < 2 || !this.getIsActive())
 			return false;
 
 		return true;

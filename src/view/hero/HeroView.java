@@ -123,6 +123,7 @@ public class HeroView extends JPanel implements MouseListener, IObserver {
 
 				if (opponent.getSpellSelected()) {
 					opponent.useSpell(this.hero);
+					
 
 				} else {
 
