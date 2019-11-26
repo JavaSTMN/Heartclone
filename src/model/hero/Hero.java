@@ -49,9 +49,9 @@ public class Hero implements Attacker, Target {
 	public Hero() {
 
 		
-		cristals = 4;
+		cristals = 1;
 		deck = new Deck(StartDeck.getDeck());		
-		cristalsRegeneration = 1;
+		cristalsRegeneration = 0;
 		hand = new CardContainer(10);
 		gameboard = new CardContainer(7);
 		discard = new CardContainer();
@@ -114,6 +114,14 @@ public class Hero implements Attacker, Target {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public int getCristalRegeneration() {
+		return this.cristalsRegeneration;
+	}
+	
+	public void setCristalsRegeneration(int value) {
+		this.cristalsRegeneration = value;
 	}
 
 	public void setIsActive(boolean value) {

@@ -35,6 +35,7 @@ public class GameManager {
 		
 		opponents[0] = new Hero();
 		opponents[1] = new Hero();
+		opponents[1].setCristalsRegeneration(1);
 		
 		opponents[activeHero].setIsTurn(true);
 		opponents[1].setIsTurn(false);
