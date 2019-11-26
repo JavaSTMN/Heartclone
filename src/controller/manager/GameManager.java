@@ -6,6 +6,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import controller.Observable;
+import model.card.Card;
 import model.hero.Hero;
 
 /**
@@ -124,15 +125,6 @@ public class GameManager {
 		this.timer.purge();
 	}
 
-	/**
-	 * Finish turn, pass to another player or finish the game
-	 * 
-
-	 * @param hero
-	 */
-	public void finishTurn(Hero hero) {
-		System.out.println("le tour a été passée");
-	}
 
 	/**
 	 * Time left for the turn in seconds
@@ -150,6 +142,8 @@ public class GameManager {
 	 
 		{
 			opponents[activeHero].setIsTurn(false);
+			opponents[activeHero].deselectAllCards();
+			
 			
 			switch (activeHero) {
 			case 0:

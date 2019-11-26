@@ -386,5 +386,16 @@ public class Hero implements Attacker, Target {
 		}
 		
 	}
+	
+	public void deselectAllCards() {
+		for(Card card : this.getHand().getCards()) {
+			card.setSelected(false);
+		}
+		
+		for(Card card : this.getGameboard().getCards()) {
+			card.setSelected(false);
+			card.setSelectedToAttack(false);
+		}
+	}
 
 }
