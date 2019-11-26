@@ -32,7 +32,7 @@ public class HeroView extends JPanel implements MouseListener, IObserver {
 	private JLabel heroHealth;
 	private JLabel heroCristals;
 	private JPanel spellButton;
-	
+
 	private JPanel containerButton;
 
 	private boolean selected;
@@ -52,21 +52,20 @@ public class HeroView extends JPanel implements MouseListener, IObserver {
 		containerButton.setLayout(new FlowLayout(FlowLayout.CENTER));
 		containerButton.setBackground(Color.DARK_GRAY);
 
-		
-		if(this.hero.getIsTurn())
+		if (this.hero.getIsTurn())
 			containerButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			
+
 		JPanel containerCristals = new JPanel();
 		containerCristals.setLayout(new FlowLayout(FlowLayout.CENTER));
 		containerCristals.setBackground(Color.DARK_GRAY);
 
 		heroHealth = new JLabel("VIE: " + this.hero.getLifePoints().toString());
 		heroHealth.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
-		heroHealth.setForeground(Color.WHITE);
+		heroHealth.setForeground(new Color(212, 53, 21));
 
 		heroCristals = new JLabel("CRISTALS: " + this.hero.getCristals() + "/10");
 		heroCristals.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
-		heroCristals.setForeground(Color.WHITE);
+		heroCristals.setForeground(new Color(21, 167, 212));
 
 		spellButton = new JPanel();
 		spellButton.add(new JLabel("Utiliser Sort"));
@@ -123,7 +122,6 @@ public class HeroView extends JPanel implements MouseListener, IObserver {
 
 				if (opponent.getSpellSelected()) {
 					opponent.useSpell(this.hero);
-					
 
 				} else {
 
@@ -135,7 +133,7 @@ public class HeroView extends JPanel implements MouseListener, IObserver {
 							}
 						}
 					}
-					
+
 					for (Card attackerCard : opponent.getHand().getCards()) {
 						if (attackerCard.getSelected()) {
 							if (attackerCard instanceof SpellCard) {
@@ -171,7 +169,6 @@ public class HeroView extends JPanel implements MouseListener, IObserver {
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		
 
 	}
 
@@ -192,13 +189,12 @@ public class HeroView extends JPanel implements MouseListener, IObserver {
 		} else {
 			spellButton.setBackground(Color.WHITE);
 		}
-		
-		if(this.hero.getIsTurn()) {
+
+		if (this.hero.getIsTurn()) {
 			containerButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		} else {
 			containerButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		}
-		
 
 	}
 
