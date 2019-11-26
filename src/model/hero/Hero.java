@@ -387,7 +387,9 @@ public class Hero implements Attacker, Target {
 		
 	}
 	
-	public void deselectAllCards() {
+	public void deselectAll() {
+		this.setSpellSelected(false);
+		
 		for(Card card : this.getHand().getCards()) {
 			card.setSelected(false);
 		}

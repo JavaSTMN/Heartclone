@@ -142,7 +142,7 @@ public class GameManager {
 	 
 		{
 			opponents[activeHero].setIsTurn(false);
-			opponents[activeHero].deselectAllCards();
+			opponents[activeHero].deselectAll();
 			
 			
 			switch (activeHero) {
