@@ -1,11 +1,15 @@
 package model.card;
 
+
+import controller.Attacker;
+import controller.Target;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import controller.Attacker;
 import controller.Target;
 import controller.manager.GameManager;
+
 
 /**
  * 
@@ -59,6 +63,14 @@ public class MinionCard extends Card implements Attacker, Target {
 	public void setDamagePoints(int value) {
 		this.damagePoints = value;
 	}
+	
+	public boolean getActive() {
+		return this.active;
+	}
+	
+	public void setActive(boolean value) {
+		this.active = value;
+	}
 
 	/* METHODS REGION */
 
@@ -78,6 +90,14 @@ public class MinionCard extends Card implements Attacker, Target {
 			MinionCard mTarget = (MinionCard)target;
 			this.receiveDamage(mTarget.damagePoints);
 		}
+		
+		this.active = false;
+	}
+	
+	@Override
+	public void dealDamage(Target target, int amount) throws IllegalArgumentException {
+		this.dealDamage(target);
+		
 	}
 
 	/**
@@ -171,6 +191,21 @@ public class MinionCard extends Card implements Attacker, Target {
 		return true;
 	}
 
-	
 
+	public void discard(Card card) {
+		GameManager gameManager;
+		try {
+			gameManager = GameManager.getInstance();
+			ArrayList<Card> cards = gameManager.getHeros()[0].getGameboard().getCards();
+			if(cards.contains(card))
+				gameManager.getHeros()[0].discard(card);
+			else {
+				gameManager.getHeros()[1].discard(card);
+			}
+			
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
 }
