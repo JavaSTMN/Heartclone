@@ -11,6 +11,7 @@ import model.effect.DealDamageEffect;
 import model.effect.DrawEffect;
 import model.effect.HealEffect;
 import model.minioneffect.ChargeEffect;
+import model.minioneffect.TauntEffect;
 
 public class StartDeck {
 	private static ArrayList<Card> deck;
@@ -24,7 +25,7 @@ public class StartDeck {
 		
 		deck = new ArrayList<Card>(Arrays.asList(
 				// Life, Dmg, Active, Name, Description, ManaCost
-				new MinionCard(1, 1, false, "Docteur Vaudou", "Charge", 1, new ChargeEffect()),
+				new MinionCard(1, 1, false, "Sanglier brocheroc", "Charge", 1, new ChargeEffect()),
 				new MinionCard(2, 3, false, "Limon des marais acide", "", 2),
 				new MinionCard(2, 3, false, "Limon des marais acide", "", 2),
 				new MinionCard(3, 2, false, "Chasseuse de Tranchebauge", "", 3),
@@ -33,14 +34,14 @@ public class StartDeck {
 				new MinionCard(2, 3, false, "Clerc du Soleil brisé", "", 3),
 				new MinionCard(4, 2, false, "Inventrice Gnome", "", 4),
 				new MinionCard(4, 2, false, "Inventrice Gnome", "", 4),
-				new MinionCard(5, 3, false, "Maitre bouclier de Sen'jin", "", 4),
-				new MinionCard(5, 3, false, "Maitre bouclier de Sen'jin", "", 4),
+				new MinionCard(5, 3, false, "Maitre bouclier de Sen'jin", "Provocation", 4, new TauntEffect()),
+				new MinionCard(5, 3, false, "Maitre bouclier de Sen'jin", "Provocation", 4, new TauntEffect()),
 				new MinionCard(5, 4, false, "Yéti noroît", "", 4),
 				new MinionCard(7, 5, false, "Berserker Gurubashi", "", 5),
 				new MinionCard(5, 5, false, "Chef de guerre loup de givre", "", 5),
 				new MinionCard(5, 5, false, "Chef de guerre loup de givre", "", 5),
 				new MinionCard(7, 4, false, "Archimage", "", 6),
-				new MinionCard(3, 5, false, "Missilière téméraire", "", 6),
+				new MinionCard(3, 5, false, "Missilière téméraire", "Charge", 6, new ChargeEffect()),
 				new MinionCard(7, 6, false, "Ogre rochepoing", "", 6),
 				new MinionCard(6, 6, false, "Champion de Hurlevent", "", 7),
 				new MinionCard(6, 6, false, "Champion de Hurlevent", "", 7),

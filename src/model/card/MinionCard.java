@@ -27,7 +27,10 @@ public class MinionCard extends Card implements Attacker, Target {
 	private int maxHealtPoints;
 	private int damagePoints;
 	private boolean active;
+
 	private MinionEffect effect;
+	
+	private boolean taunt = false;
 
 	/**
 	 * Constructor
@@ -83,6 +86,14 @@ public class MinionCard extends Card implements Attacker, Target {
 	
 	public void setActive(boolean value) {
 		this.active = value;
+	}
+	
+	public boolean getTaunt() {
+		return this.taunt;
+	}
+	
+	public void setTaunt(boolean value) {
+		this.taunt = value;
 	}
 
 	/* METHODS REGION */
