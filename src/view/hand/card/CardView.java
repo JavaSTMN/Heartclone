@@ -222,6 +222,7 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 			border = BorderFactory.createLineBorder(Color.ORANGE, 4);
 			this.setBorder(border);
 		}
+
 	}
 
 	@Override
@@ -287,35 +288,38 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 				Hero opponent = GameManager.getInstance().getOpponent(this.hero);
 
 				if (this.card instanceof MinionCard) {
-					MinionCard mCard = (MinionCard) this.card;
 
-					if (opponent.getSpellSelected()) {
-						opponent.useSpell(mCard);
-					} else {
-						for (Card attackerCard : opponent.getGameboard().getCards()) {
-							if (attackerCard.getSelectedToAttack()) {
-								if (attackerCard instanceof MinionCard) {
-									MinionCard mAttackerCard = (MinionCard) attackerCard;
-									mAttackerCard.dealDamage(mCard);
+					if (!this.hero.hasTaunt() || (this.hero.hasTaunt() && ((MinionCard) this.card).getTaunt()) ) {
+						MinionCard mCard = (MinionCard) this.card;
+
+						if (opponent.getSpellSelected()) {
+							opponent.useSpell(mCard);
+						} else {
+							for (Card attackerCard : opponent.getGameboard().getCards()) {
+								if (attackerCard.getSelectedToAttack()) {
+									if (attackerCard instanceof MinionCard) {
+										MinionCard mAttackerCard = (MinionCard) attackerCard;
+										mAttackerCard.dealDamage(mCard);
+									}
 								}
 							}
-						}
 
-						for (Card attackerCard : opponent.getHand().getCards()) {
-							if (attackerCard.getSelected()) {
-								if (attackerCard instanceof SpellCard) {
-									SpellCard sCard = (SpellCard) attackerCard;
-									if (sCard.getEffect() instanceof DealDamageEffect
-											|| sCard.getEffect() instanceof HealEffect) {
-										if (this.card instanceof MinionCard) {
-											MinionCard target = (MinionCard) this.card;
-											this.hero.activateSpell(sCard, target);
+							for (Card attackerCard : opponent.getHand().getCards()) {
+								if (attackerCard.getSelected()) {
+									if (attackerCard instanceof SpellCard) {
+										SpellCard sCard = (SpellCard) attackerCard;
+										if (sCard.getEffect() instanceof DealDamageEffect
+												|| sCard.getEffect() instanceof HealEffect) {
+											if (this.card instanceof MinionCard) {
+												MinionCard target = (MinionCard) this.card;
+												this.hero.activateSpell(sCard, target);
+											}
 										}
 									}
 								}
 							}
 						}
-					}
+					} 
 				}
 
 				if (this.card instanceof SpellCard) {

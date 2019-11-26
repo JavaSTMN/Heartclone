@@ -79,7 +79,7 @@ public class GameManager {
 	 * Finish a game
 	 */
 	public void finishGame() {
-		System.out.println("Partie terminée");
+		System.out.println("Partie terminee");
 
 		try {
 			GameView.getInstance().showEndView(opponents[0].isAlive());

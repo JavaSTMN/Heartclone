@@ -390,5 +390,16 @@ public class Hero implements Attacker, Target {
 			card.setSelectedToAttack(false);
 		}
 	}
+	
+	public boolean hasTaunt() {
+		for(Card card: this.getGameboard().getCards()) {
+			if(card instanceof MinionCard) {
+				if(((MinionCard)card).getTaunt())
+					return true;
+			}
+		}
+		
+		return false;
+	}
 
 }
