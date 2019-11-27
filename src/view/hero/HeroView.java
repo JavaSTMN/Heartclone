@@ -122,26 +122,51 @@ public class HeroView extends JPanel implements MouseListener, IObserver {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 
+		boolean spellPlayed = false;
+
 		if (this.hero.getIsTurn()) {
-			if (this.hero.getSpellSelected()) {
 
-			} else {
-				for (Card card : this.hero.getHand().getCards()) {
-					card.setSelected(false);
-					card.setSelectedToAttack(false);
-				}
+			for (Card card : this.hero.getHand().getCards()) {
+				if (card.getSelected()) {
+					if (card instanceof SpellCard) {
+						
+						SpellCard sCard = (SpellCard) card;
 
-				// We deselect all the cards on the gameboard
-				for (Card card : this.hero.getGameboard().getCards()) {
-					card.setSelectedToAttack(false);
-				}
-
-				// We select the spell
-				if (this.hero.canUseSpell()) {
-					this.selected = true;
-					this.hero.setSpellSelected(true);
+						if (sCard.getEffect() instanceof HealEffect) {
+							try {
+								System.out.println("activateSpell");
+								this.hero.activateSpell(sCard, this.hero);
+								spellPlayed = true;
+							} catch (Exception e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
+					}
 				}
 			}
+			
+			if(!spellPlayed) {
+				if (!this.hero.getSpellSelected()) {
+
+					for (Card card : this.hero.getHand().getCards()) {
+						card.setSelected(false);
+						card.setSelectedToAttack(false);
+					}
+
+					// We deselect all the cards on the gameboard
+					for (Card card : this.hero.getGameboard().getCards()) {
+						card.setSelectedToAttack(false);
+					}
+
+					// We select the spell
+					if (this.hero.canUseSpell()) {
+						this.selected = true;
+						this.hero.setSpellSelected(true);
+					}
+				}
+			}
+			
 
 		} else {
 
@@ -172,12 +197,11 @@ public class HeroView extends JPanel implements MouseListener, IObserver {
 								if (sCard.getEffect() instanceof DealDamageEffect
 										|| sCard.getEffect() instanceof HealEffect) {
 									opponent.activateSpell(sCard, this.hero);
-									//sCard.activateEffect(this.hero);
+									// sCard.activateEffect(this.hero);
 								}
 							}
 						}
 					}
-
 				}
 
 			} catch (Exception e1) {
@@ -213,14 +237,13 @@ public class HeroView extends JPanel implements MouseListener, IObserver {
 					if (card.getSelectedToAttack() && !this.hero.hasTaunt())
 						this.containerHero.setBorder(BorderFactory.createLineBorder(Color.CYAN));
 				}
-				
-				for(Card card : opponent.getHand().getCards()) {
+
+				for (Card card : opponent.getHand().getCards()) {
 					if (card instanceof SpellCard && card.getSelected()) {
 						this.containerHero.setBorder(BorderFactory.createLineBorder(Color.CYAN));
 					}
 				}
-				
-				
+
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

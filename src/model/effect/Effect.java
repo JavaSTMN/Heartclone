@@ -20,13 +20,9 @@ public abstract class Effect {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void activateEffect(Target target) {
-		// TODO Auto-generated method stub
-	}
+	public abstract void activateEffect(Target target);
 	
-	public void activateEffect(Hero target) {
-		
-	}
+	public abstract void activateEffect(Hero target);
 	
 
 }
