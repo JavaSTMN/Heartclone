@@ -3,6 +3,7 @@ package model.effect;
 import java.util.ArrayList;
 import java.util.Random;
 
+import controller.Target;
 import model.card.Card;
 import model.card.MinionCard;
 import model.hero.Hero;
@@ -35,5 +36,11 @@ public class ArcanesMissilesEffect extends Effect {
 			}
 		}
 
+	}
+
+	@Override
+	public void activateEffect(Target target) {
+		// TODO Auto-generated method stub
+		
 	}
 }
