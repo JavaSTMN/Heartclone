@@ -85,6 +85,8 @@ public class BoardView extends JPanel implements IObserver, MouseListener {
 				if (card.getSelected() && card instanceof MinionCard) {
 					try {
 						this.hero.play(card);
+						if(((MinionCard)card).hasEffect())
+							((MinionCard)card).activateEffect();
 						card.setSelected(false);
 					} catch (Exception e1) {
 						e1.getMessage();

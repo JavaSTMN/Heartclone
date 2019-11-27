@@ -167,8 +167,8 @@ public class Hero implements Attacker, Target {
 
 	public void activateSpell(SpellCard card, Target target) throws Exception {
 		if (this.canPlay(card)) {
-			card.activateEffect(target);
 			this.setCristals(this.getCristals() - card.getCristalCost());
+			card.activateEffect(target);
 		} else {
 			throw new Exception("Not enough cristals to play this card");
 		}
@@ -393,6 +393,17 @@ public class Hero implements Attacker, Target {
 			card.setSelected(false);
 			card.setSelectedToAttack(false);
 		}
+	}
+	
+	public boolean hasTaunt() {
+		for(Card card: this.getGameboard().getCards()) {
+			if(card instanceof MinionCard) {
+				if(((MinionCard)card).getTaunt())
+					return true;
+			}
+		}
+		
+		return false;
 	}
 
 }

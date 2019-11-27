@@ -41,7 +41,7 @@ public class HeroView extends JPanel implements MouseListener, IObserver {
 	private JPanel containerHero;
 	private JPanel containerLabel;
 	private JPanel containerCristals;
-	
+
 	private JPanel container;
 
 	private boolean selected;
@@ -57,51 +57,45 @@ public class HeroView extends JPanel implements MouseListener, IObserver {
 		this.container = new JPanel();
 		this.container.setLayout(new BoxLayout(container, BoxLayout.PAGE_AXIS));
 		this.container.setOpaque(false);
-		
+
 		this.containerLabel = new JPanel();
-		
+
 		this.containerHero = new JPanel();
 		this.containerHero.addMouseListener(this);
 		this.containerHero.setLayout(new BoxLayout(containerHero, BoxLayout.PAGE_AXIS));
 
-	
 		if (this.hero.getIsTurn())
 			containerHero.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
 		containerCristals = new JPanel();
-		
+
 		// HEALTH LABEL
 		heroHealth = new JLabel("VIE: " + this.hero.getLifePoints().toString());
 		heroHealth.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
 		heroHealth.setForeground(new Color(212, 53, 21));
-		
-		
+
 		// CRISTALS LABEL
 		heroCristals = new JLabel("CRISTALS: " + this.hero.getCristals() + "/10");
 		heroCristals.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
 		heroCristals.setForeground(new Color(21, 167, 212));
-		
-		
+
 		// SPELL BUTTON
 		spellButton = new JPanel();
 		spellButton.add(new JLabel("Utiliser Sort"));
-		
-		
+
 		// HERO IMAGE
 		Image heroImg = new ImageIcon("assets/card-images/hero.png").getImage();
-		heroImg = heroImg.getScaledInstance(100, 60,
-				Image.SCALE_SMOOTH); // scale it the smooth way
+		heroImg = heroImg.getScaledInstance(100, 60, Image.SCALE_SMOOTH); // scale it the smooth way
 		ImageIcon img = new ImageIcon(heroImg); // transform it back
-		
+
 		this.heroImage = new JLabel();
 		this.heroImage.setIcon(img);
 		this.heroImage.setAlignmentX(CENTER_ALIGNMENT);
 
-		//containerLabel.add(heroHealth);
+		// containerLabel.add(heroHealth);
 		containerHero.add(heroImage);
 		containerHero.add(spellButton);
 		containerCristals.add(heroCristals);
-		
 
 		try {
 			if (GameManager.getInstance().isPlayerOne(this.hero)) {
@@ -128,26 +122,51 @@ public class HeroView extends JPanel implements MouseListener, IObserver {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 
+		boolean spellPlayed = false;
+
 		if (this.hero.getIsTurn()) {
-			if (this.hero.getSpellSelected()) {
 
-			} else {
-				for (Card card : this.hero.getHand().getCards()) {
-					card.setSelected(false);
-					card.setSelectedToAttack(false);
-				}
+			for (Card card : this.hero.getHand().getCards()) {
+				if (card.getSelected()) {
+					if (card instanceof SpellCard) {
+						
+						SpellCard sCard = (SpellCard) card;
 
-				// We deselect all the cards on the gameboard
-				for (Card card : this.hero.getGameboard().getCards()) {
-					card.setSelectedToAttack(false);
-				}
-
-				// We select the spell
-				if (this.hero.canUseSpell()) {
-					this.selected = true;
-					this.hero.setSpellSelected(true);
+						if (sCard.getEffect() instanceof HealEffect) {
+							try {
+								System.out.println("activateSpell");
+								this.hero.activateSpell(sCard, this.hero);
+								spellPlayed = true;
+							} catch (Exception e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
+					}
 				}
 			}
+			
+			if(!spellPlayed) {
+				if (!this.hero.getSpellSelected()) {
+
+					for (Card card : this.hero.getHand().getCards()) {
+						card.setSelected(false);
+						card.setSelectedToAttack(false);
+					}
+
+					// We deselect all the cards on the gameboard
+					for (Card card : this.hero.getGameboard().getCards()) {
+						card.setSelectedToAttack(false);
+					}
+
+					// We select the spell
+					if (this.hero.canUseSpell()) {
+						this.selected = true;
+						this.hero.setSpellSelected(true);
+					}
+				}
+			}
+			
 
 		} else {
 
@@ -155,16 +174,18 @@ public class HeroView extends JPanel implements MouseListener, IObserver {
 			try {
 				opponent = GameManager.getInstance().getOpponent(this.hero);
 
-				if (opponent.getSpellSelected()) {
+				if (opponent.getSpellSelected() && !this.hero.hasTaunt()) {
 					opponent.useSpell(this.hero);
 
 				} else {
 
-					for (Card card : opponent.getGameboard().getCards()) {
-						if (card.getSelectedToAttack()) {
-							if (card instanceof MinionCard) {
-								MinionCard mCard = (MinionCard) card;
-								mCard.dealDamage(this.hero);
+					if (!this.hero.hasTaunt()) {
+						for (Card card : opponent.getGameboard().getCards()) {
+							if (card.getSelectedToAttack()) {
+								if (card instanceof MinionCard) {
+									MinionCard mCard = (MinionCard) card;
+									mCard.dealDamage(this.hero);
+								}
 							}
 						}
 					}
@@ -175,7 +196,8 @@ public class HeroView extends JPanel implements MouseListener, IObserver {
 								SpellCard sCard = (SpellCard) attackerCard;
 								if (sCard.getEffect() instanceof DealDamageEffect
 										|| sCard.getEffect() instanceof HealEffect) {
-									sCard.activateEffect(this.hero);
+									opponent.activateSpell(sCard, this.hero);
+									// sCard.activateEffect(this.hero);
 								}
 							}
 						}
@@ -204,28 +226,35 @@ public class HeroView extends JPanel implements MouseListener, IObserver {
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		if(!this.hero.getIsTurn()) {
-			
+		if (!this.hero.getIsTurn()) {
+
 			try {
 				Hero opponent = GameManager.getInstance().getOpponent(this.hero);
-				if(opponent.getSpellSelected()) 
+				if (opponent.getSpellSelected() && !this.hero.hasTaunt())
 					this.containerHero.setBorder(BorderFactory.createLineBorder(Color.CYAN));
-				
-				for(Card card: opponent.getGameboard().getCards()) {
-					if(card.getSelectedToAttack())
+
+				for (Card card : opponent.getGameboard().getCards()) {
+					if (card.getSelectedToAttack() && !this.hero.hasTaunt())
 						this.containerHero.setBorder(BorderFactory.createLineBorder(Color.CYAN));
 				}
+
+				for (Card card : opponent.getHand().getCards()) {
+					if (card instanceof SpellCard && card.getSelected()) {
+						this.containerHero.setBorder(BorderFactory.createLineBorder(Color.CYAN));
+					}
+				}
+
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			
+
 		}
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		this.containerHero.setBorder(new EmptyBorder(0,0,0,0));
+		this.containerHero.setBorder(new EmptyBorder(0, 0, 0, 0));
 
 	}
 

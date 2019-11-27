@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import controller.Attacker;
 import controller.Target;
 import controller.manager.GameManager;
+import model.minioneffect.MinionEffect;
 
 
 /**
@@ -27,6 +28,10 @@ public class MinionCard extends Card implements Attacker, Target {
 	private int damagePoints;
 	private boolean active;
 
+	private MinionEffect effect;
+	
+	private boolean taunt = false;
+
 	/**
 	 * Constructor
 	 * 
@@ -40,12 +45,23 @@ public class MinionCard extends Card implements Attacker, Target {
 		this.maxHealtPoints = this.healthPoints = maxHealthPoints;
 		this.damagePoints = damagePoints;
 		this.active = active;
+		this.effect = null;
+	}
+	
+	public MinionCard(int maxHealthPoints, int damagePoints, boolean active, String name, String description,
+			int cristalCost, MinionEffect effect) {
+		super(name, description, cristalCost);
+		this.maxHealtPoints = this.healthPoints = maxHealthPoints;
+		this.damagePoints = damagePoints;
+		this.active = active;
+		this.effect = effect;
 	}
 
 	public MinionCard(int maxHealthPoints, int damagePoints, boolean active) {
 		this.maxHealtPoints = this.healthPoints = maxHealthPoints;
 		this.damagePoints = damagePoints;
 		this.active = active;
+		this.effect = null;
 	}
 
 	public Integer getHealthPoints() {
@@ -71,9 +87,27 @@ public class MinionCard extends Card implements Attacker, Target {
 	public void setActive(boolean value) {
 		this.active = value;
 	}
+	
+	public boolean getTaunt() {
+		return this.taunt;
+	}
+	
+	public void setTaunt(boolean value) {
+		this.taunt = value;
+	}
 
 	/* METHODS REGION */
-
+	
+	public void activateEffect() {
+		this.effect.activateEffect(this);
+	}
+	
+	public boolean hasEffect() {
+		if(this.effect == null)
+			return false;
+		
+		return true;
+	}
 	// Attacker Interface //
 
 	/**

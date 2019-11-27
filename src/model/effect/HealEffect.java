@@ -1,6 +1,7 @@
 package model.effect;
 
 import controller.Target;
+import model.hero.Hero;
 
 /**
  * 
@@ -23,5 +24,11 @@ public class HealEffect extends Effect {
 	
 	public void activateEffect(Target target) {
 		target.receiveHealthPoints(this.amount);
+	}
+
+	@Override
+	public void activateEffect(Hero target) {
+		target.receiveHealthPoints(this.amount);
+		
 	}
 }
