@@ -171,7 +171,8 @@ public class HeroView extends JPanel implements MouseListener, IObserver {
 								SpellCard sCard = (SpellCard) attackerCard;
 								if (sCard.getEffect() instanceof DealDamageEffect
 										|| sCard.getEffect() instanceof HealEffect) {
-									sCard.activateEffect(this.hero);
+									opponent.activateSpell(sCard, this.hero);
+									//sCard.activateEffect(this.hero);
 								}
 							}
 						}

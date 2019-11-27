@@ -312,7 +312,7 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 												|| sCard.getEffect() instanceof HealEffect) {
 											if (this.card instanceof MinionCard) {
 												MinionCard target = (MinionCard) this.card;
-												this.hero.activateSpell(sCard, target);
+												opponent.activateSpell(sCard, target);
 											}
 										}
 									}
