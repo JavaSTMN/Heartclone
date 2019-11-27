@@ -202,7 +202,11 @@ public class Hero implements Attacker, Target {
 	 */
 	public void draw() throws Exception {
 		try {
-		hand.addCard(deck.fetchCard(0));
+		if(hand.getCardNumber() == hand.getCardLimit()) {
+			this.discard(deck.fetchCard(0));
+		} else {
+			hand.addCard(deck.fetchCard(0));
+		}
 
 		observable.notifyObservers();
 		}
