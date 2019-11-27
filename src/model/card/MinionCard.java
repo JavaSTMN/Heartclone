@@ -108,6 +108,10 @@ public class MinionCard extends Card implements Attacker, Target {
 		
 		return true;
 	}
+	
+	public Integer getMaxHealthPoints() {
+		return this.maxHealtPoints;
+	}
 	// Attacker Interface //
 
 	/**

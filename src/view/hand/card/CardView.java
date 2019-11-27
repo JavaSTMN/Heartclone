@@ -152,7 +152,7 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 
 			// CARD HEALTH
 			health = new JLabel();
-			health.setText("Vie: " + minionCard.getHealthPoints().toString());
+			health.setText("Vie: " + minionCard.getHealthPoints().toString()+" /"+minionCard.getMaxHealthPoints().toString());
 			health.setFont(new Font(Font.DIALOG, Font.BOLD, 13));
 			health.setForeground(Color.WHITE);
 
@@ -211,7 +211,7 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 		if (this.card instanceof MinionCard) {
 
 			MinionCard card = (MinionCard) this.card;
-			this.health.setText("Vie: " + card.getHealthPoints().toString());
+			this.health.setText("Vie: " + card.getHealthPoints().toString()+" /"+card.getMaxHealthPoints().toString());
 			this.attack.setText("Atk: " + card.getDamagePoints().toString());
 		}
 
