@@ -37,6 +37,7 @@ public class Hero implements Attacker, Target {
 	private Image image;
 	private boolean isTurn = false;
 	private boolean spellSelected = false;
+	private int tiredness = 0;
 
 	public Hero() {
 
@@ -260,7 +261,8 @@ public class Hero implements Attacker, Target {
 	 * Makes the hero loose 2 healthpoints
 	 */
 	public void sufferFatigue() {
-		this.receiveDamage(2);
+		this.tiredness++;
+		this.receiveDamage(tiredness);
 	}
 		
 	
