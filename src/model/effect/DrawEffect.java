@@ -35,4 +35,10 @@ public class DrawEffect extends Effect {
 		}
 	}
 
+	@Override
+	public void activateEffect(Target target) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

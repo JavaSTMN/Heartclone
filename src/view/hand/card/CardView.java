@@ -264,7 +264,6 @@ public class CardView extends JPanel implements IObserver, MouseListener {
 								
 							}
 						}
-
 					}
 				}
 			}
